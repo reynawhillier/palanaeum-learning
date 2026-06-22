@@ -1,5 +1,7 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
+// This is an example of a database table migration!
+// Related to this: schema defined in schema.ts, create a model out of it. to work with the data (app/models/role.ts)
 export default class extends BaseSchema {
   protected tableName = 'roles'
 

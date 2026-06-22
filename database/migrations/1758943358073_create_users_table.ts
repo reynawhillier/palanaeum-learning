@@ -1,5 +1,9 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
+// This is Adonis' default user table -> we can add to it, but we NEED to use this users' table as our main user stoargae
+// Preconfigured to work with Adonis' authentication system
+// There is a coomand line command to create users -> node ace make:user --help
+// probably don't change these fields unless we want to go on a wild goose
 export default class extends BaseSchema {
   protected tableName = 'users'
 
