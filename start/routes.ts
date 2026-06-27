@@ -28,3 +28,5 @@ router
     router.post('logout', [controllers.Session, 'destroy'])
   })
   .use(middleware.auth())
+
+router.get('/student_list', [controllers.StudentLists, 'index'])
