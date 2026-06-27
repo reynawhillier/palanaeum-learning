@@ -7,6 +7,132 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
+export class AdminSchema extends BaseModel {
+  static $columns = ['adminId', 'createdAt', 'email', 'firstName', 'lastName', 'passwordHash', 'schoolId'] as const
+  $columns = AdminSchema.$columns
+  @column({ isPrimary: true })
+  declare adminId: number
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare email: string
+  @column()
+  declare firstName: string
+  @column()
+  declare lastName: string
+  @column()
+  declare passwordHash: string
+  @column()
+  declare schoolId: string
+}
+
+export class AssignmentSchema extends BaseModel {
+  static $columns = ['assignmentId', 'courseId', 'description', 'dueDate', 'status', 'title'] as const
+  $columns = AssignmentSchema.$columns
+  @column({ isPrimary: true })
+  declare assignmentId: number
+  @column()
+  declare courseId: number
+  @column()
+  declare description: string | null
+  @column.date()
+  declare dueDate: DateTime | null
+  @column()
+  declare status: string | null
+  @column()
+  declare title: string
+}
+
+export class CourseSchema extends BaseModel {
+  static $columns = ['courseCode', 'courseId', 'courseName', 'professorId', 'programId', 'status', 'term'] as const
+  $columns = CourseSchema.$columns
+  @column()
+  declare courseCode: string
+  @column({ isPrimary: true })
+  declare courseId: number
+  @column()
+  declare courseName: string
+  @column()
+  declare professorId: number
+  @column()
+  declare programId: number
+  @column()
+  declare status: string | null
+  @column()
+  declare term: string | null
+}
+
+export class DepartmentSchema extends BaseModel {
+  static $columns = ['departmentId', 'departmentName'] as const
+  $columns = DepartmentSchema.$columns
+  @column({ isPrimary: true })
+  declare departmentId: number
+  @column()
+  declare departmentName: string
+}
+
+export class EnrollmentSchema extends BaseModel {
+  static $columns = ['courseId', 'enrollmentId', 'enrollmentStatus', 'studentId'] as const
+  $columns = EnrollmentSchema.$columns
+  @column()
+  declare courseId: number
+  @column({ isPrimary: true })
+  declare enrollmentId: number
+  @column()
+  declare enrollmentStatus: string | null
+  @column()
+  declare studentId: number
+}
+
+export class GradeSchema extends BaseModel {
+  static $columns = ['feedback', 'gradeId', 'gradedAt', 'professorId', 'score', 'submissionId'] as const
+  $columns = GradeSchema.$columns
+  @column()
+  declare feedback: string | null
+  @column({ isPrimary: true })
+  declare gradeId: number
+  @column.dateTime()
+  declare gradedAt: DateTime | null
+  @column()
+  declare professorId: number
+  @column()
+  declare score: string | null
+  @column()
+  declare submissionId: number
+}
+
+export class ProfessorSchema extends BaseModel {
+  static $columns = ['createdAt', 'departmentId', 'email', 'firstName', 'lastName', 'passwordHash', 'professorId', 'schoolId'] as const
+  $columns = ProfessorSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare departmentId: number
+  @column()
+  declare email: string
+  @column()
+  declare firstName: string
+  @column()
+  declare lastName: string
+  @column()
+  declare passwordHash: string
+  @column({ isPrimary: true })
+  declare professorId: number
+  @column()
+  declare schoolId: string
+}
+
+export class ProgramSchema extends BaseModel {
+  static $columns = ['departmentId', 'programId', 'programName'] as const
+  $columns = ProgramSchema.$columns
+  @column()
+  declare departmentId: number
+  @column({ isPrimary: true })
+  declare programId: number
+  @column()
+  declare programName: string
+}
+
 export class RoleSchema extends BaseModel {
   static $columns = ['createdAt', 'id', 'updatedAt'] as const
   $columns = RoleSchema.$columns
@@ -16,6 +142,44 @@ export class RoleSchema extends BaseModel {
   declare id: number
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
+}
+
+export class StudentSchema extends BaseModel {
+  static $columns = ['createdAt', 'email', 'firstName', 'lastName', 'passwordHash', 'programId', 'schoolId', 'studentId'] as const
+  $columns = StudentSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare email: string
+  @column()
+  declare firstName: string
+  @column()
+  declare lastName: string
+  @column()
+  declare passwordHash: string
+  @column()
+  declare programId: number
+  @column()
+  declare schoolId: string
+  @column({ isPrimary: true })
+  declare studentId: number
+}
+
+export class SubmissionSchema extends BaseModel {
+  static $columns = ['assignmentId', 'fileName', 'status', 'studentId', 'submissionId', 'submittedAt'] as const
+  $columns = SubmissionSchema.$columns
+  @column()
+  declare assignmentId: number
+  @column()
+  declare fileName: string | null
+  @column()
+  declare status: string | null
+  @column()
+  declare studentId: number
+  @column({ isPrimary: true })
+  declare submissionId: number
+  @column.dateTime()
+  declare submittedAt: DateTime | null
 }
 
 export class UserSchema extends BaseModel {
