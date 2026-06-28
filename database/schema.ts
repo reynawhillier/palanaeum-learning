@@ -172,6 +172,23 @@ export class ProgramSchema extends BaseModel {
   declare programName: string
 }
 
+export class AssignmentSchema extends BaseModel {
+  static $columns = ['createdAt', 'description', 'dueDate', 'id', 'title', 'updatedAt'] as const
+  $columns = AssignmentSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare description: string | null
+  @column.date()
+  declare dueDate: DateTime | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare title: string | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
 export class RoleSchema extends BaseModel {
   static $columns = ['createdAt', 'id', 'updatedAt'] as const
   $columns = RoleSchema.$columns
