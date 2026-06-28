@@ -1,0 +1,62 @@
+@let(path = request.url())
+@let(courseId = path.split('/')[2])
+
+<body style="margin:0; padding:0; background:#f5f6f8;">
+@include('partials/header')
+
+<div style="display:flex; width:100vw; min-height:100vh; margin:0; padding:0;">
+
+  @include('partials/sidebar')
+
+  <main style="
+    flex:1;
+    padding:32px 24px;
+    box-sizing:border-box;
+  ">
+
+    <h1 style="margin:0 0 20px 0;">Course Dashboard</h1>
+
+    <!-- TOP CARDS -->
+    <div style="
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:20px;
+    ">
+
+      <div style="
+        background:white;
+        padding:20px;
+        border-radius:10px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.06);
+      ">
+        <h3 style="margin:0 0 10px 0;">Recent Grade</h3>
+        <p style="font-size:22px; margin:0; font-weight:bold;">85%</p>
+      </div>
+
+      <div style="
+        background:white;
+        padding:20px;
+        border-radius:10px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.06);
+      ">
+        <h3 style="margin:0 0 10px 0;">Assignments Due</h3>
+        <p style="font-size:22px; margin:0; font-weight:bold;">3</p>
+      </div>
+
+      <div style="
+        background:white;
+        padding:20px;
+        border-radius:10px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.06);
+      ">
+        <h3 style="margin:0 0 10px 0;">Progress</h3>
+        <p style="font-size:22px; margin:0; font-weight:bold;">60%</p>
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+</body>

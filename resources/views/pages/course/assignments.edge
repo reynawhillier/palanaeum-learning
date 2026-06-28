@@ -1,0 +1,88 @@
+<body style="margin:0; padding:0;">
+@include('partials/header')
+
+<div style="display:flex; width:100vw; min-height:100vh; margin:0; padding:0;">
+
+  @include('partials/sidebar')
+
+  <main style="flex:1; padding:20px;">
+
+    <h1 style="margin-top:0;">Assignments</h1>
+
+    <div style="background:white; border-radius:10px; overflow:hidden;">
+
+      <table style="width:100%; border-collapse:collapse;">
+
+        <thead style="background:#111827; color:white;">
+          <tr>
+            <th style="text-align:left; padding:12px;">Assignment</th>
+            <th style="text-align:left; padding:12px;">Due Date</th>
+            <th style="text-align:left; padding:12px;">Submitted</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @each(a in [
+            { name: 'HW1 - Introduction', due: 'June 30', link: '#', submitted: true },
+            { name: 'Project 1', due: 'July 5', link: '#', submitted: false },
+            { name: 'Quiz Prep', due: 'July 10', link: '#', submitted: true }
+          ])
+
+            <tr style="border-bottom:1px solid #eee;">
+
+              <!-- NAME = LINK TO DROPBOX -->
+              <td style="padding:12px;">
+                <a href="{{ a.link }}" style="
+                  color:#111827;
+                  text-decoration:none;
+                  font-weight:500;
+                ">
+                  {{ a.name }}
+                </a>
+              </td>
+
+              <td style="padding:12px;">
+                {{ a.due }}
+              </td>
+
+              <!-- SUBMITTED STATUS -->
+              <td style="padding:12px;">
+                @if(a.submitted)
+                  <span style="
+                    background:#16a34a;
+                    color:white;
+                    padding:4px 8px;
+                    border-radius:6px;
+                    font-size:13px;
+                  ">
+                    Submitted
+                  </span>
+                @else
+                  <span style="
+                    background:#dc2626;
+                    color:white;
+                    padding:4px 8px;
+                    border-radius:6px;
+                    font-size:13px;
+                  ">
+                    Not Submitted
+                  </span>
+                @endif
+              </td>
+
+            </tr>
+
+          @endeach
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </main>
+
+</div>
+
+</body>

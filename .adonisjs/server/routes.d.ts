@@ -4,25 +4,22 @@ type ParamValue = string | number | bigint | boolean
 
 export type ScannedRoutes = {
   ALL: {
-    'home': { paramsTuple?: []; params?: {} }
     'new_account.create': { paramsTuple?: []; params?: {} }
     'new_account.store': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
-    'assignments.create': { paramsTuple?: []; params?: {} }
-    'assignments.index': { paramsTuple?: []; params?: {} }
     'student_lists.index': { paramsTuple?: []; params?: {} }
+    'assignments.store': { paramsTuple?: []; params?: {} }
+    'assignments.index': { paramsTuple?: []; params?: {} }
   }
   GET: {
-    'home': { paramsTuple?: []; params?: {} }
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
-    'assignments.index': { paramsTuple?: []; params?: {} }
     'student_lists.index': { paramsTuple?: []; params?: {} }
+    'assignments.index': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
-    'home': { paramsTuple?: []; params?: {} }
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'student_lists.index': { paramsTuple?: []; params?: {} }
@@ -32,7 +29,7 @@ export type ScannedRoutes = {
     'new_account.store': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
-    'assignments.create': { paramsTuple?: []; params?: {} }
+    'assignments.store': { paramsTuple?: []; params?: {} }
   }
 }
 declare module '@adonisjs/core/types/http' {
