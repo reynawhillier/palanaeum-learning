@@ -1,0 +1,23 @@
+@let(path = request.url())
+@let(courseId = path.split('/')[2])
+
+<aside style="
+  width:240px;
+  background:#111827;
+  color:white;
+  padding:20px;
+  flex-shrink:0;
+  height:100vh;
+">
+
+  <h3 style="color:white">Course {{ courseId }}</h3>
+
+  <nav style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">
+
+    <a href="/courses/{{ courseId }}" style="color:white;">Overview</a>
+    <a href="/courses/{{ courseId }}/assignments" style="color:white;">Assignments</a>
+    <a href="/courses/{{ courseId }}/grades" style="color:white;">Grades</a>
+
+  </nav>
+
+</aside>
