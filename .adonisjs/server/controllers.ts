@@ -4,6 +4,8 @@
  */
 
 export const controllers = {
+  CourseRetrievals: () => import('#controllers/course_retrievals_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
+  NewCourses: () => import('#controllers/new_courses_controller'),
   Session: () => import('#controllers/session_controller'),
 }
