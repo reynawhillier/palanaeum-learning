@@ -1,7 +1,9 @@
-import { schema } from '@adonisjs/validator'
+import vine from '@vinejs/vine'
 
-export const AssignmentValidator = schema.create({
-  title: schema.string(),
-  description: schema.string.optional(),
-  due_date: schema.date(),
-})
+export const assignmentsValidator = vine.compile(
+  vine.object({
+    title: vine.string().trim(),
+    description: vine.string().trim().optional(),
+    due_date: vine.date(),
+  })
+)

@@ -1,5 +1,5 @@
 import Assignment from '#models/assignment'
-import { AssignmentValidator } from '#validators/assignment'
+import { assignmentsValidator } from '#validators/assignments'
 
 export default class AssignmentsController {
   /**
@@ -15,7 +15,7 @@ export default class AssignmentsController {
    * Creates a new assignment with validation
    */
   public async store({ request }) {
-    const payload = await request.validateUsing(AssignmentValidator)
+    const payload = await request.validateUsing(assignmentsValidator)
 
     return await Assignment.create({
       title: payload.title,

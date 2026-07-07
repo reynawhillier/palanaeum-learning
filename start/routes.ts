@@ -36,5 +36,8 @@ router
   .group(() => {
     router.post('/assignments', [AssignmentsController, 'store'])
     router.get('/assignments', [AssignmentsController, 'index'])
+    router.put('/assignments/:id', [AssignmentsController, 'update'])
+    router.delete('/assignments/:id', [AssignmentsController, 'destroy'])
   })
   .use(middleware.auth())
+

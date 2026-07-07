@@ -11,6 +11,6 @@ export default class Assignment extends BaseModel {
   @column()
   public description: string
 
-  @column.date()
+  @column.date({ columnName: 'due_date' })
   public dueDate: Date
 }
