@@ -14,7 +14,8 @@
     "test": "node ace test",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "seed:all": "node ace db:seed --files database/seeders/department_seeder.ts && node ace db:seed --files database/seeders/program_seeder.ts && node ace db:seed --files database/seeders/professor_seeder.ts && node ace db:seed --files database/seeders/student_seeder.ts && node ace db:seed --files database/seeders/admin_seeder.ts && node ace db:seed --files database/seeders/course_seeder.ts && node ace db:seed --files database/seeders/enrollment_seeder.ts && node ace db:seed --files database/seeders/assignment_seeder.ts && node ace db:seed --files database/seeders/submission_seeder.ts && node ace db:seed --files database/seeders/grade_seeder.ts"
   },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
