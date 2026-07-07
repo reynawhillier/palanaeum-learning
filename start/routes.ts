@@ -11,6 +11,7 @@ import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
 import AssignmentsController from '#controllers/assignments_controller'
+import UploadController from '#controllers/upload_controller'
 
 router.on('/').render('pages/home').as('home')
 
@@ -41,3 +42,9 @@ router
   })
   .use(middleware.auth())
 
+// Upload routes 
+router
+  .group(() => {
+    router.post('/upload', [UploadController, 'store'])
+  })
+  .use(middleware.auth())
