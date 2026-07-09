@@ -1,0 +1,54 @@
+@layouts.app()
+
+<div class="course-dashboard">
+
+    <div class="course-header">
+        <h1>
+            CP164 - Data Structures
+        </h1>
+
+        <p>
+            Fall 2026
+        </p>
+    </div>
+
+
+    <nav class="course-nav">
+
+        <a href="/courses/{{ courseId }}">
+            Overview
+        </a>
+
+        <a href="/courses/{{ courseId }}/assignments">
+            Assignments
+        </a>
+
+        <a href="/courses/{{ courseId }}/grades">
+            Grades
+        </a>
+
+    </nav>
+
+
+    <section class="announcements">
+
+        <h2>
+            Announcements
+        </h2>
+
+        <div class="card">
+            <h3>
+                Welcome to the course
+            </h3>
+
+            <p>
+                First lecture materials are available.
+            </p>
+        </div>
+
+    </section>
+
+
+</div>
+
+@end

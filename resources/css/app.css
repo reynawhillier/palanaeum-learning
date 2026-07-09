@@ -209,6 +209,42 @@ h6 {
   margin-top: 8px;
 }
 
+/* =====================
+   Grades
+===================== */
+.grades-page {
+    padding: 40px;
+}
+
+.page-title {
+    font-size: 32px;
+    margin-bottom: 24px;
+}
+
+
+.grades-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+
+.grades-table th,
+.grades-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.grades-table th {
+    font-weight: 600;
+}
+
+
+.grades-table tr:hover {
+    background: #f8f8f8;
+}
 
 /* =====================
    Buttons

@@ -48,16 +48,22 @@ router.get('/professor', async ({ view }) => {
   return view.render('pages/dashboards/professor')
 })
 
-router.get('/courses/:id', async ({ view }) => {
-  return view.render('pages/course_dashboard')
+router.get('/courses/:id', async ({ view, params }) => {
+  return view.render('pages/courses/dashboard', {
+    courseId: params.id
+  })
 })
 
-router.get('/courses/:id/assignments', async ({ view }) => {
-  return view.render('pages/course/assignments')
+router.get('/courses/:id/assignments', async ({ view, params }) => {
+    return view.render('pages/courses/assignments', {
+        courseId: params.id
+    })
 })
 
-router.get('/courses/:id/grades', async ({ view }) => {
-  return view.render('pages/course/grades')
+router.get('/courses/:id/grades', async ({ view, params }) => {
+    return view.render('pages/courses/grades', {
+        courseId: params.id
+    })
 })
 // Assignment routes
 // router

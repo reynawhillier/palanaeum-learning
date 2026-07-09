@@ -1,10 +1,16 @@
 @let(user = {
-    fullName: 'Salma Rageh',
+    fullName: 'James Smith',
     role: 'student'
 })
 
-<header class="navbar">
+@let(path = request.url())
+@let(isCoursePage = path.includes('/courses/'))
 
+@let(courseId = path.split('/')[2])
+@let(courseName = 'CP164 - Data Structures')
+
+
+<header class="navbar">
     <div class="navbar-left">
 
         <a href="/" class="navbar-logo">
@@ -13,67 +19,38 @@
 
         <nav class="navbar-links">
 
-            @if(user.role === 'student')
+            @if(isCoursePage)
 
-                <a class="navbar-link" href="/dashboard">
-                    Dashboard
+                <a class="navbar-link" href="/courses/{{ courseId }}">
+                    CourseName
                 </a>
 
-                <a class="navbar-link" href="/courses">
-                    Courses
-                </a>
-
-                <a class="navbar-link" href="/grades">
-                    Grades
-                </a>
-
-            @elseif(user.role === 'professor')
-
-                <a class="navbar-link" href="/dashboard">
-                    Dashboard
-                </a>
-
-                <a class="navbar-link" href="/courses">
-                    Courses
-                </a>
-
-                <a class="navbar-link" href="/assignments">
+                <a class="navbar-link" href="/courses/{{ courseId }}/assignments">
                     Assignments
                 </a>
 
-            @elseif(user.role === 'admin')
-
-                <a class="navbar-link" href="/dashboard">
-                    Dashboard
+                <a class="navbar-link" href="/courses/{{ courseId }}/grades">
+                    Grades
                 </a>
 
-                <a class="navbar-link" href="/users">
-                    Users
+                <a class="navbar-link" href="/courses/{{ courseId }}/content">
+                    Content
                 </a>
 
-                <a class="navbar-link" href="/courses/manage">
+            @elseif(user.role === 'student')
+
+                <a class="navbar-link" href="/">
                     Courses
                 </a>
 
             @endif
-
         </nav>
-
     </div>
 
-
     <div class="navbar-right">
-
-        <span class="navbar-user">
+        <span>
             {{ user.fullName }}
         </span>
-
-        <form method="POST" action="/logout">
-            <button class="btn btn-primary">
-                Logout
-            </button>
-        </form>
-
     </div>
 
 </header>

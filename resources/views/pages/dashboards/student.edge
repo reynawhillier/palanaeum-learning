@@ -1,5 +1,43 @@
 @layouts.app()
 
+@let(courses = [
+    {
+        id: 1,
+        code: 'CP164',
+        name: 'Data Structures',
+        professor: 'Dr. Emily Smith',
+        term: 'Fall 2026'
+    },
+    {
+        id: 2,
+        code: 'CP213',
+        name: 'Object Oriented Programming',
+        professor: 'Dr. Michael Chen',
+        term: 'Fall 2026'
+    },
+    {
+        id: 3,
+        code: 'CP214',
+        name: 'Java Software Development',
+        professor: 'Dr. Sarah Patel',
+        term: 'Winter 2027'
+    },
+    {
+        id: 4,
+        code: 'MA123',
+        name: 'Calculus I',
+        professor: 'Dr. James Wilson',
+        term: 'Fall 2026'
+    },
+    {
+        id: 5,
+        code: 'ST230',
+        name: 'Statistics',
+        professor: 'Dr. Olivia Brown',
+        term: 'Fall 2026'
+    }
+])
+
 <div class="dashboard">
 
     <div class="dashboard-header">
@@ -10,14 +48,30 @@
 
     <div class="dashboard-grid">
 
-        <div class="card">
-            <h2 class="card-title">
-                My Courses
-            </h2>
-        </div>
+        @each(course in courses)
 
+            <a href="/courses/{{ course.id }}" class="card">
+
+                <h2 class="card-title">
+                    {{ course.code }}
+                </h2>
+
+                <p>
+                    {{ course.name }}
+                </p>
+
+                <p>
+                    {{ course.professor }}
+                </p>
+
+                <small>
+                    {{ course.term }}
+                </small>
+
+            </a>
+
+        @endeach
     </div>
-
 </div>
 
 @end
