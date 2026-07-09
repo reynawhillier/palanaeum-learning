@@ -1,6 +1,6 @@
 @let(user = {
-    fullName: 'James Smith',
-    role: 'student'
+    fullName: 'Dr. Smith',
+    role: 'professor'
 })
 
 @let(path = request.url())
@@ -37,11 +37,51 @@
                     Content
                 </a>
 
-            @elseif(user.role === 'student')
+                @if(user.role === 'professor')
 
-                <a class="navbar-link" href="/">
-                    Courses
-                </a>
+                    <a href="/courses/{{ courseId }}/students">
+                        Students
+                    </a>
+
+
+                    <a href="/courses/{{ courseId }}/announcements">
+                        Announcements
+                    </a>
+
+
+                    <a href="/courses/{{ courseId }}/settings">
+                        Settings
+                    </a>
+
+
+                @endif
+
+
+            @else 
+            
+                @if(user.role === 'student')
+
+                    <a class="navbar-link" href="/">
+                        Courses
+                    </a>
+
+                @elseif(user.role === 'professor')
+
+                    <a href="/dashboard">
+                        Dashboard
+                    </a>
+
+                    <a href="/courses">
+                        My Courses
+                    </a>
+
+
+                    <a href="/assignments">
+                        Assignments
+                    </a>
+
+
+                @endif
 
             @endif
         </nav>
