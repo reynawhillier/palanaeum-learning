@@ -1,0 +1,79 @@
+@let(user = {
+    fullName: 'Salma Rageh',
+    role: 'student'
+})
+
+<header class="navbar">
+
+    <div class="navbar-left">
+
+        <a href="/" class="navbar-logo">
+            Palanaeum Learning
+        </a>
+
+        <nav class="navbar-links">
+
+            @if(user.role === 'student')
+
+                <a class="navbar-link" href="/dashboard">
+                    Dashboard
+                </a>
+
+                <a class="navbar-link" href="/courses">
+                    Courses
+                </a>
+
+                <a class="navbar-link" href="/grades">
+                    Grades
+                </a>
+
+            @elseif(user.role === 'professor')
+
+                <a class="navbar-link" href="/dashboard">
+                    Dashboard
+                </a>
+
+                <a class="navbar-link" href="/courses">
+                    Courses
+                </a>
+
+                <a class="navbar-link" href="/assignments">
+                    Assignments
+                </a>
+
+            @elseif(user.role === 'admin')
+
+                <a class="navbar-link" href="/dashboard">
+                    Dashboard
+                </a>
+
+                <a class="navbar-link" href="/users">
+                    Users
+                </a>
+
+                <a class="navbar-link" href="/courses/manage">
+                    Courses
+                </a>
+
+            @endif
+
+        </nav>
+
+    </div>
+
+
+    <div class="navbar-right">
+
+        <span class="navbar-user">
+            {{ user.fullName }}
+        </span>
+
+        <form method="POST" action="/logout">
+            <button class="btn btn-primary">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+</header>
