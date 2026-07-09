@@ -55,7 +55,25 @@ router.get('/courses/:id', async ({ view, params }) => {
 })
 
 router.get('/courses/:id/assignments', async ({ view, params }) => {
-    return view.render('pages/courses/assignments', {
+
+    const role = 'professor' // Replace later when db is connected 
+
+    if (role === 'professor') {
+        return view.render('pages/courses/assignments/professor', {
+            courseId: params.id
+        })
+    }
+
+    else {
+        return view.render('pages/courses/assignments/student', {
+            courseId: params.id
+        })
+    }
+
+})
+
+router.get('/courses/:id/assignments/create', async ({ view, params }) => {
+    return view.render('pages/courses/assignments/create', {
         courseId: params.id
     })
 })

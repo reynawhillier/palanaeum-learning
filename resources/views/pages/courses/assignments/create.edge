@@ -1,0 +1,77 @@
+@layouts.app()
+
+
+<div class="form-container">
+
+    <h1>
+        Create Assignment
+    </h1>
+
+
+    <form method="POST" action="/courses/{{ courseId }}/assignments">
+
+
+        <div>
+            <label>
+                Assignment Title
+            </label>
+
+            <input 
+                type="text"
+                name="title"
+                placeholder="Assignment 1"
+            >
+        </div>
+
+
+
+        <div>
+            <label>
+                Description
+            </label>
+
+            <textarea
+                name="description"
+                placeholder="Assignment instructions..."
+            ></textarea>
+        </div>
+
+
+
+        <div>
+            <label>
+                Due Date
+            </label>
+
+            <input
+                type="date"
+                name="dueDate"
+            >
+        </div>
+
+
+
+        <div>
+            <label>
+                Attach File
+            </label>
+
+            <input
+                type="file"
+                name="attachment"
+            >
+        </div>
+
+
+
+        <button type="submit">
+            Create Assignment
+        </button>
+
+
+    </form>
+
+</div>
+
+
+@end
