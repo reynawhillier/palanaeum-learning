@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Palanaeum Learning</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('dumper')
+    <title>App</title>
   </head>
-  <body>
+
+  <body style="margin:0; font-family:Arial; background:#f5f6f8;">
     @include('partials/header')
-    <main>
-      @include('partials/flash_alerts')
+    <main style="padding:20px;">
+
       {{{ await $slots.main() }}}
+
     </main>
+
   </body>
 </html>
