@@ -10,8 +10,6 @@
 import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
-import AssignmentsController from '#controllers/assignments_controller'
-import UploadController from '#controllers/upload_controller'
 
 router.on('/').render('pages/home').as('home')
 
@@ -35,16 +33,14 @@ router.get('/student_list', [controllers.StudentLists, 'index'])
 // Assignment routes
 router
   .group(() => {
-    router.post('/assignments', [AssignmentsController, 'store'])
-    router.get('/assignments', [AssignmentsController, 'index'])
-    router.put('/assignments/:id', [AssignmentsController, 'update'])
-    router.delete('/assignments/:id', [AssignmentsController, 'destroy'])
+    router.post('/assignments', [controllers.Assignments, 'store'])
+    router.get('/assignments', [controllers.Assignments, 'index'])
   })
   .use(middleware.auth())
 
 // Upload routes 
 router
   .group(() => {
-    router.post('/upload', [UploadController, 'store'])
+    router.post('/upload', [controllers.Upload, 'store'])
   })
   .use(middleware.auth())

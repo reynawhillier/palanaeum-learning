@@ -13,7 +13,7 @@ export default class AssignmentsController {
     return await Assignment.create({
       title: payload.title,
       description: payload.description,
-      dueDate: payload.due_date,
+      due_date: payload.due_date,
     })
   }
 }
