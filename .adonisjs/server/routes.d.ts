@@ -18,6 +18,13 @@ export type ScannedRoutes = {
     'profile.update': { paramsTuple?: []; params?: {} }
     'reports.performance.generate': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
+    'submissions.form': { paramsTuple?: []; params?: {} }
+    'submissions.validate': { paramsTuple?: []; params?: {} }
+    'submissions.create': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'submissions.store': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'submissions.file': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'courses.assignments': { paramsTuple: [ParamValue]; params: { courseId: ParamValue } }
+    'student_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'upload.store': { paramsTuple?: []; params?: {} }
     'assignments.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
@@ -49,6 +56,11 @@ export type ScannedRoutes = {
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
+    'submissions.form': { paramsTuple?: []; params?: {} }
+    'submissions.create': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'submissions.file': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'courses.assignments': { paramsTuple: [ParamValue]; params: { courseId: ParamValue } }
+    'student_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'assignments.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'assignments.edit': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
@@ -71,6 +83,11 @@ export type ScannedRoutes = {
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
+    'submissions.form': { paramsTuple?: []; params?: {} }
+    'submissions.create': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'submissions.file': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'courses.assignments': { paramsTuple: [ParamValue]; params: { courseId: ParamValue } }
+    'student_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'assignments.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'assignments.edit': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }

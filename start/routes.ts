@@ -28,6 +28,7 @@ router
 router
   .group(() => {
     // GET routes
+
     router
       .get('/courses/:courseId/reports/performance/print', [
         controllers.PerformanceReports,
@@ -46,6 +47,7 @@ router
       ])
       .as('reports.performance.generate.get')
 
+
     // router
     //   .get('/courses/:courseId/assignments/:assignmentId/submit', [
     //     controllers.Assignments,
@@ -63,6 +65,7 @@ router
     // router
     //   .get('/courses/:courseId/assignments', [controllers.Assignments, 'courseAssignments'])
     //   .as('courses.assignments')
+
 
     // POST routes
     router.post('logout', [controllers.Session, 'destroy'])
@@ -116,6 +119,7 @@ router
   .group(() => {
     router.post('/upload', [controllers.Upload, 'store'])
   })
+
   .use(middleware.auth())
 
 // Assignments: professor-only lifecycle (create/edit/delete) and grading.
@@ -233,4 +237,7 @@ router
   .use(middleware.auth())
 
 
+
+
+  .use(middleware.auth())
 

@@ -172,7 +172,18 @@ export class StudentSchema extends BaseModel {
 }
 
 export class SubmissionSchema extends BaseModel {
-  static $columns = ['assignmentId', 'fileKey', 'fileName', 'fileSize', 'mimeType', 'status', 'studentId', 'submissionId', 'submittedAt'] as const
+  static $columns = ['assignmentId', 
+    'fileKey',
+    'fileName',
+    'fileSize',
+    'mimeType', 
+    'status',
+    'studentId',
+    'submissionId',
+    'submittedAt'] as const
+
+  
+
   $columns = SubmissionSchema.$columns
   @column()
   declare assignmentId: number

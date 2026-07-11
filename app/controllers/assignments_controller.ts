@@ -360,6 +360,7 @@ export default class AssignmentsController {
     })
   }
 
+
   // POST /courses/:courseId/assignments/:assignmentId/submissions/:submissionId/grade  (professor only)
   async gradeStore(ctx: HttpContext) {
     const { request, response, params } = ctx
@@ -403,3 +404,5 @@ export default class AssignmentsController {
     return response.redirect().toRoute('assignments.show', { courseId, assignmentId })
   }
 }
+
+
