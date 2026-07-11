@@ -11,6 +11,8 @@ import { controllers } from '#generated/controllers'
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
+// router.on('/').render('pages/dashboard').as('home')
+
 // Guest routes
 router
   .group(() => {
@@ -26,8 +28,9 @@ router
 router
   .group(() => {
     // GET routes
-    router.get('/submissions/validate', [controllers.Submissions, 'create']).as('submissions.form')
-
+    router
+      .get('/submissions/validate', [controllers.Submissions, 'create'])
+      .as('submissions.form')
     router
       .get('/courses/:courseId/assignments/:assignmentId/submit', [
         controllers.Assignments,
@@ -43,7 +46,11 @@ router
       .as('submissions.file')
 
     router
-      .get('/courses/:courseId/assignments', [controllers.Assignments, 'courseAssignments'])
+    router
+      .get('/courses/:courseId/assignments', [
+        controllers.Assignments,
+        'courseAssignments',
+      ])
       .as('courses.assignments')
 
     // POST routes

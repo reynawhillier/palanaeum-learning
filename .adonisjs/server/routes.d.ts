@@ -19,6 +19,13 @@ export type ScannedRoutes = {
     'student_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
+    'submissions.form': { paramsTuple?: []; params?: {} }
+    'submissions.validate': { paramsTuple?: []; params?: {} }
+    'submissions.create': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'submissions.store': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'submissions.file': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'courses.assignments': { paramsTuple: [ParamValue]; params: { courseId: ParamValue } }
+    'student_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'assignments.store': { paramsTuple?: []; params?: {} }
     'assignments.index': { paramsTuple?: []; params?: {} }
@@ -35,6 +42,11 @@ export type ScannedRoutes = {
     'courses.assignments': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'student_lists.index': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
+    'submissions.form': { paramsTuple?: []; params?: {} }
+    'submissions.create': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'submissions.file': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'courses.assignments': { paramsTuple: [ParamValue]; params: { courseId: ParamValue } }
+    'student_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'assignments.index': { paramsTuple?: []; params?: {} }
   }
@@ -48,6 +60,11 @@ export type ScannedRoutes = {
     'courses.assignments': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'student_lists.index': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
+    'submissions.form': { paramsTuple?: []; params?: {} }
+    'submissions.create': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'submissions.file': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
+    'courses.assignments': { paramsTuple: [ParamValue]; params: { courseId: ParamValue } }
+    'student_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'assignments.index': { paramsTuple?: []; params?: {} }
   }
