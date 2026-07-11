@@ -1,72 +1,45 @@
-import Assignment from '#models/assignment'
-import { assignmentsValidator } from '#validators/assignment'
 import { submissionFileValidator } from '#validators/submission'
-import string from '@adonisjs/core/helpers/string'
 import type { HttpContext } from '@adonisjs/core/http'
-import drive from '@adonisjs/drive/services/main'
 import db from '@adonisjs/lucid/services/db'
+import string from '@adonisjs/core/helpers/string'
+import drive from '@adonisjs/drive/services/main'
+// Troy: Temporary submission-validation controller.
+// Permanent storage and database records will be added later.
+export default class SubmissionController {
+  async create({ view, params }: HttpContext) {
+    const courseId = params.courseId ?? null
+    const assignmentId = params.assignmentId ?? null
 
-export default class AssignmentsController {
-  public async index() {
-    return await Assignment.all()
+    return view.render('pages/submissions/validate', { courseId, assignmentId })
   }
 
-  public async courseAssignments({ view, params, auth }: HttpContext) {
-    const courseId = Number(params.courseId)
-    const studentId = auth.user!.id
-
-    const assignmentRows = await db
-      .from('assignments')
-      .where('course_id', courseId)
-      .orderBy('assignment_id', 'asc')
-
-    const submissionRows = await db
-      .from('submissions')
-      .where('student_id', studentId)
-      .select('assignment_id')
-
-    const submittedIds = new Set(
-      submissionRows.map((submission) => Number(submission.assignment_id))
-    )
-
-    const assignments = assignmentRows.map((assignment) => ({
-      id: assignment.assignment_id,
-      name: assignment.title,
-      due: assignment.due_date,
-      submitted: submittedIds.has(Number(assignment.assignment_id)),
-    }))
-
-    return view.render('pages/course/assignments', {
-      courseId,
-      assignments,
-    })
-  }
-
-  public async createSubmission({ view, params }: HttpContext) {
-    const courseId = Number(params.courseId)
-    const assignmentId = Number(params.assignmentId)
-
-    return view.render('pages/submissions/validate', {
-      courseId,
-      assignmentId,
-    })
-  }
-
-  public async storeSubmission({ request, response, session, params, auth }: HttpContext) {
+  async store({ request, response, session, params, auth }: HttpContext) {
     const payload = await request.validateUsing(submissionFileValidator)
-    const file = payload.submission
 
-    const courseId = Number(params.courseId)
-    const assignmentId = Number(params.assignmentId)
-    const studentId = auth.user!.id
+    const file = payload.submission
 
     const mimeType =
       file.type && file.subtype
         ? `${file.type}/${file.subtype}`
         : (file.type ?? 'application/octet-stream')
 
+    console.log('Detected file MIME:', {
+      type: file.type,
+      subtype: file.subtype,
+      mimeType,
+    })
+    if (!params.assignmentId) {
+      session.flash(
+        'success',
+        `File "${file.clientName}" passed validation. Size: ${file.size} bytes.`
+      )
+      return response.redirect().toRoute('submissions.form')
+    }
+    const assignmentId = Number(params.assignmentId)
+    const studentId = auth.user!.id
+
     const fileKey =
-      `submissions/course-${courseId}` +
+      `submissions/course-${params.courseId}` +
       `/assignments-${assignmentId}` +
       `/student-${studentId}` +
       `/${string.uuid()}.${file.extname ?? 'bin'}`
@@ -100,19 +73,17 @@ export default class AssignmentsController {
         status: 'Submitted',
       })
     }
-
     session.flash(
       'success',
       `File "${file.clientName}" passed validation. Size: ${file.size} bytes.`
     )
 
     return response.redirect().toRoute('submissions.create', {
-      courseId,
-      assignmentId,
+      courseId: params.courseId,
+      assignmentId: params.assignmentId,
     })
   }
-
-  public async viewSubmissionFile({ params, auth, response }: HttpContext) {
+  async viewFile({ params, auth, response }: HttpContext) {
     const courseId = Number(params.courseId)
     const assignmentId = Number(params.assignmentId)
     const studentId = auth.user!.id
@@ -125,27 +96,12 @@ export default class AssignmentsController {
       .where('assignments.course_id', courseId)
       .select('submissions.file_key', 'submissions.file_name')
       .first()
-
     if (!submission?.file_key) {
       return response.notFound('Submission file not found')
     }
-
     const signedUrl = await drive.use().getSignedUrl(submission.file_key, {
       expiresIn: '10 mins',
     })
-
     return response.redirect().toPath(signedUrl)
-  }
-
-  public async store({ request }: HttpContext) {
-    const payload = await request.validateUsing(assignmentsValidator)
-
-    return await Assignment.create({
-      courseId: payload.course_id,
-      title: payload.title,
-      description: payload.description,
-      dueDate: payload.due_date,
-      status: 'Open',
-    })
   }
 }

@@ -1,0 +1,53 @@
+@layout()
+    <section>
+        <h1>Test Assignment Submission</h1>
+
+        <p>
+            Allowed files: PDF, DOC,DOCX,TXT,ZIP.
+            Maximum size: 20 MB.
+        </p>
+        @flashMessage('success')
+            <p style="color: green; font-weight: bold;">
+                {{ $message }}
+            </p>
+        @end
+
+        @inputError('submission')
+            @each(message in $messages)
+                <p style="color: red; font-weight: bold;">
+                    {{ message }}
+                </p>
+            @end
+        @end
+
+        <form
+            action="{{ courseId && assignmentId ?
+            urlFor('submissions.store', {
+                courseId: courseId,
+                assignmentId: assignmentId
+            })
+            : urlFor('submissions.validate')
+            }}"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+            {{csrfField() }}
+
+            <div>
+                <label for="submission">Choose assignment file</label>
+
+                <input
+                    type="file"
+                    id="submission"
+                    name="submission"
+                    accept=".pdf,.doc,.docx,.txt,.zip"
+                    required
+                />
+            </div>
+
+            <button type="submit">
+                validate file
+            </button>
+        </form>
+    </section>
+@end
