@@ -1,36 +1,56 @@
-import db from '@adonisjs/lucid/services/db'
+import Program from '#models/program'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   async run() {
-    const exists = await db
-      .from('programs')
-      .where('program_name', 'Magical Sciences')
-      .first()
+    await Program.firstOrCreate(
+      {
+        programName: 'Magical Sciences',
+      },
+      {
+        programName: 'Magical Sciences',
+        departmentId: 1,
+      }
+    )
 
-    if (!exists) {
-      await db.table('programs').insert([
-        {
-          program_name: 'Magical Sciences',
-          department_id: 1,
-        },
-        {
-          program_name: 'Transfiguration Sciences',
-          department_id: 1,
-        },
-        {
-          program_name: 'Dark Arts',
-          department_id: 3,
-        },
-        {
-          program_name: 'Charm Design',
-          department_id: 2,
-        },
-        {
-          program_name: 'Potions',
-          department_id: 4,
-        },
-      ])
-    }
+    await Program.firstOrCreate(
+      {
+        programName: 'Transfiguration Sciences',
+      },
+      {
+        programName: 'Transfiguration Sciences',
+        departmentId: 1,
+      }
+    )
+
+    await Program.firstOrCreate(
+      {
+        programName: 'Dark Arts',
+      },
+      {
+        programName: 'Dark Arts',
+        departmentId: 3,
+      }
+    )
+
+    await Program.firstOrCreate(
+      {
+        programName: 'Charm Design',
+      },
+      {
+        programName: 'Charm Design',
+        departmentId: 2,
+      }
+    )
+
+    await Program.firstOrCreate(
+      {
+        programName: 'Potions',
+      },
+      {
+        programName: 'Potions',
+        departmentId: 4,
+      }
+    )
   }
 }

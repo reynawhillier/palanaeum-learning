@@ -1,48 +1,62 @@
-import db from '@adonisjs/lucid/services/db'
+import Professor from '#models/professor'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   async run() {
-    const exists = await db
-      .from('professors')
-      .where('school_id', 'P2001')
-      .first()
+    await Professor.firstOrCreate(
+      {
+        schoolId: 'P2001',
+      },
+      {
+        schoolId: 'P2001',
+        firstName: 'Minerva',
+        lastName: 'McGonagall',
+        email: 'mcgonagall@school.ca',
+        passwordHash: 'password123',
+        departmentId: 1,
+      }
+    )
 
-    if (!exists) {
-      await db.table('professors').insert([
-        {
-          school_id: 'P2001',
-          first_name: 'Minerva',
-          last_name: 'McGonagall',
-          email: 'mcgonagall@school.ca',
-          password_hash: 'password123',
-          department_id: 1,
-        },
-        {
-          school_id: 'P2002',
-          first_name: 'Filius',
-          last_name: 'Flitwick',
-          email: 'flitwick@school.ca',
-          password_hash: 'password234',
-          department_id: 2,
-        },
-        {
-          school_id: 'P2003',
-          first_name: 'Ahsen',
-          last_name: 'Ucler',
-          email: 'ucler@school.ca',
-          password_hash: 'password245',
-          department_id: 3,
-        },
-        {
-          school_id: 'P2004',
-          first_name: 'Horace',
-          last_name: 'Slughorn',
-          email: 'slughorn@school.ca',
-          password_hash: 'password245',
-          department_id: 4,
-        },
-      ])
-    }
+    await Professor.firstOrCreate(
+      {
+        schoolId: 'P2002',
+      },
+      {
+        schoolId: 'P2002',
+        firstName: 'Filius',
+        lastName: 'Flitwick',
+        email: 'flitwick@school.ca',
+        passwordHash: 'password234',
+        departmentId: 2,
+      }
+    )
+
+    await Professor.firstOrCreate(
+      {
+        schoolId: 'P2003',
+      },
+      {
+        schoolId: 'P2003',
+        firstName: 'Ahsen',
+        lastName: 'Ucler',
+        email: 'ucler@school.ca',
+        passwordHash: 'password245',
+        departmentId: 3,
+      }
+    )
+
+    await Professor.firstOrCreate(
+      {
+        schoolId: 'P2004',
+      },
+      {
+        schoolId: 'P2004',
+        firstName: 'Horace',
+        lastName: 'Slughorn',
+        email: 'slughorn@school.ca',
+        passwordHash: 'password245',
+        departmentId: 4,
+      }
+    )
   }
 }

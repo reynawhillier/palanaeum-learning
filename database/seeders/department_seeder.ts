@@ -1,20 +1,22 @@
-import db from '@adonisjs/lucid/services/db'
+import Department from '#models/department'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   async run() {
-    const exists = await db
-      .from('departments')
-      .where('department_name', 'Transfiguration')
-      .first()
+    await Department.firstOrCreate({
+      departmentName: 'Transfiguration',
+    })
 
-    if (!exists) {
-      await db.table('departments').insert([
-        { department_name: 'Transfiguration' },
-        { department_name: 'Charms' },
-        { department_name: 'Dark Arts' },
-        { department_name: 'Potions' },
-      ])
-    }
+    await Department.firstOrCreate({
+      departmentName: 'Charms',
+    })
+
+    await Department.firstOrCreate({
+      departmentName: 'Dark Arts',
+    })
+
+    await Department.firstOrCreate({
+      departmentName: 'Potions',
+    })
   }
 }
