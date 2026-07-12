@@ -6,6 +6,9 @@ export default class Assignment extends BaseModel {
   public id: number
 
   @column()
+  public courseId: number
+
+  @column()
   public title: string
 
   @column()
