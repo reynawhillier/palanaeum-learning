@@ -14,7 +14,11 @@
 
 <body>
 
-    @include('components/navbar')
+    @navbar({
+        user: $props.get('user'),
+        course: $props.get('course')
+    })
+    @end
 
     <main class="page-content">
         {{{ await $slots.main() }}}

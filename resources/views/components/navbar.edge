@@ -1,10 +1,10 @@
-@let(user = {
-    fullName: 'Dr. Smith',
-    role: 'professor'
+@props({
+    user: null,
+    course: null
 })
 
 @let(path = request.url())
-@let(isCoursePage = path.includes('/courses/'))
+@let(isCoursePage = path.match(/^\/courses\/\d+/))
 
 @let(courseId = path.split('/')[2])
 @let(courseName = 'CP164 - Data Structures')
@@ -19,10 +19,10 @@
 
         <nav class="navbar-links">
 
-            @if(isCoursePage)
+            @if(course)
 
-                <a class="navbar-link" href="/courses/{{ courseId }}">
-                    CourseName
+                <a class="navbar-link" href="/courses/{{ course.id }}">
+                    {{ course.code }} - {{ course.name }}
                 </a>
 
                 <a class="navbar-link" href="/courses/{{ courseId }}/assignments">
@@ -37,49 +37,38 @@
                     Content
                 </a>
 
-                @if(user.role === 'professor')
+
+                @if(user && user.role === 'professor')
 
                     <a href="/courses/{{ courseId }}/students">
                         Students
                     </a>
 
-
                     <a href="/courses/{{ courseId }}/announcements">
                         Announcements
                     </a>
 
-
-                    <a href="/courses/{{ courseId }}/settings">
-                        Settings
-                    </a>
-
-
                 @endif
 
 
-            @else 
-            
-                @if(user.role === 'student')
+            @else
 
-                    <a class="navbar-link" href="/">
-                        Courses
-                    </a>
+                @if(user && user.role === 'student')
 
-                @elseif(user.role === 'professor')
-
-                    <a href="/dashboard">
-                        Dashboard
-                    </a>
-
-                    <a href="/courses">
+                    <a class="navbar-link" href="/student/dashboard">
                         My Courses
                     </a>
 
 
-                    <a href="/assignments">
-                        Assignments
+                @elseif(user && user.role === 'professor')
+
+                    <a href="/professor/dashboard">
+                        Dashboard
                     </a>
 
+                    <a href="/professor/dashboard">
+                        My Courses
+                    </a>
 
                 @endif
 
@@ -89,7 +78,7 @@
 
     <div class="navbar-right">
         <span>
-            {{ user.fullName }}
+            {{ user?.fullName ?? 'Guest' }}
         </span>
     </div>
 
