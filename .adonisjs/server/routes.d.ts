@@ -12,18 +12,21 @@ export type ScannedRoutes = {
     'session.destroy': { paramsTuple?: []; params?: {} }
     'new_courses.store': { paramsTuple?: []; params?: {} }
     'course_retrieval.index': { paramsTuple?: []; params?: {} }
+    'student_lists.index': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'home': { paramsTuple?: []; params?: {} }
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'course_retrieval.index': { paramsTuple?: []; params?: {} }
+    'student_lists.index': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'home': { paramsTuple?: []; params?: {} }
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'course_retrieval.index': { paramsTuple?: []; params?: {} }
+    'student_lists.index': { paramsTuple?: []; params?: {} }
   }
   POST: {
     'new_account.store': { paramsTuple?: []; params?: {} }

@@ -51,3 +51,7 @@ router.get('courses/create', async ({ view }) => {
 router.get('courses/view', async ({ view }) => {
   return view.render('pages/courses/view')
 })
+
+router.group(() => {
+  router.get('students', [controllers.StudentLists, 'index'])
+})
