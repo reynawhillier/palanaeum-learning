@@ -21,14 +21,11 @@ WORKDIR /usr/src/app
 #     --mount=type=cache,target=/root/.npm \
 #     npm ci --omit=dev
 
-# Copy the rest of the source files into the image.
-COPY entrypoint.sh /usr/src/app/entrypoint.sh
-RUN chmod +x /usr/src/app/entrypoint.sh
-
-COPY . .
-
 # Run the application as a non-root user.
 USER node
+
+# Copy the rest of the source files into the image.
+COPY . .
 
 # Expose the port that the application listens on.
 # EXPOSE 3333
