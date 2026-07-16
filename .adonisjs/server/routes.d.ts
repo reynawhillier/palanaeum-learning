@@ -18,8 +18,8 @@ export type ScannedRoutes = {
     'submissions.store': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
     'student_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
-    'assignments.store': { paramsTuple?: []; params?: {} }
     'assignments.index': { paramsTuple?: []; params?: {} }
+    'assignments.store': { paramsTuple?: []; params?: {} }
     'upload.store': { paramsTuple?: []; params?: {} }
   }
   GET: {

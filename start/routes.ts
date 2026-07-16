@@ -26,9 +26,7 @@ router
 router
   .group(() => {
     // GET routes
-    router
-      .get('/submissions/validate', [controllers.Submissions, 'create'])
-      .as('submissions.form')
+    router.get('/submissions/validate', [controllers.Submissions, 'create']).as('submissions.form')
 
     router
       .get('/courses/:courseId/assignments/:assignmentId/submit', [
@@ -45,10 +43,7 @@ router
       .as('submissions.file')
 
     router
-      .get('/courses/:courseId/assignments', [
-        controllers.Assignments,
-        'courseAssignments',
-      ])
+      .get('/courses/:courseId/assignments', [controllers.Assignments, 'courseAssignments'])
       .as('courses.assignments')
 
     // POST routes
