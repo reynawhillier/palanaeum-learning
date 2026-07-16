@@ -1,0 +1,65 @@
+<body style="margin:0; padding:0;">
+@include('partials/header')
+
+<div style="display:flex; width:100vw; min-height:100vh; margin:0; padding:0;">
+
+  @include('partials/sidebar')
+
+  <main style="flex:1; padding:20px;">
+
+    <h1 style="margin-top:0;">Grades</h1>
+
+    <!-- OVERALL GRADE CARD -->
+    <div style="
+      background:white;
+      padding:20px;
+      border-radius:10px;
+      margin-bottom:20px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);
+      max-width:300px;
+    ">
+      <h3 style="margin:0;">Overall Grade</h3>
+      <p style="font-size:28px; margin:10px 0 0 0; font-weight:bold;">
+        87%
+      </p>
+    </div>
+
+    <!-- GRADES TABLE -->
+    <div style="background:white; border-radius:10px; overflow:hidden;">
+
+      <table style="width:100%; border-collapse:collapse;">
+
+        <thead style="background:#111827; color:white;">
+          <tr>
+            <th style="text-align:left; padding:12px;">Assignment</th>
+            <th style="text-align:left; padding:12px;">Grade</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @each(item in [
+            { name: 'HW1', grade: '85%' },
+            { name: 'Quiz 1', grade: '90%' },
+            { name: 'Project', grade: '88%' },
+            { name: 'Midterm', grade: '84%' }
+          ])
+
+            <tr style="border-bottom:1px solid #eee;">
+              <td style="padding:12px;">{{ item.name }}</td>
+              <td style="padding:12px; font-weight:bold;">{{ item.grade }}</td>
+            </tr>
+
+          @endeach
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </main>
+
+</div>
+
+</body>
