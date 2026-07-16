@@ -235,7 +235,6 @@ export class SubmissionSchema extends BaseModel {
     'submissionId',
     'submittedAt',
   ] as const
-
   $columns = SubmissionSchema.$columns
   @column()
   declare assignmentId: number

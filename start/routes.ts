@@ -30,7 +30,7 @@ router
     // GET routes
     router
       .get('/submissions/validate', [controllers.Submissions, 'create'])
-      .as('submissions.form')
+      .as('submissions.form')   
     router
       .get('/courses/:courseId/assignments/:assignmentId/submit', [
         controllers.Assignments,

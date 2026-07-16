@@ -27,7 +27,6 @@ export type ScannedRoutes = {
     'courses.assignments': { paramsTuple: [ParamValue]; params: { courseId: ParamValue } }    
     'student_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
-    'assignments.store': { paramsTuple?: []; params?: {} }
     'assignments.index': { paramsTuple?: []; params?: {} }
     'assignments.store': { paramsTuple?: []; params?: {} }
     'upload.store': { paramsTuple?: []; params?: {} }
