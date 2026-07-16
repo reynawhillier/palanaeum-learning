@@ -1,0 +1,41 @@
+@layout() 
+    <table style="width:100%; border-collapse:collapse;">
+
+        <thead style="background:#111827; color:white;">
+          <tr>
+            <th style="text-align:left; padding:12px;">User</th>
+            <th style="text-align:left; padding:12px;">Email</th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @each(user in users)
+
+            <tr style="border-bottom:1px solid #eee;">
+
+              <!-- NAME = LINK TO DROPBOX -->
+              <td style="padding:12px;">
+                <p style="
+                  color:#111827;
+                  text-decoration:none;
+                  font-weight:500;
+                ">
+                  {{ user.fullName }}
+                </p>
+              </td>
+
+              <td style="padding:12px;">
+                {{ user.email }}
+              </td>
+
+            </tr>
+
+          @endeach
+
+        </tbody>
+
+      </table>
+
+@end

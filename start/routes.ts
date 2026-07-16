@@ -29,15 +29,21 @@ router
   })
   .use(middleware.auth())
 
-router.get('/user_list', [controllers.UserLists, 'index'])
+router
+  .group(() => {
+    router.get('/user_list', [controllers.UserLists, 'index'])
+  })
+  .use(middleware.auth())
 
 router.get('/profile', async ({ view }) => {
   return view.render('pages/profile')
 })
 
-router.get('/', async ({ view }) => {
-  return view.render('pages/dashboard')
-})
+router
+  .get('/', async ({ view }) => {
+    return view.render('pages/dashboard')
+  })
+  .as('home')
 
 router.get('/courses/:id', async ({ view }) => {
   return view.render('pages/course_dashboard')
