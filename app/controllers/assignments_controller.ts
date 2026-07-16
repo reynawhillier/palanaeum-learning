@@ -143,7 +143,7 @@ export default class AssignmentsController {
     return await Assignment.create({
       courseId: payload.course_id,
       title: payload.title,
-      description: payload.description,
+      description: payload.description ?? null,
       dueDate: payload.due_date,
       status: 'Open',
     })
