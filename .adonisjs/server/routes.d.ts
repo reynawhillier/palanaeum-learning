@@ -11,23 +11,30 @@ export type ScannedRoutes = {
     'session.destroy': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
+    'assignments.store': { paramsTuple?: []; params?: {} }
+    'assignments.index': { paramsTuple?: []; params?: {} }
+    'upload.store': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
+    'assignments.index': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
+    'assignments.index': { paramsTuple?: []; params?: {} }
   }
   POST: {
     'new_account.store': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
+    'assignments.store': { paramsTuple?: []; params?: {} }
+    'upload.store': { paramsTuple?: []; params?: {} }
   }
 }
 declare module '@adonisjs/core/types/http' {

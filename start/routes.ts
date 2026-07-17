@@ -56,10 +56,17 @@ router.get('/courses/:id/assignments', async ({ view }) => {
 router.get('/courses/:id/grades', async ({ view }) => {
   return view.render('pages/course/grades')
 })
-// // Assignment routes
-// router
-//   .group(() => {
-//     router.post('/assignments', [AssignmentsController, 'store'])
-//     router.get('/assignments', [AssignmentsController, 'index'])
-//   })
-//   .use(middleware.auth())
+// Assignment routes
+router
+  .group(() => {
+    router.post('/assignments', [controllers.Assignments, 'store'])
+    router.get('/assignments', [controllers.Assignments, 'index'])
+  })
+  .use(middleware.auth())
+
+// Upload routes
+router
+  .group(() => {
+    router.post('/upload', [controllers.Upload, 'store'])
+  })
+  .use(middleware.auth())
