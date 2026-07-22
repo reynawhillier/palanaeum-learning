@@ -7,6 +7,6 @@ export const controllers = {
   Assignments: () => import('#controllers/assignments_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   Session: () => import('#controllers/session_controller'),
-  UserLists: () => import('#controllers/user_lists_controller'),
   Upload: () => import('#controllers/upload_controller'),
+  UserLists: () => import('#controllers/user_lists_controller'),
 }
