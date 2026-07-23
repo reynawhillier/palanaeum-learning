@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Performance Report Print View</title>
+  </head>
+
+  <body style="font-family: Arial; margin: 32px;">
+    <h1>Performance Report</h1>
+
+    <p>Course: {{ report.courseCode ?? 'Course' }}</p>
+    <p>Course Name: {{ report.courseName ?? 'Unknown course' }}</p>
+    <p>Students Enrolled: {{ report.studentCount }}</p>
+    <p>Assignments: {{ report.assignmentCount }}</p>
+    <p>Submitted Work: {{ report.submittedCount }}</p>
+    <p>Missing Work: {{ report.missingCount }}</p>
+    <p>Class Average: {{ report.classAverage ?? 'No grades yet' }}</p>
+    <p>At-Risk Students: {{ report.atRiskCount }}</p>
+    <p>Generated At: {{ report.generatedAt }}</p>
+
+    <button onclick="window.print()">Print Report</button>
+
+    <h2>Student Progress</h2>
+
+    <table style="width:100%; border-collapse:collapse;" border="1">
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Email</th>
+          <th>Submitted</th>
+          <th>Missing</th>
+          <th>Average</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @each(student in report.students)
+          <tr>
+            <td>{{ student.name }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.submittedCount }}</td>
+            <td>{{ student.missingCount }}</td>
+            <td>{{ student.averageScore ?? 'No grades yet' }}</td>
+            <td>{{ student.status }}</td>
+          </tr>
+        @else
+          <tr>
+            <td colspan="6">No students found for this course.</td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  </body>
+</html>

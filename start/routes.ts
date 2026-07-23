@@ -28,7 +28,14 @@ router
 router
   .group(() => {
     // GET routes
-        router
+    router
+      .get('/courses/:courseId/reports/performance/print', [
+        controllers.PerformanceReports,
+        'print',
+      ])
+      .as('reports.performance.print')
+
+    router
       .get('/courses/:courseId/reports/performance', [
         controllers.PerformanceReports,
         'index',

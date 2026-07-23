@@ -12,6 +12,11 @@
   @if(report)
     <h2>{{ report.courseCode ?? 'Course' }} Performance Summary</h2>
 
+    <p>
+      <a href="{{ route('reports.performance.print', { courseId }) }}" target="_blank">
+        Open Print View
+      </a>
+    </p>
     <p>Course Name: {{ report.courseName ?? 'Unknown course' }}</p>
     <p>Students Enrolled: {{ report.studentCount }}</p>
     <p>Assignments: {{ report.assignmentCount }}</p>

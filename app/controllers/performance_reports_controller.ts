@@ -63,6 +63,27 @@ export default class PerformanceReportsController {
       report,
     })
   }
+  public async print({ view, params, auth, response }: HttpContext) {
+    const courseId = Number(params.courseId)
+    const userId = auth.user!.id
+
+    const canAccessReport = await this.canAccessCourseReport(userId, courseId)
+
+    if (!canAccessReport) {
+      return response.status(403).send('You are not authorized to print this performance report')
+    }
+
+    const report = await this.buildReport(courseId)
+
+    if (!report) {
+      return response.notFound('Course not found')
+    }
+
+    return view.render('pages/reports/performance_print', {
+      courseId,
+      report,
+    })
+  }
   private async canAccessCourseReport(userId: number, courseId: number): Promise<boolean> {
     const professorCourse = await db
       .from('professors')
