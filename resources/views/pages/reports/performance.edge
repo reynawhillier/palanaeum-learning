@@ -10,13 +10,48 @@
   </form>
 
   @if(report)
-    <h2>Generated Report</h2>
+    <h2>{{ report.courseCode ?? 'Course' }} Performance Summary</h2>
 
-    <p>Class Average: {{ report.classAverage ?? 'Not calculated yet' }}</p>
-    <p>Submitted Count: {{ report.submittedCount ?? 'Not calculated yet' }}</p>
-    <p>Missing Count: {{ report.missingCount ?? 'Not calculated yet' }}</p>
-    <p>At-Risk Students: {{ report.atRiskCount ?? 'Not calculated yet' }}</p>
+    <p>Course Name: {{ report.courseName ?? 'Unknown course' }}</p>
+    <p>Students Enrolled: {{ report.studentCount }}</p>
+    <p>Assignments: {{ report.assignmentCount }}</p>
+    <p>Submitted Work: {{ report.submittedCount }}</p>
+    <p>Missing Work: {{ report.missingCount }}</p>
+    <p>Class Average: {{ report.classAverage ?? 'No grades yet' }}</p>
+    <p>At-Risk Students: {{ report.atRiskCount }}</p>
     <p>Generated At: {{ report.generatedAt }}</p>
+
+    <h2>Student Progress</h2>
+
+    <table style="width:100%; border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th style="text-align:left; padding:8px;">Student</th>
+          <th style="text-align:left; padding:8px;">Email</th>
+          <th style="text-align:left; padding:8px;">Submitted</th>
+          <th style="text-align:left; padding:8px;">Missing</th>
+          <th style="text-align:left; padding:8px;">Average</th>
+          <th style="text-align:left; padding:8px;">Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @each(student in report.students)
+          <tr>
+            <td style="padding:8px;">{{ student.name }}</td>
+            <td style="padding:8px;">{{ student.email }}</td>
+            <td style="padding:8px;">{{ student.submittedCount }}</td>
+            <td style="padding:8px;">{{ student.missingCount }}</td>
+            <td style="padding:8px;">{{ student.averageScore ?? 'No grades yet' }}</td>
+            <td style="padding:8px;">{{ student.status }}</td>
+          </tr>
+        @else
+          <tr>
+            <td colspan="6" style="padding:8px;">No students found for this course.</td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
   @endif
 
 @end
