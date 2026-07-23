@@ -26,8 +26,15 @@ type PerformanceReport = {
 }
 
 export default class PerformanceReportsController {
-  public async index({ view, params }: HttpContext) {
+  public async index({ view, params, auth, response }: HttpContext) {
     const courseId = Number(params.courseId)
+    const userId = auth.user!.id
+
+    const canAccessReport = await this.canAccessCourseReport(userId, courseId)
+
+    if (!canAccessReport) {
+      return response.status(403).send('You are not authorized to view this performance report')
+    }
 
     return view.render('pages/reports/performance', {
       courseId,
@@ -35,8 +42,16 @@ export default class PerformanceReportsController {
     })
   }
 
-  public async generate({ view, params, response }: HttpContext) {
+  public async generate({ view, params, auth, response }: HttpContext) {
     const courseId = Number(params.courseId)
+    const userId = auth.user!.id
+
+    const canAccessReport = await this.canAccessCourseReport(userId, courseId)
+
+    if (!canAccessReport) {
+      return response.status(403).send('You are not authorized to generate this performance report')
+    }
+
     const report = await this.buildReport(courseId)
 
     if (!report) {
@@ -48,7 +63,22 @@ export default class PerformanceReportsController {
       report,
     })
   }
+  private async canAccessCourseReport(userId: number, courseId: number): Promise<boolean> {
+    const professorCourse = await db
+      .from('professors')
+      .join('courses', 'professors.professor_id', 'courses.professor_id')
+      .where('professors.user_id', userId)
+      .where('courses.course_id', courseId)
+      .first()
 
+    if (professorCourse) {
+      return true
+    }
+
+    const admin = await db.from('admins').where('user_id', userId).first()
+
+    return Boolean(admin)
+  }
   private async buildReport(courseId: number): Promise<PerformanceReport | null> {
     const course = await db
       .from('courses')
