@@ -28,9 +28,16 @@ router
 router
   .group(() => {
     // GET routes
+        router
+      .get('/courses/:courseId/reports/performance', [
+        controllers.PerformanceReports,
+        'index',
+      ])
+      .as('reports.performance')
+
     router
       .get('/submissions/validate', [controllers.Submissions, 'create'])
-      .as('submissions.form')   
+      .as('submissions.form')
     router
       .get('/courses/:courseId/assignments/:assignmentId/submit', [
         controllers.Assignments,
@@ -66,6 +73,12 @@ router
         'storeSubmission',
       ])
       .as('submissions.store')
+    router
+      .post('/courses/:courseId/reports/performance/generate', [
+        controllers.PerformanceReports,
+        'generate',
+      ])
+      .as('reports.performance.generate')
   })
   .use(middleware.auth())
 

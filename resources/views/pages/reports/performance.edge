@@ -1,0 +1,22 @@
+@layout()
+
+  <h1>Performance Report</h1>
+
+  <p>Course ID: {{ courseId }}</p>
+
+  <form method="POST" action="{{ route('reports.performance.generate', { courseId }) }}">
+    {{ csrfField() }}
+    <button type="submit">Generate Report</button>
+  </form>
+
+  @if(report)
+    <h2>Generated Report</h2>
+
+    <p>Class Average: {{ report.classAverage ?? 'Not calculated yet' }}</p>
+    <p>Submitted Count: {{ report.submittedCount ?? 'Not calculated yet' }}</p>
+    <p>Missing Count: {{ report.missingCount ?? 'Not calculated yet' }}</p>
+    <p>At-Risk Students: {{ report.atRiskCount ?? 'Not calculated yet' }}</p>
+    <p>Generated At: {{ report.generatedAt }}</p>
+  @endif
+
+@end
