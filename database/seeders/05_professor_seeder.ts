@@ -1,12 +1,10 @@
 import Professor from '#models/professor'
+import User from '#models/user'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   async run() {
-    await Professor.firstOrCreate(
-      {
-        schoolId: 'P2001',
-      },
+    const professors = [
       {
         schoolId: 'P2001',
         firstName: 'Minerva',
@@ -14,12 +12,6 @@ export default class extends BaseSeeder {
         email: 'mcgonagall@school.ca',
         passwordHash: 'password123',
         departmentId: 1,
-      }
-    )
-
-    await Professor.firstOrCreate(
-      {
-        schoolId: 'P2002',
       },
       {
         schoolId: 'P2002',
@@ -28,12 +20,6 @@ export default class extends BaseSeeder {
         email: 'flitwick@school.ca',
         passwordHash: 'password234',
         departmentId: 2,
-      }
-    )
-
-    await Professor.firstOrCreate(
-      {
-        schoolId: 'P2003',
       },
       {
         schoolId: 'P2003',
@@ -42,12 +28,6 @@ export default class extends BaseSeeder {
         email: 'ucler@school.ca',
         passwordHash: 'password245',
         departmentId: 3,
-      }
-    )
-
-    await Professor.firstOrCreate(
-      {
-        schoolId: 'P2004',
       },
       {
         schoolId: 'P2004',
@@ -56,7 +36,24 @@ export default class extends BaseSeeder {
         email: 'slughorn@school.ca',
         passwordHash: 'password245',
         departmentId: 4,
-      }
-    )
+      },
+    ]
+
+    for (const professorData of professors) {
+      const user = await User.findByOrFail('email', professorData.email)
+
+      await Professor.updateOrCreate(
+        { schoolId: professorData.schoolId },
+        {
+          userId: user.id,
+          schoolId: professorData.schoolId,
+          firstName: professorData.firstName,
+          lastName: professorData.lastName,
+          email: professorData.email,
+          passwordHash: professorData.passwordHash,
+          departmentId: professorData.departmentId,
+        }
+      )
+    }
   }
 }
