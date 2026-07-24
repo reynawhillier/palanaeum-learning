@@ -1,5 +1,5 @@
 import Assignment from '#models/assignment'
-import { assignmentsValidator } from '#validators/assignments'
+import { assignmentsValidator } from '#validators/assignment'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class AssignmentsController {
@@ -13,7 +13,7 @@ export default class AssignmentsController {
     return await Assignment.create({
       title: payload.title,
       description: payload.description,
-      due_date: payload.due_date,
+      dueDate: payload.due_date,
     })
   }
 }

@@ -9,7 +9,8 @@ export type ScannedRoutes = {
     'session.create': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
-    'student_lists.index': { paramsTuple?: []; params?: {} }
+    'user_lists.index': { paramsTuple?: []; params?: {} }
+    'home': { paramsTuple?: []; params?: {} }
     'assignments.store': { paramsTuple?: []; params?: {} }
     'assignments.index': { paramsTuple?: []; params?: {} }
     'upload.store': { paramsTuple?: []; params?: {} }
@@ -17,13 +18,15 @@ export type ScannedRoutes = {
   GET: {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
-    'student_lists.index': { paramsTuple?: []; params?: {} }
+    'user_lists.index': { paramsTuple?: []; params?: {} }
+    'home': { paramsTuple?: []; params?: {} }
     'assignments.index': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
-    'student_lists.index': { paramsTuple?: []; params?: {} }
+    'user_lists.index': { paramsTuple?: []; params?: {} }
+    'home': { paramsTuple?: []; params?: {} }
     'assignments.index': { paramsTuple?: []; params?: {} }
   }
   POST: {

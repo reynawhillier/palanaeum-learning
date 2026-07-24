@@ -11,7 +11,7 @@ import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
 
-//router.on('/').render('pages/home').as('home')
+//router.on('/').render('pages/dashboard').as('home')
 
 router
   .group(() => {
@@ -29,15 +29,21 @@ router
   })
   .use(middleware.auth())
 
-router.get('/student_list', [controllers.StudentLists, 'index'])
+router
+  .group(() => {
+    router.get('/user_list', [controllers.UserLists, 'index'])
+  })
+  .use(middleware.auth())
 
 router.get('/profile', async ({ view }) => {
   return view.render('pages/profile')
 })
 
-router.get('/', async ({ view }) => {
-  return view.render('pages/dashboard')
-})
+router
+  .get('/', async ({ view }) => {
+    return view.render('pages/dashboard')
+  })
+  .as('home')
 
 router.get('/courses/:id', async ({ view }) => {
   return view.render('pages/course_dashboard')
@@ -58,7 +64,7 @@ router
   })
   .use(middleware.auth())
 
-// Upload routes 
+// Upload routes
 router
   .group(() => {
     router.post('/upload', [controllers.Upload, 'store'])
