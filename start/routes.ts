@@ -43,8 +43,16 @@ router
       .as('reports.performance')
 
     router
+      .get('/courses/:courseId/reports/performance/generate', [
+        controllers.PerformanceReports,
+        'generate',
+      ])
+      .as('reports.performance.generate.get')
+
+    router
       .get('/submissions/validate', [controllers.Submissions, 'create'])
       .as('submissions.form')
+
     router
       .get('/courses/:courseId/assignments/:assignmentId/submit', [
         controllers.Assignments,
@@ -59,7 +67,6 @@ router
       ])
       .as('submissions.file')
 
-    router
     router
       .get('/courses/:courseId/assignments', [
         controllers.Assignments,
@@ -80,6 +87,7 @@ router
         'storeSubmission',
       ])
       .as('submissions.store')
+
     router
       .post('/courses/:courseId/reports/performance/generate', [
         controllers.PerformanceReports,
