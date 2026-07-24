@@ -2,6 +2,15 @@
 <html>
   <head>
     <title>Performance Report Print View</title>
+
+    <style>
+      @media print {
+        button,
+        a {
+          display: none;
+        }
+      }
+    </style>
   </head>
 
   <body style="font-family: Arial; margin: 32px;">
@@ -13,10 +22,19 @@
     <p>Assignments: {{ report.assignmentCount }}</p>
     <p>Submitted Work: {{ report.submittedCount }}</p>
     <p>Missing Work: {{ report.missingCount }}</p>
-    <p>Class Average: {{ report.classAverage ?? 'No grades yet' }}</p>
+    <p>
+    Class Average:
+    @if(report.classAverage !== null)
+        {{ report.classAverage }}%
+    @else
+        No grades yet
+    @endif
+    </p>
     <p>At-Risk Students: {{ report.atRiskCount }}</p>
     <p>Generated At: {{ report.generatedAt }}</p>
-
+    <p>
+    <a href="{{ route('reports.performance', { courseId }) }}">Back to Report</a>
+    </p>
     <button onclick="window.print()">Print Report</button>
 
     <h2>Student Progress</h2>
@@ -40,7 +58,13 @@
             <td>{{ student.email }}</td>
             <td>{{ student.submittedCount }}</td>
             <td>{{ student.missingCount }}</td>
-            <td>{{ student.averageScore ?? 'No grades yet' }}</td>
+            <td>
+            @if(student.averageScore !== null)
+                {{ student.averageScore }}%
+            @else
+                No grades yet
+            @endif
+            </td>
             <td>{{ student.status }}</td>
           </tr>
         @else

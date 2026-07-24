@@ -3,7 +3,9 @@
   <h1>Performance Report</h1>
 
   <p>Course ID: {{ courseId }}</p>
-
+  <p>
+    <a href="{{ route('courses.assignments', { courseId }) }}">Back to Assignments</a>
+  </p>
   <form method="POST" action="{{ route('reports.performance.generate', { courseId }) }}">
     {{ csrfField() }}
     <button type="submit">Generate Report</button>
@@ -22,7 +24,14 @@
     <p>Assignments: {{ report.assignmentCount }}</p>
     <p>Submitted Work: {{ report.submittedCount }}</p>
     <p>Missing Work: {{ report.missingCount }}</p>
-    <p>Class Average: {{ report.classAverage ?? 'No grades yet' }}</p>
+    <p>
+      Class Average:
+      @if(report.classAverage)
+        {{ report.classAverage }}%
+      @else
+        No grades yet
+      @endif
+    </p>
     <p>At-Risk Students: {{ report.atRiskCount }}</p>
     <p>Generated At: {{ report.generatedAt }}</p>
 
@@ -47,7 +56,13 @@
             <td style="padding:8px;">{{ student.email }}</td>
             <td style="padding:8px;">{{ student.submittedCount }}</td>
             <td style="padding:8px;">{{ student.missingCount }}</td>
-            <td style="padding:8px;">{{ student.averageScore ?? 'No grades yet' }}</td>
+            <td style="padding:8px;">
+              @if(student.averageScore)
+                {{ student.averageScore }}%
+              @else
+                No grades yet
+              @endif
+            </td>
             <td style="padding:8px;">{{ student.status }}</td>
           </tr>
         @else
