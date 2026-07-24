@@ -1,10 +1,10 @@
 import Student from '#models/student'
+import User from '#models/user'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   async run() {
-    await Student.firstOrCreate(
-      { schoolId: 'S1001' },
+    const students = [
       {
         schoolId: 'S1001',
         firstName: 'James',
@@ -12,11 +12,7 @@ export default class extends BaseSeeder {
         email: 'potter@school.ca',
         passwordHash: 'password123',
         programId: 1,
-      }
-    )
-
-    await Student.firstOrCreate(
-      { schoolId: 'S1004' },
+      },
       {
         schoolId: 'S1004',
         firstName: 'Sirius',
@@ -24,11 +20,7 @@ export default class extends BaseSeeder {
         email: 'black@school.ca',
         passwordHash: 'password123',
         programId: 2,
-      }
-    )
-
-    await Student.firstOrCreate(
-      { schoolId: 'S1005' },
+      },
       {
         schoolId: 'S1005',
         firstName: 'Remus',
@@ -36,11 +28,7 @@ export default class extends BaseSeeder {
         email: 'lupin@school.ca',
         passwordHash: 'password123',
         programId: 3,
-      }
-    )
-
-    await Student.firstOrCreate(
-      { schoolId: 'S1006' },
+      },
       {
         schoolId: 'S1006',
         firstName: 'Peter',
@@ -48,11 +36,7 @@ export default class extends BaseSeeder {
         email: 'pettigrew@school.ca',
         passwordHash: 'password123',
         programId: 4,
-      }
-    )
-
-    await Student.firstOrCreate(
-      { schoolId: 'S1007' },
+      },
       {
         schoolId: 'S1007',
         firstName: 'Severus',
@@ -60,7 +44,24 @@ export default class extends BaseSeeder {
         email: 'snape@school.ca',
         passwordHash: 'password123',
         programId: 5,
-      }
-    )
+      },
+    ]
+
+    for (const studentData of students) {
+      const user = await User.findByOrFail('email', studentData.email)
+
+      await Student.updateOrCreate(
+        { schoolId: studentData.schoolId },
+        {
+          userId: user.id,
+          schoolId: studentData.schoolId,
+          firstName: studentData.firstName,
+          lastName: studentData.lastName,
+          email: studentData.email,
+          passwordHash: studentData.passwordHash,
+          programId: studentData.programId,
+        }
+      )
+    }
   }
 }
