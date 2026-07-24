@@ -25,6 +25,22 @@ export type PerformanceReport = {
 }
 
 class PerformanceReportService {
+  public async buildForActiveCourses(): Promise<PerformanceReport[]> {
+    const courses = await db.from('courses').where('status', 'Active').select('course_id')
+
+    const reports: PerformanceReport[] = []
+
+    for (const course of courses) {
+      const report = await this.build(Number(course.course_id))
+
+      if (report) {
+        reports.push(report)
+      }
+    }
+
+    return reports
+  }
+
   public async build(courseId: number): Promise<PerformanceReport | null> {
     const course = await db
       .from('courses')
