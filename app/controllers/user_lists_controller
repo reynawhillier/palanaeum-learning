@@ -1,0 +1,28 @@
+import User from '#models/user'
+import { signupValidator } from '#validators/user'
+import type { HttpContext } from '@adonisjs/core/http'
+
+export default class UserListsController {
+  /**
+   * List users with optional search + filtering
+   */
+  async index({ request, view }: HttpContext) {
+    const { role, name } = request.qs()
+    const query = User.query()
+
+    if (role) query.where('role', role)
+    if (name) query.where('fullName', 'like', `%${name}%`)
+
+    const users = await query.orderBy('last_name', 'asc')
+    return view.render('pages/user_list', { users })
+  }
+
+  /**
+   * Create a new user (admin-only)
+   */
+  async store({ request, response }: HttpContext) {
+    const data = await request.validateUsing(signupValidator)
+    const user = await User.create(data)
+    return response.created(user)
+  }
+}

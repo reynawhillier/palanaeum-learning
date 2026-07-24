@@ -44,3 +44,14 @@ router
     router.post('/upload', [controllers.Upload, 'store'])
   })
   .use(middleware.auth())
+// User list routes
+router.get('/users', [controllers.UserLists, 'index']).use(middleware.auth())
+router //so non admin can view the user list but cannot modify it
+  .group(() => {
+    router.post('/users', [controllers.UserLists, 'store'])
+    router.put('/users/:id', [controllers.UserLists, 'update'])
+    router.delete('/users/:id', [controllers.UserLists, 'destroy'])
+  })
+  .use(middleware.auth())
+  .use(middleware.adminOnly())
+
