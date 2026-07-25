@@ -10,4 +10,5 @@ export const controllers = {
   StudentLists: () => import('#controllers/student_lists_controller'),
   Submissions: () => import('#controllers/submissions_controller'),
   Upload: () => import('#controllers/upload_controller'),
+  UserLists: () => import('#controllers/user_lists_controller'),
 }

@@ -62,7 +62,11 @@ router
   })
   .use(middleware.auth())
 
-router.get('/student_list', [controllers.StudentLists, 'index'])
+router
+  .group(() => {
+    router.get('/user_list', [controllers.UserLists, 'index'])
+  })
+  .use(middleware.auth())
 
 router.get('/profile', async ({ view }) => {
   return view.render('pages/profile')
