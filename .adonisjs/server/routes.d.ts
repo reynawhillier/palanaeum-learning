@@ -10,16 +10,19 @@ export type ScannedRoutes = {
     'session.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'student_lists.index': { paramsTuple?: []; params?: {} }
+    'home': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'student_lists.index': { paramsTuple?: []; params?: {} }
+    'home': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'student_lists.index': { paramsTuple?: []; params?: {} }
+    'home': { paramsTuple?: []; params?: {} }
   }
   POST: {
     'new_account.store': { paramsTuple?: []; params?: {} }

@@ -64,7 +64,7 @@ export default class extends BaseSeeder {
         await User.create({
           fullName: userData.fullName,
           email: userData.email,
-          password: await hash.make(userData.password),
+          password: userData.password,
         })
       }
     }
