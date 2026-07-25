@@ -16,11 +16,8 @@ export type ScannedRoutes = {
     'session.destroy': { paramsTuple?: []; params?: {} }
     'submissions.validate': { paramsTuple?: []; params?: {} }
     'submissions.store': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
-    'student_lists.index': { paramsTuple?: []; params?: {} }
-    'home': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
-    'assignments.store': { paramsTuple?: []; params?: {} }
     'assignments.index': { paramsTuple?: []; params?: {} }
     'assignments.store': { paramsTuple?: []; params?: {} }
     'upload.store': { paramsTuple?: []; params?: {} }
@@ -33,7 +30,6 @@ export type ScannedRoutes = {
     'submissions.create': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
     'submissions.file': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
     'courses.assignments': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
-    'student_lists.index': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'assignments.index': { paramsTuple?: []; params?: {} }
@@ -46,7 +42,6 @@ export type ScannedRoutes = {
     'submissions.create': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
     'submissions.file': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
     'courses.assignments': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
-    'student_lists.index': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'assignments.index': { paramsTuple?: []; params?: {} }
