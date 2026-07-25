@@ -5,6 +5,12 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 export default class extends BaseSeeder {
   async run() {
     // Write your database queries inside the run method
+    //   use await Table.firstOrCreate (
+    //    { primaryKey: keyinformation },
+    //    {   other attribute : value,
+    //        other attribute : value
+    //    }
+    //   )
     await Role.firstOrCreate({ id: 1 }, {})
   }
 }

@@ -1,9 +1,10 @@
 import vine from '@vinejs/vine'
 
-export const AssignmentValidator = vine.compile(
+export const assignmentsValidator = vine.compile(
   vine.object({
-    title: vine.string(),
-    description: vine.string().optional(),
+    course_id: vine.number().positive(),
+    title: vine.string().trim(),
+    description: vine.string().trim().optional(),
     due_date: vine.date(),
   })
 )
