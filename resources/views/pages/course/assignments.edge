@@ -8,6 +8,7 @@
   <main style="flex:1; padding:20px;">
 
     <h1 style="margin-top:0;">Assignments</h1>
+    <p>Course ID: {{ courseId }}</p>
 
     <div style="background:white; border-radius:10px; overflow:hidden;">
 
@@ -23,21 +24,23 @@
 
         <tbody>
 
-          @each(a in [
-            { name: 'HW1 - Introduction', due: 'June 30', link: '#', submitted: true },
-            { name: 'Project 1', due: 'July 5', link: '#', submitted: false },
-            { name: 'Quiz Prep', due: 'July 10', link: '#', submitted: true }
-          ])
+          @each(a in assignments)
 
             <tr style="border-bottom:1px solid #eee;">
 
               <!-- NAME = LINK TO DROPBOX -->
               <td style="padding:12px;">
-                <a href="{{ a.link }}" style="
-                  color:#111827;
-                  text-decoration:none;
-                  font-weight:500;
-                ">
+                <a
+                  href="{{ urlFor('submissions.create',{
+                    courseId: courseId,
+                    assignmentId: a.id
+                  }) }}"
+                  style="
+                    color:#111827;
+                    text-decoration:none;
+                    font-weight:500;
+                  "
+                >
                   {{ a.name }}
                 </a>
               </td>
@@ -47,28 +50,34 @@
               </td>
 
               <!-- SUBMITTED STATUS -->
-              <td style="padding:12px;">
+              <td style="padding: 12px;">
                 @if(a.submitted)
-                  <span style="
-                    background:#16a34a;
-                    color:white;
-                    padding:4px 8px;
-                    border-radius:6px;
-                    font-size:13px;
-                  ">
+                  <span style="color: green; font-weight: bold;">
                     Submitted
                   </span>
+
+                  <br>
+
+                  <a
+                    href="{{ urlFor('submissions.file', {
+                      courseId: courseId,
+                      assignmentId: a.id
+                    }) }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="
+                      color: #2563eb;
+                      text-decoration: underline;
+                      font-weight: 500;
+                    "
+                  >
+                    View File
+                  </a>
                 @else
-                  <span style="
-                    background:#dc2626;
-                    color:white;
-                    padding:4px 8px;
-                    border-radius:6px;
-                    font-size:13px;
-                  ">
+                  <span style="color: red; font-weight: bold;">
                     Not Submitted
                   </span>
-                @endif
+                @end
               </td>
 
             </tr>
