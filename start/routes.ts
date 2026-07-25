@@ -11,6 +11,8 @@ import { controllers } from '#generated/controllers'
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
+// router.on('/').render('pages/dashboard').as('home')
+
 // Guest routes
 router
   .group(() => {
@@ -26,6 +28,24 @@ router
 router
   .group(() => {
     // GET routes
+    router
+      .get('/courses/:courseId/reports/performance/print', [
+        controllers.PerformanceReports,
+        'print',
+      ])
+      .as('reports.performance.print')
+
+    router
+      .get('/courses/:courseId/reports/performance', [controllers.PerformanceReports, 'index'])
+      .as('reports.performance')
+
+    router
+      .get('/courses/:courseId/reports/performance/generate', [
+        controllers.PerformanceReports,
+        'generate',
+      ])
+      .as('reports.performance.generate.get')
+
     router.get('/submissions/validate', [controllers.Submissions, 'create']).as('submissions.form')
 
     router
@@ -59,6 +79,13 @@ router
         'storeSubmission',
       ])
       .as('submissions.store')
+
+    router
+      .post('/courses/:courseId/reports/performance/generate', [
+        controllers.PerformanceReports,
+        'generate',
+      ])
+      .as('reports.performance.generate')
   })
   .use(middleware.auth())
 
