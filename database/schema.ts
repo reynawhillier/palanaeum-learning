@@ -223,7 +223,6 @@ export class StudentSchema extends BaseModel {
 }
 
 export class SubmissionSchema extends BaseModel {
-
   static $columns = [
     'assignmentId',
     'fileKey',
