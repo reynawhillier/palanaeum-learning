@@ -1,0 +1,70 @@
+@layouts.app({
+    user: user,
+    course: course
+})
+
+@slot('main')
+
+<div class="grades-page">
+
+    <h1 class="page-title">
+        {{ course.code }} - Grade Overview
+    </h1>
+
+    <table class="grades-table">
+
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Assignment 1</th>
+                <th>Midterm</th>
+                <th>Assignment 2</th>
+                <th>Average</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>Alice Johnson</td>
+                <td>85%</td>
+                <td>78%</td>
+                <td>92%</td>
+                <td>85%</td>
+            </tr>
+
+            <tr>
+                <td>John Smith</td>
+                <td>90%</td>
+                <td>84%</td>
+                <td>88%</td>
+                <td>87%</td>
+            </tr>
+
+            <tr>
+                <td>Sarah Lee</td>
+                <td>72%</td>
+                <td>80%</td>
+                <td>75%</td>
+                <td>76%</td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <div class="grade-actions">
+
+        <a href="/courses/{{ course.id }}/assignments">
+            View Assignments
+        </a>
+
+    </div>
+
+
+</div>
+
+@endslot
+
+@end

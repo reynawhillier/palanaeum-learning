@@ -1,10 +1,16 @@
-@layouts.app()
+@layouts.app({
+    user: user,
+    course: course
+})
+
+@slot('main')
 
 <div class="grades-page">
 
     <h1 class="page-title">
-        Student Grades
+        {{ course.code }} - My Grades
     </h1>
+
 
     <table class="grades-table">
 
@@ -49,5 +55,7 @@
     </table>
 
 </div>
+
+@endslot
 
 @end

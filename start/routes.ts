@@ -75,40 +75,76 @@ router.get('/courses/:id', async ({ view, params }) => {
 })
 
 router.get('/courses/:id/assignments', async ({ view, params }) => {
-    const user = fakeUsers.professor
+  const courseId = Number(params.id)
+  const user = fakeUsers.professor 
 
-    if(user.role === 'professor') {
+  const course = user.courses.find(
+    course => course.id === courseId
+  )
 
-        return view.render(
-            'pages/courses/assignments/professor',
-            {
-                user,
-                courseId: params.id
-            }
-        )
-
-    }
-
+  if (user.role === 'professor') {
     return view.render(
-        'pages/courses/assignments/student',
-        {
-            user,
-            courseId: params.id
-        }
+      'pages/courses/assignments/professor',
+      {
+        user,
+        course
+      }
     )
+  }
+
+  return view.render(
+    'pages/courses/assignments/student',
+    {
+      user,
+      course
+    }
+  )
 })
 
 router.get('/courses/:id/assignments/create', async ({ view, params }) => {
-    return view.render('pages/courses/assignments/create', {
-        courseId: params.id
-    })
+  const courseId = Number(params.id)
+  const user = fakeUsers.professor
+
+  const course = user.courses.find(
+    course => course.id === courseId
+  )
+
+  return view.render(
+    'pages/courses/assignments/create',
+    {
+      user,
+      course
+    }
+  )
 })
 
 router.get('/courses/:id/grades', async ({ view, params }) => {
-    return view.render('pages/courses/grades', {
-        courseId: params.id
-    })
+  const courseId = Number(params.id)
+  const user = fakeUsers.professor 
+
+  const course = user.courses.find(
+    course => course.id === courseId
+  )
+
+  if (user.role === 'professor') {
+    return view.render(
+      'pages/courses/grades/professor',
+      {
+        user,
+        course
+      }
+    )
+  }
+
+  return view.render(
+    'pages/courses/grades/student',
+    {
+      user,
+      course
+    }
+  )
 })
+
 // Assignment routes
 // router
 //   .group(() => {
