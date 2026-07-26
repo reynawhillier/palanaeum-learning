@@ -1,16 +1,4 @@
-// // Basic model that represents an assignment record in the database
-// import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { AssignmentSchema } from '#database/schema'
 
-// export default class Assignment extends BaseModel {
-//   @column({ isPrimary: true })
-//   public id: number
+export default class Assignment extends AssignmentSchema {}
 
-//   @column()
-//   public title: string
-
-//   @column()
-//   public description: string
-
-//   @column.date()
-//   public dueDate: Date
-// }

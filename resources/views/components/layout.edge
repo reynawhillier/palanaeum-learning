@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Palanaeum Learning</title>
+  </head>
+
+  <body style="margin:0; font-family:Arial; background:#f5f6f8;">
+    @include('partials/header')
+    <main style="padding:20px;">
+
+      {{{ await $slots.main() }}}
+
+    </main>
+
+  </body>
+</html>
