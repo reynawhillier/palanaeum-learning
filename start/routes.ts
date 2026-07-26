@@ -12,9 +12,8 @@ import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 import CourseRetrievalController from '#controllers/course_retrievals_controller'
 import NewCoursesController from '#controllers/new_courses_controller'
+import CoursesController from '#controllers/courses_controller'
 
-
-// router.on('/').render('pages/dashboard').as('home')
 
 // Guest routes
 router
@@ -27,10 +26,12 @@ router
   })
   .use(middleware.guest())
 
+
 // Authenticated routes
 router
   .group(() => {
-    // GET routes
+
+    // Reports
     router
       .get('/courses/:courseId/reports/performance/print', [
         controllers.PerformanceReports,
@@ -38,9 +39,14 @@ router
       ])
       .as('reports.performance.print')
 
+
     router
-      .get('/courses/:courseId/reports/performance', [controllers.PerformanceReports, 'index'])
+      .get('/courses/:courseId/reports/performance', [
+        controllers.PerformanceReports,
+        'index',
+      ])
       .as('reports.performance')
+
 
     router
       .get('/courses/:courseId/reports/performance/generate', [
@@ -49,7 +55,23 @@ router
       ])
       .as('reports.performance.generate.get')
 
-    router.get('/submissions/validate', [controllers.Submissions, 'create']).as('submissions.form')
+
+    // Submissions
+    router
+      .get('/submissions/validate', [
+        controllers.Submissions,
+        'create'
+      ])
+      .as('submissions.form')
+
+
+    router
+      .post('/submissions/validate', [
+        controllers.Submissions,
+        'store'
+      ])
+      .as('submissions.validate')
+
 
     router
       .get('/courses/:courseId/assignments/:assignmentId/submit', [
@@ -58,23 +80,6 @@ router
       ])
       .as('submissions.create')
 
-    router
-      .get('/courses/:courseId/assignments/:assignmentId/submission/file', [
-        controllers.Assignments,
-        'viewSubmissionFile',
-      ])
-      .as('submissions.file')
-
-    router
-      .get('/courses/:courseId/assignments', [controllers.Assignments, 'courseAssignments'])
-      .as('courses.assignments')
-
-    // POST routes
-    router.post('logout', [controllers.Session, 'destroy'])
-
-    router
-      .post('/submissions/validate', [controllers.Submissions, 'store'])
-      .as('submissions.validate')
 
     router
       .post('/courses/:courseId/assignments/:assignmentId/submit', [
@@ -83,74 +88,153 @@ router
       ])
       .as('submissions.store')
 
+
     router
-      .post('/courses/:courseId/reports/performance/generate', [
-        controllers.PerformanceReports,
-        'generate',
+      .get('/courses/:courseId/assignments', [
+        controllers.Assignments,
+        'courseAssignments'
       ])
-      .as('reports.performance.generate')
+      .as('courses.assignments')
+
+
+    // Logout
+    router.post('logout', [
+      controllers.Session,
+      'destroy'
+    ])
+
   })
   .use(middleware.auth())
 
+
+
+// User list
 router
-  .group(() => {
-    router.get('/user_list', [controllers.UserLists, 'index'])
-  })
+  .get('/user_list', [
+    controllers.UserLists,
+    'index'
+  ])
   .use(middleware.auth())
 
+
+
+// Profile
 router.get('/profile', async ({ view }) => {
   return view.render('pages/profile')
 })
 
+
+
+// Dashboard
 router
   .get('/', async ({ view }) => {
     return view.render('pages/dashboard')
   })
   .as('home')
 
-router.get('/courses/:id', async ({ view }) => {
-  return view.render('pages/course_dashboard')
-})
 
-router.get('/courses/:id/grades', async ({ view }) => {
-  return view.render('pages/course/grades')
-})
 
-// Assignment routes
+// ================================
+// AYZA COURSE WORK
+// ================================
+
+
+// Create course API
+router
+  .post('new-course', [
+    NewCoursesController,
+    'store'
+  ])
+  .use(middleware.auth())
+
+
+
+// Retrieve courses API
+router.get(
+  'courses',
+  [
+    CourseRetrievalController,
+    'index'
+  ]
+)
+
+
+
+// Courses list page
+// MUST COME BEFORE /courses/:id
+router.get(
+  'courses/view',
+  [
+    CoursesController,
+    'index'
+  ]
+)
+
+
+
+// Create course page
+router.get(
+  'courses/create',
+  async ({ view }) => {
+    return view.render('pages/courses/create')
+  }
+)
+
+
+
+// Course grades page
+router.get(
+  'courses/:id/grades',
+  async ({ view }) => {
+    return view.render('pages/course/grades')
+  }
+)
+
+
+
+// Course dashboard page
+// MUST ALWAYS BE LAST
+router.get(
+  'courses/:id',
+  async ({ view }) => {
+    return view.render('pages/course_dashboard')
+  }
+)
+
+
+
+// Assignments
 router
   .group(() => {
-    router.get('/assignments', [controllers.Assignments, 'index'])
-    router.post('/assignments', [controllers.Assignments, 'store'])
+    router.get('/assignments', [
+      controllers.Assignments,
+      'index'
+    ])
+
+    router.post('/assignments', [
+      controllers.Assignments,
+      'store'
+    ])
   })
   .use(middleware.auth())
 
-// Upload routes
+
+
+// Upload
 router
-  .group(() => {
-    router.post('/upload', [controllers.Upload, 'store'])
-  })
+  .post('/upload', [
+    controllers.Upload,
+    'store'
+  ])
   .use(middleware.auth())
 
-/*Ayza Work*/
-router
-  .group(() => {
-    router.post('new-course', [NewCoursesController, 'store'])
-  })
-  .use(middleware.auth())
 
-router
-  .group(() => {
-    router.get('courses', [CourseRetrievalController, 'index'])
-  })
 
-router.get('courses/create', async ({ view }) => {
-  return view.render('pages/courses/create')
-})
-
-router.get('courses/view', async ({ view }) => {
-  return view.render('pages/courses/view')
-})
-
-router.group(() => {
-  router.get('students', [controllers.StudentLists, 'index'])
-})
+// Students
+router.get(
+  'students',
+  [
+    controllers.StudentLists,
+    'index'
+  ]
+)

@@ -1,15 +1,12 @@
 import type { HttpContext } from '@adonisjs/core/http'
+import Student from '#models/student'
 
 export default class StudentListsController {
-  async index({ response }: HttpContext) {
-    const students = [
-      { id: 1, name: 'John Doe', studentId: 'L12345678' },
-      { id: 2, name: 'Jane Smith', studentId: 'L87654321' },
-    ]
+  async index({ view }: HttpContext) {
+    const students = await Student.all()
 
-    return response.ok({
-      message: 'Students retrieved successfully',
-      data: students,
+    return view.render('pages/students', {
+      students,
     })
   }
 }
