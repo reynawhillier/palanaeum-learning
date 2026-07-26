@@ -4,9 +4,14 @@
  */
 
 export const controllers = {
+  Assignments: () => import('#controllers/assignments_controller'),
   CourseRetrievals: () => import('#controllers/course_retrievals_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   NewCourses: () => import('#controllers/new_courses_controller'),
+  PerformanceReports: () => import('#controllers/performance_reports_controller'),
   Session: () => import('#controllers/session_controller'),
   StudentLists: () => import('#controllers/student_lists_controller'),
+  Submissions: () => import('#controllers/submissions_controller'),
+  Upload: () => import('#controllers/upload_controller'),
+  UserLists: () => import('#controllers/user_lists_controller'),
 }

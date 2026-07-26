@@ -1,3 +1,4 @@
+//File I mentioned earlier that makes perm storage possible
 import { indexEntities } from '@adonisjs/core'
 import { defineConfig } from '@adonisjs/core/app'
 
@@ -53,6 +54,7 @@ export default defineConfig({
     () => import('@adonisjs/static/static_provider'),
     () => import('@adonisjs/lucid/database_provider'),
     () => import('@adonisjs/auth/auth_provider'),
+    () => import('@adonisjs/drive/drive_provider'),
   ],
 
   /*
