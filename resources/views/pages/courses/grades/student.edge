@@ -16,7 +16,7 @@
 
         <thead>
             <tr>
-                <th>Assessment</th>
+                <th>Assignment</th>
                 <th>Due Date</th>
                 <th>Grade</th>
                 <th>Status</th>
@@ -26,29 +26,24 @@
 
         <tbody>
 
-            <tr>
-                <td>Assignment 1</td>
-                <td>Oct 10, 2026</td>
-                <td>85%</td>
-                <td>Graded</td>
-            </tr>
-
-
-            <tr>
-                <td>Midterm</td>
-                <td>Nov 5, 2026</td>
-                <td>78%</td>
-                <td>Graded</td>
-            </tr>
-
-
-            <tr>
-                <td>Assignment 2</td>
-                <td>Nov 20, 2026</td>
-                <td>-</td>
-                <td>Pending</td>
-            </tr>
-
+            @each(row in rows)
+                <tr>
+                    <td>{{ row.title }}</td>
+                    <td>{{ row.dueDate }}</td>
+                    <td>
+                        @if(row.score !== null)
+                            {{ row.score }}%
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td>{{ row.status }}</td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="4">No assignments in this course yet.</td>
+                </tr>
+            @endeach
 
         </tbody>
 

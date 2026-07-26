@@ -1,19 +1,9 @@
-@props({
-    user: null,
-    course: null
-})
-
-@let(path = request.url())
-@let(isCoursePage = path.match(/^\/courses\/\d+/))
-
-@let(courseId = path.split('/')[2])
-@let(courseName = 'CP164 - Data Structures')
-
+@let(courseId = course ? course.id : null)
 
 <header class="navbar">
     <div class="navbar-left">
 
-        <a href="/" class="navbar-logo">
+        <a href="{{ urlFor('home') }}" class="navbar-logo">
             Palanaeum Learning
         </a>
 
@@ -21,31 +11,22 @@
 
             @if(course)
 
-                <a class="navbar-link" href="/courses/{{ course.id }}">
+                <a class="navbar-link" href="{{ urlFor('courses.show', { id: courseId }) }}">
                     {{ course.code }} - {{ course.name }}
                 </a>
 
-                <a class="navbar-link" href="/courses/{{ courseId }}/assignments">
+                <a class="navbar-link" href="{{ urlFor('courses.assignments', { courseId: courseId }) }}">
                     Assignments
                 </a>
 
-                <a class="navbar-link" href="/courses/{{ courseId }}/grades">
+                <a class="navbar-link" href="{{ urlFor('courses.grades', { id: courseId }) }}">
                     Grades
                 </a>
 
-                <a class="navbar-link" href="/courses/{{ courseId }}/content">
-                    Content
-                </a>
-
-
                 @if(user && user.role === 'professor')
 
-                    <a href="/courses/{{ courseId }}/students">
+                    <a class="navbar-link" href="{{ urlFor('courses.students', { id: courseId }) }}">
                         Students
-                    </a>
-
-                    <a href="/courses/{{ courseId }}/announcements">
-                        Announcements
                     </a>
 
                 @endif
@@ -55,19 +36,25 @@
 
                 @if(user && user.role === 'student')
 
-                    <a class="navbar-link" href="/student/dashboard">
+                    <a class="navbar-link" href="{{ urlFor('dashboard') }}">
                         My Courses
                     </a>
 
 
                 @elseif(user && user.role === 'professor')
 
-                    <a href="/professor/dashboard">
+                    <a class="navbar-link" href="{{ urlFor('dashboard') }}">
                         Dashboard
                     </a>
 
-                    <a href="/professor/dashboard">
-                        My Courses
+                @elseif(user && user.role === 'admin')
+
+                    <a class="navbar-link" href="{{ urlFor('dashboard') }}">
+                        Dashboard
+                    </a>
+
+                    <a class="navbar-link" href="{{ urlFor('admin.users') }}">
+                        Manage Users
                     </a>
 
                 @endif
@@ -77,9 +64,21 @@
     </div>
 
     <div class="navbar-right">
-        <span>
-            {{ user?.fullName ?? 'Guest' }}
-        </span>
+        @if(user)
+            <a href="{{ urlFor('profile') }}" class="navbar-link">
+                @!avatar({
+                    initials: user.initials,
+                    style: 'display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:#374151; color:white; font-size:12px; vertical-align:middle;'
+                })
+                <span>{{ user.fullName }}</span>
+            </a>
+
+            @form({ route: 'session.destroy', method: 'POST' })
+                @!button({ text: 'Logout', type: 'submit' })
+            @end
+        @else
+            <span>Guest</span>
+        @endif
     </div>
 
 </header>

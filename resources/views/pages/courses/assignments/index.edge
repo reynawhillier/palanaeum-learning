@@ -1,0 +1,48 @@
+@layouts.app({
+    user: user
+})
+
+@slot('main')
+
+<div class="assignments-page">
+    <div class="page-header">
+        <h1>Assignments</h1>
+
+        @if(user.role === 'professor')
+            <a href="{{ urlFor('assignments.create', { courseId: courseId }) }}" class="btn">
+                Create Assignment
+            </a>
+        @endif
+    </div>
+
+    <div class="assignment-list">
+
+        @each(assignment in assignments)
+            <div class="card">
+                <h2>
+                    <a href="{{ urlFor('assignments.show', { courseId: courseId, assignmentId: assignment.id }) }}">
+                        {{ assignment.title }}
+                    </a>
+                </h2>
+
+                <p>Due: {{ assignment.due }}</p>
+
+                @if(user.role === 'professor')
+                    <p>Submissions: {{ assignment.submissionCount }}</p>
+                @else
+                    @if(assignment.submitted)
+                        <span style="color:green; font-weight:bold;">Submitted</span>
+                    @else
+                        <span style="color:red; font-weight:bold;">Not Submitted</span>
+                    @endif
+                @endif
+            </div>
+        @else
+            <p>No assignments yet.</p>
+        @endeach
+
+    </div>
+</div>
+
+@endslot
+@end

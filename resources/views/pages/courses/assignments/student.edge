@@ -1,31 +1,60 @@
 @layouts.app()
 
-
 <h1>
     Student Assignments
 </h1>
 
+<p>Course ID: {{ courseId }}</p>
 
 <div class="assignment-list">
 
+    @each(a in assignments)
 
-    <div class="card">
+        <div class="card">
 
-        <h2>
-            Assignment 1
-        </h2>
+            <h2>
+                {{ a.name }}
+            </h2>
 
-        <p>
-            Due: October 10
-        </p>
+            <p>
+                Due: {{ a.due }}
+            </p>
 
+            @if(a.submitted)
 
-        <a href="/courses/{{ courseId }}/assignments/1">
-            View Assignment
-        </a>
+                <span>
+                    Submitted
+                </span>
 
-    </div>
+                <br>
 
+                <a href="{{ urlFor('submissions.file', {
+                    courseId: courseId,
+                    assignmentId: a.id
+                }) }}">
+                    View File
+                </a>
+
+            @else
+
+                <span>
+                    Not Submitted
+                </span>
+
+                <br>
+
+                <a href="{{ urlFor('submissions.create', {
+                    courseId: courseId,
+                    assignmentId: a.id
+                }) }}">
+                    Submit Assignment
+                </a>
+
+            @end
+
+        </div>
+
+    @endeach
 
 </div>
 

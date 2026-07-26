@@ -1,0 +1,46 @@
+@layouts.app({
+    user: user
+})
+
+@slot('main')
+
+<div class="form-container">
+    <h1>Grade Submission</h1>
+
+    <p>Student: {{ submission.first_name }} {{ submission.last_name }}</p>
+    <p>File: {{ submission.file_name }}</p>
+
+    @form({ route: 'assignments.grade.store', routeParams: { courseId: courseId, assignmentId: assignmentId, submissionId: submissionId }, method: 'POST' })
+
+        <div>
+            @field.root({ name: 'score' })
+                @!field.label({ text: 'Score (0-100)' })
+                @!input.control({ type: 'number', min: '0', max: '100', value: submission.score })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @field.root({ name: 'feedback' })
+                @!field.label({ text: 'Feedback' })
+                @!textarea.control({ value: submission.feedback })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @!button({ text: 'Save Grade', type: 'submit' })
+        </div>
+
+    @end
+
+    @if(submission.score !== null)
+        @form({ route: 'assignments.grade.destroy', routeParams: { courseId: courseId, assignmentId: assignmentId, submissionId: submissionId }, method: 'POST' })
+            @!button({ text: 'Delete Grade', type: 'submit', style: 'color:red;' })
+        @end
+    @endif
+
+</div>
+
+@endslot
+@end

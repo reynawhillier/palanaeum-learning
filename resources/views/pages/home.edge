@@ -6,22 +6,12 @@
     </h1>
 
     <p>
-        Development Login
+        Coursework, assignments, and grades in one place.
     </p>
 
     <div class="dashboard-links">
-
-        <a href="/student/dashboard">
-            Login as Student
-        </a>
-
-        <a href="/professor/dashboard">
-            Login as Professor
-        </a>
-
-        <a href="/admin/dashboard">
-            Login as Admin
-        </a>
+        @!link({ route: 'session.create', text: 'Log in', class: 'btn btn-primary' })
+        @!link({ route: 'new_account.create', text: 'Sign up' })
     </div>
 </section>
 

@@ -5,14 +5,14 @@
 @slot('main')
 
 <div class="form-container">
-    <h1>Create Assignment</h1>
+    <h1>Edit Assignment</h1>
 
-    @form({ route: 'assignments.store', routeParams: { courseId: courseId }, method: 'POST' })
+    @form({ route: 'assignments.update', routeParams: { courseId: courseId, assignmentId: assignment.id }, method: 'POST' })
 
         <div>
             @field.root({ name: 'title' })
                 @!field.label({ text: 'Assignment Title' })
-                @!input.control({ type: 'text' })
+                @!input.control({ type: 'text', value: assignment.title })
                 @!field.error()
             @end
         </div>
@@ -20,7 +20,7 @@
         <div>
             @field.root({ name: 'description' })
                 @!field.label({ text: 'Description' })
-                @!textarea.control()
+                @!textarea.control({ value: assignment.description })
                 @!field.error()
             @end
         </div>
@@ -28,15 +28,19 @@
         <div>
             @field.root({ name: 'due_date' })
                 @!field.label({ text: 'Due Date' })
-                @!input.control({ type: 'date' })
+                @!input.control({ type: 'date', value: assignment.dueDate })
                 @!field.error()
             @end
         </div>
 
         <div>
-            @!button({ text: 'Create Assignment', type: 'submit' })
+            @!button({ text: 'Save Changes', type: 'submit' })
         </div>
 
+    @end
+
+    @form({ route: 'assignments.destroy', routeParams: { courseId: courseId, assignmentId: assignment.id }, method: 'POST' })
+        @!button({ text: 'Delete Assignment', type: 'submit', style: 'color:red;' })
     @end
 
 </div>

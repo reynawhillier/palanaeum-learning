@@ -16,38 +16,54 @@
         <thead>
             <tr>
                 <th>Student</th>
-                <th>Assignment 1</th>
-                <th>Midterm</th>
-                <th>Assignment 2</th>
+                @each(assignment in assignments)
+                    <th>{{ assignment.title }}</th>
+                @endeach
                 <th>Average</th>
             </tr>
         </thead>
 
         <tbody>
 
-            <tr>
-                <td>Alice Johnson</td>
-                <td>85%</td>
-                <td>78%</td>
-                <td>92%</td>
-                <td>85%</td>
-            </tr>
+            @each(row in rows)
+                <tr>
+                    <td>{{ row.name }}</td>
 
-            <tr>
-                <td>John Smith</td>
-                <td>90%</td>
-                <td>84%</td>
-                <td>88%</td>
-                <td>87%</td>
-            </tr>
+                    @each(cell in row.cells)
+                        <td>
+                            @if(cell.score !== null)
+                                {{ cell.score }}%
+                                <br>
+                                <a href="{{ urlFor('assignments.grade.edit', {
+                                    courseId: course.id,
+                                    assignmentId: cell.assignmentId,
+                                    submissionId: cell.submissionId
+                                }) }}">Edit</a>
+                            @elseif(cell.submissionId)
+                                <a href="{{ urlFor('assignments.grade.edit', {
+                                    courseId: course.id,
+                                    assignmentId: cell.assignmentId,
+                                    submissionId: cell.submissionId
+                                }) }}">Grade</a>
+                            @else
+                                <span style="color:#999;">Not submitted</span>
+                            @endif
+                        </td>
+                    @endeach
 
-            <tr>
-                <td>Sarah Lee</td>
-                <td>72%</td>
-                <td>80%</td>
-                <td>75%</td>
-                <td>76%</td>
-            </tr>
+                    <td>
+                        @if(row.average !== null)
+                            {{ row.average }}%
+                        @else
+                            -
+                        @endif
+                    </td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="{{ assignments.length + 2 }}">No students enrolled in this course.</td>
+                </tr>
+            @endeach
 
         </tbody>
 
@@ -56,7 +72,7 @@
 
     <div class="grade-actions">
 
-        <a href="/courses/{{ course.id }}/assignments">
+        <a href="{{ urlFor('courses.assignments', { courseId: course.id }) }}">
             View Assignments
         </a>
 
