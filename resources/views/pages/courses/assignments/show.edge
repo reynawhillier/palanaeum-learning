@@ -6,6 +6,10 @@
 @slot('main')
 
 <div class="assignment-detail">
+    
+    <a href="{{ urlFor('courses.assignments', { courseId: courseId }) }}">
+        &larr; Back to Assignments
+    </a>
 
     <h1>{{ assignment.title }}</h1>
     <p>Due: {{ assignment.dueDate }}</p>
