@@ -12,12 +12,10 @@ export type ScannedRoutes = {
     'reports.performance.print': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'reports.performance': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'reports.performance.generate.get': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
-    'submissions.form': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
     'profile.update': { paramsTuple?: []; params?: {} }
-    'submissions.validate': { paramsTuple?: []; params?: {} }
     'reports.performance.generate': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
@@ -48,7 +46,6 @@ export type ScannedRoutes = {
     'reports.performance.print': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'reports.performance': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'reports.performance.generate.get': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
-    'submissions.form': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
@@ -71,7 +68,6 @@ export type ScannedRoutes = {
     'reports.performance.print': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'reports.performance': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'reports.performance.generate.get': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
-    'submissions.form': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
     'user_lists.index': { paramsTuple?: []; params?: {} }
@@ -92,7 +88,6 @@ export type ScannedRoutes = {
     'session.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'profile.update': { paramsTuple?: []; params?: {} }
-    'submissions.validate': { paramsTuple?: []; params?: {} }
     'reports.performance.generate': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'upload.store': { paramsTuple?: []; params?: {} }
     'assignments.store': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }

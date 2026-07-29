@@ -46,8 +46,6 @@ router
       ])
       .as('reports.performance.generate.get')
 
-    router.get('/submissions/validate', [controllers.Submissions, 'create']).as('submissions.form')
-
     // router
     //   .get('/courses/:courseId/assignments/:assignmentId/submit', [
     //     controllers.Assignments,
@@ -72,10 +70,6 @@ router
     router.get('/dashboard', [controllers.Dashboard, 'index']).as('dashboard')
     router.get('/profile', [controllers.Profile, 'show']).as('profile')
     router.post('/profile', [controllers.Profile, 'update']).as('profile.update')
-
-    router
-      .post('/submissions/validate', [controllers.Submissions, 'store'])
-      .as('submissions.validate')
 
     // router
     //   .post('/courses/:courseId/assignments/:assignmentId/submit', [
