@@ -44,9 +44,13 @@ export default class DashboardController {
       return ctx.view.render('pages/dashboards/admin', { user })
     }
 
-    // Logged-in user with no students/professors/admins row — shouldn't
-    // normally happen, but don't leave them stuck in a redirect loop.
-    session.flash('error', 'Your account is not linked to a student, professor, or admin record.')
-    return response.redirect().toRoute('session.create')
+    // Logged-in user with no students/professors/admins row (typically a
+    // fresh self-signup awaiting admin role assignment). Redirecting to
+    // the login page here would loop forever - GuestMiddleware bounces
+    // authenticated users away from it, straight back to '/', which
+    // redirects to /dashboard again. Send them somewhere that works for
+    // any authenticated user instead.
+    session.flash('error', 'Your account is not yet linked to a role. Contact an administrator.')
+    return response.redirect().toRoute('profile')
   }
 }
