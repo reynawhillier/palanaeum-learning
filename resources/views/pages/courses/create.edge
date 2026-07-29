@@ -1,0 +1,55 @@
+@layouts.app({
+    user: user
+})
+
+@slot('main')
+
+<div class="form-container">
+    <h1>Create Course</h1>
+
+    @form({ route: 'courses.store', method: 'POST' })
+
+        <div>
+            @field.root({ name: 'course_code' })
+                @!field.label({ text: 'Course Code' })
+                @!input.control({ type: 'text', placeholder: 'CP164' })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @field.root({ name: 'course_name' })
+                @!field.label({ text: 'Course Name' })
+                @!input.control({ type: 'text', placeholder: 'Data Structures' })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @field.root({ name: 'term' })
+                @!field.label({ text: 'Term' })
+                @!input.control({ type: 'text', placeholder: 'Fall 2026' })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @field.root({ name: 'program_id' })
+                @!field.label({ text: 'Program' })
+                @!select.control({
+                    options: programs.map((p) => ({ value: p.program_id, name: p.program_name }))
+                })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @!button({ text: 'Create Course', type: 'submit' })
+        </div>
+
+    @end
+
+</div>
+
+@endslot
+@end

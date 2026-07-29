@@ -9,6 +9,10 @@
         <h1 class="dashboard-title">
             Welcome {{ user.fullName }}
         </h1>
+
+        <a href="{{ urlFor('courses.create') }}" class="btn">
+            Create Course
+        </a>
     </div>
 
     <div class="dashboard-grid">
