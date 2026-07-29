@@ -28,7 +28,11 @@
 
             @each(row in rows)
                 <tr>
-                    <td>{{ row.title }}</td>
+                    <td>
+                        <a href="{{ urlFor('assignments.show', { courseId: course.id, assignmentId: row.id }) }}">
+                            {{ row.title }}
+                        </a>
+                    </td>
                     <td>{{ row.dueDate }}</td>
                     <td>
                         @if(row.score !== null)
