@@ -31,6 +31,14 @@
 
                 @endif
 
+                @if(user && (user.role === 'professor' || user.role === 'admin'))
+
+                    <a class="navbar-link" href="{{ urlFor('reports.performance', { courseId: courseId }) }}">
+                        Performance Report
+                    </a>
+
+                @endif
+
 
             @else
 
