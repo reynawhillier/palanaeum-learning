@@ -9,11 +9,24 @@ import drive from '@adonisjs/drive/services/main'
 import db from '@adonisjs/lucid/services/db'
 
 export default class AssignmentsController {
+  private async getCourse(courseId: number) {
+    const row = await db
+      .from('courses')
+      .where('course_id', courseId)
+      .select('course_id', 'course_code', 'course_name')
+      .first()
+ 
+    if (!row) return null
+ 
+    return { id: row.course_id, code: row.course_code, name: row.course_name }
+  }
+
   // GET /courses/:courseId/assignments
   async index(ctx: HttpContext) {
     const { view, params } = ctx
     const user = sessionUser(ctx)
     const courseId = Number(params.courseId)
+    const course = await this.getCourse(courseId)
 
     const assignmentRows = await db
       .from('assignments')
@@ -40,7 +53,7 @@ export default class AssignmentsController {
         submissionCount: countByAssignment.get(a.assignment_id) ?? 0,
       }))
 
-      return view.render('pages/courses/assignments/index', { user, courseId, assignments })
+      return view.render('pages/courses/assignments/index', { user, courseId, course, assignments })
     }
 
     // student
@@ -58,14 +71,16 @@ export default class AssignmentsController {
       submitted: submittedIds.has(Number(a.assignment_id)),
     }))
 
-    return view.render('pages/courses/assignments/index', { user, courseId, assignments })
+    return view.render('pages/courses/assignments/index', { user, courseId, course, assignments })
   }
 
   // GET /courses/:courseId/assignments/create  (professor only, enforced by route middleware)
   async create(ctx: HttpContext) {
     const user = sessionUser(ctx)
     const courseId = Number(ctx.params.courseId)
-    return ctx.view.render('pages/courses/assignments/create', { user, courseId })
+    const course = await this.getCourse(courseId)
+
+    return ctx.view.render('pages/courses/assignments/create', { user, courseId, course })
   }
 
   // POST /courses/:courseId/assignments  (professor only)
@@ -90,6 +105,7 @@ export default class AssignmentsController {
     const user = sessionUser(ctx)
     const courseId = Number(params.courseId)
     const assignmentId = Number(params.assignmentId)
+    const course = await this.getCourse(courseId)
 
     const assignmentRow = await db
       .from('assignments')
@@ -127,6 +143,7 @@ export default class AssignmentsController {
       return view.render('pages/courses/assignments/show', {
         user,
         courseId,
+        course,
         assignment,
         submissions,
       })
@@ -150,6 +167,7 @@ export default class AssignmentsController {
     return view.render('pages/courses/assignments/show', {
       user,
       courseId,
+      course,
       assignment,
       submission,
     })
@@ -160,6 +178,7 @@ export default class AssignmentsController {
     const user = sessionUser(ctx)
     const courseId = Number(ctx.params.courseId)
     const assignmentId = Number(ctx.params.assignmentId)
+    const course = await this.getCourse(courseId)
 
     const assignmentRow = await db
       .from('assignments')
@@ -174,6 +193,7 @@ export default class AssignmentsController {
     return ctx.view.render('pages/courses/assignments/edit', {
       user,
       courseId,
+      course,
       assignment: {
         id: assignmentRow.assignment_id,
         title: assignmentRow.title,
@@ -310,6 +330,7 @@ export default class AssignmentsController {
     const courseId = Number(ctx.params.courseId)
     const assignmentId = Number(ctx.params.assignmentId)
     const submissionId = Number(ctx.params.submissionId)
+    const course = await this.getCourse(courseId)
 
     const submission = await db
       .from('submissions')
@@ -332,6 +353,7 @@ export default class AssignmentsController {
     return ctx.view.render('pages/courses/assignments/grade', {
       user,
       courseId,
+      course,
       assignmentId,
       submissionId,
       submission,
