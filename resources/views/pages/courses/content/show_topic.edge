@@ -1,0 +1,66 @@
+@layouts.app({
+    user: user,
+    course: course
+})
+
+@slot('main')
+
+<div class="content-topic">
+    <a href="{{ urlFor('courses.content', { courseId: courseId }) }}">
+        &larr; Back to Content
+    </a>
+
+    <div class="page-header">
+        <div>
+            <h1>{{ topic.title }}</h1>
+
+            @if(topic.description)
+                <p>{{ topic.description }}</p>
+            @endif
+        </div>
+
+        @if(canManage)
+            <div>
+                <a href="{{ urlFor('course_content.items.create', { courseId: courseId, topicId: topic.content_topic_id }) }}" class="btn">
+                    Add Content
+                </a>
+
+                @form({ route: 'course_content.topics.destroy', routeParams: { courseId: courseId, topicId: topic.content_topic_id }, method: 'POST' })
+                    @!button({ text: 'Delete Topic', type: 'submit', style: 'color:red;' })
+                @end
+            </div>
+        @endif
+    </div>
+
+    <div class="content-items">
+        @each(item in items)
+            <div class="card">
+                <h2>{{ item.title }}</h2>
+
+                @if(item.body)
+                    <p>{{ item.body }}</p>
+                @endif
+
+                @if(item.file_name)
+                    <p>
+                        File:
+                        <a href="{{ urlFor('course_content.items.file', { courseId: courseId, itemId: item.content_item_id }) }}" target="_blank">
+                            {{ item.file_name }}
+                        </a>
+                    </p>
+                @endif
+
+                @if(canManage)
+                    @form({ route: 'course_content.items.destroy', routeParams: { courseId: courseId, topicId: topic.content_topic_id, itemId: item.content_item_id }, method: 'POST' })
+                        @!button({ text: 'Delete Item', type: 'submit', style: 'color:red;' })
+                    @end
+                @endif
+            </div>
+        @else
+            <p>No content has been added to this topic yet.</p>
+        @endeach
+    </div>
+</div>
+
+@endslot
+@end

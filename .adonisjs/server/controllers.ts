@@ -5,6 +5,7 @@
 
 export const controllers = {
   Assignments: () => import('#controllers/assignments_controller'),
+  CourseContents: () => import('#controllers/course_contents_controller'),
   CourseRetrievals: () => import('#controllers/course_retrievals_controller'),
   Courses: () => import('#controllers/courses_controller'),
   Dashboard: () => import('#controllers/dashboard_controller'),

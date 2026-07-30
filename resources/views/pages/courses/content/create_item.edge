@@ -1,0 +1,48 @@
+@layouts.app({
+    user: user,
+    course: course
+})
+
+@slot('main')
+
+<div class="content-create-item">
+    <a href="{{ urlFor('course_content.topics.show', { courseId: courseId, topicId: topic.content_topic_id }) }}">
+        &larr; Back to Topic
+    </a>
+
+    <h1>Add Content</h1>
+    <p>Topic: {{ topic.title }}</p>
+
+    @form({ route: 'course_content.items.store', routeParams: { courseId: courseId, topicId: topic.content_topic_id }, method: 'POST', enctype: 'multipart/form-data' })
+        <div>
+            @field.root({ name: 'title' })
+                @!field.label({ text: 'Content title' })
+                @!input.control({ type: 'text' })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @field.root({ name: 'body' })
+                @!field.label({ text: 'Text content' })
+                @!textarea.control()
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @field.root({ name: 'content_file' })
+                @!field.label({ text: 'Optional file' })
+                @!input.control({ type: 'file', accept: '.pdf,.doc,.docx,.txt,.zip,.png,.jpg,.jpeg' })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @!button({ text: 'Add Content', type: 'submit' })
+        </div>
+    @end
+</div>
+
+@endslot
+@end

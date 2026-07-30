@@ -11,6 +11,8 @@ import { controllers } from '#generated/controllers'
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
+const CourseContentsController = () => import('#controllers/course_contents_controller')
+
 // router.on('/').render('pages/dashboard').as('home')
 
 // Guest routes
@@ -81,6 +83,65 @@ router
 router
   .group(() => {
     router.post('/upload', [controllers.Upload, 'store'])
+  })
+  .use(middleware.auth())
+
+// Course content: professor-only create/delete.
+router
+  .group(() => {
+    router
+      .get('/courses/:courseId/content/topics/create', [CourseContentsController, 'createTopic'])
+      .as('course_content.topics.create')
+
+    router
+      .post('/courses/:courseId/content/topics', [CourseContentsController, 'storeTopic'])
+      .as('course_content.topics.store')
+
+    router
+      .get('/courses/:courseId/content/topics/:topicId/items/create', [
+        CourseContentsController,
+        'createItem',
+      ])
+      .as('course_content.items.create')
+
+    router
+      .post('/courses/:courseId/content/topics/:topicId/items', [
+        CourseContentsController,
+        'storeItem',
+      ])
+      .as('course_content.items.store')
+
+    router
+      .post('/courses/:courseId/content/topics/:topicId/delete', [
+        CourseContentsController,
+        'destroyTopic',
+      ])
+      .as('course_content.topics.destroy')
+
+    router
+      .post('/courses/:courseId/content/topics/:topicId/items/:itemId/delete', [
+        CourseContentsController,
+        'destroyItem',
+      ])
+      .as('course_content.items.destroy')
+  })
+  .use(middleware.auth())
+  .use(middleware.role({ roles: ['professor'] }))
+
+// Course content: any authenticated course member can view.
+router
+  .group(() => {
+    router
+      .get('/courses/:courseId/content', [CourseContentsController, 'index'])
+      .as('courses.content')
+
+    router
+      .get('/courses/:courseId/content/topics/:topicId', [CourseContentsController, 'showTopic'])
+      .as('course_content.topics.show')
+
+    router
+      .get('/courses/:courseId/content/items/:itemId/file', [CourseContentsController, 'file'])
+      .as('course_content.items.file')
   })
   .use(middleware.auth())
 
@@ -184,6 +245,7 @@ router
   })
   .use(middleware.auth())
   .use(middleware.role({ roles: ['professor', 'admin'] }))
+
 // Courses: admin-only enrollment.
 router
   .group(() => {

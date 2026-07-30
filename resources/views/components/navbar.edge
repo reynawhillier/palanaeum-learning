@@ -15,6 +15,10 @@
                     {{ course.code }} - {{ course.name }}
                 </a>
 
+                <a class="navbar-link" href="{{ urlFor('courses.content', { courseId: courseId }) }}">
+                    Content
+                </a>
+                
                 <a class="navbar-link" href="{{ urlFor('courses.assignments', { courseId: courseId }) }}">
                     Assignments
                 </a>
