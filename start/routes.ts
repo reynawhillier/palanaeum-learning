@@ -232,5 +232,25 @@ router
   })
   .use(middleware.auth())
 
+// Admin: user directory + role assignment
+router
+  .group(() => {
+    router.get('/admin/users', [controllers.UserLists, 'index']).as('admin.users')
 
+    router
+      .get('/admin/users/:id/change-role', [controllers.UserLists, 'changeRoleForm'])
+      .as('admin.users.change_role.form')
+    router
+      .post('/admin/users/:id/change-role', [controllers.UserLists, 'changeRole'])
+      .as('admin.users.change_role')
+  })
+  .use(middleware.auth())
+  .use(middleware.role({ roles: ['admin'] }))
 
+// Admin: enroll a student in a course 
+router
+  .group(() => {
+    router.post('/courses/:id/enrollments', [controllers.Courses, 'enroll']).as('courses.enroll')
+  })
+  .use(middleware.auth())
+  .use(middleware.role({ roles: ['admin'] }))

@@ -38,6 +38,10 @@ export type ScannedRoutes = {
     'courses.students': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'courses.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'courses.grades': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.users': { paramsTuple?: []; params?: {} }
+    'admin.users.change_role.form': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.users.change_role': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'courses.enroll': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   GET: {
     'drive.fs.serve': { paramsTuple: [...ParamValue[]]; params: {'*': ParamValue[]} }
@@ -60,6 +64,8 @@ export type ScannedRoutes = {
     'courses.students': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'courses.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'courses.grades': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.users': { paramsTuple?: []; params?: {} }
+    'admin.users.change_role.form': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   HEAD: {
     'drive.fs.serve': { paramsTuple: [...ParamValue[]]; params: {'*': ParamValue[]} }
@@ -82,6 +88,8 @@ export type ScannedRoutes = {
     'courses.students': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'courses.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'courses.grades': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.users': { paramsTuple?: []; params?: {} }
+    'admin.users.change_role.form': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   POST: {
     'new_account.store': { paramsTuple?: []; params?: {} }
@@ -98,6 +106,8 @@ export type ScannedRoutes = {
     'assignments.submit': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
     'courses.store': { paramsTuple?: []; params?: {} }
     'courses.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.users.change_role': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'courses.enroll': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }
 declare module '@adonisjs/core/types/http' {

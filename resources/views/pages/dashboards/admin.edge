@@ -1,4 +1,6 @@
-@layouts.app()
+@layouts.app({
+    user: user
+})
 
 <div class="dashboard">
 
@@ -10,11 +12,14 @@
 
     <div class="dashboard-grid">
 
-        <div class="card">
+        <a href="{{ urlFor('admin.users') }}" class="card">
             <h2 class="card-title">
-                Tasks
+                Manage Users
             </h2>
-        </div>
+            <p class="card-text">
+                View school personnel and control account access.
+            </p>
+        </a>
 
     </div>
 
