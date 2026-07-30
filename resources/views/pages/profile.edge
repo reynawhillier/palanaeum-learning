@@ -1,39 +1,39 @@
-<layout.app>
+@layouts.app({
+    user: user
+})
 
-  <slot name="main">
-    <h1>Profile</h1>
-  </slot>
-
+@slot('main')
 <h1>Profile</h1>
 
-<div style="background:white; padding:20px; border-radius:10px; margin-top:15px;">
+<div style="background:white; padding:20px; border-radius:10px; margin-top:15px; max-width:480px;">
 
-  <h2 style="margin-top:0;">John Doe</h2>
+    <div style="margin-bottom:20px;">
+        @!avatar({
+            initials: user.initials,
+            style: 'display:inline-flex; align-items:center; justify-content:center; width:64px; height:64px; border-radius:50%; background:#111827; color:white; font-weight:bold;'
+        })
+    </div>
 
-  <p><strong>Email:</strong> johndoe@example.com</p>
-  <p><strong>Program:</strong> Software Engineering</p>
-  <p><strong>Level:</strong> 2nd Year</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Role:</strong> {{ user.role }}</p>
+
+    @form({ route: 'profile.update', method: 'POST' })
+
+        <div>
+            @field.root({ name: 'fullName' })
+                @!field.label({ text: 'Full name' })
+                @!input.control({ type: 'text', value: user.fullName })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @!button({ text: 'Save Changes', type: 'submit' })
+        </div>
+
+    @end
 
 </div>
-
-<div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:15px; margin-top:20px;">
-
-  <div style="background:white; padding:15px; border-radius:10px;">
-    <h3>Courses</h3>
-    <p>5 enrolled</p>
-  </div>
-
-  <div style="background:white; padding:15px; border-radius:10px;">
-    <h3>Assignments</h3>
-    <p>3 pending</p>
-  </div>
-
-  <div style="background:white; padding:15px; border-radius:10px;">
-    <h3>Average Grade</h3>
-    <p>84%</p>
-  </div>
-
-</div>
-</layout.app>
+@endslot
 
 @end

@@ -1,0 +1,120 @@
+@layouts.app({
+    user: user,
+    course: course
+})
+
+@slot('main')
+
+<div class="assignment-detail">
+    
+    <a href="{{ urlFor('courses.assignments', { courseId: courseId }) }}">
+        &larr; Back to Assignments
+    </a>
+
+    <h1>{{ assignment.title }}</h1>
+    <p>Due: {{ assignment.dueDate }}</p>
+
+    @if(assignment.description)
+        <p>{{ assignment.description }}</p>
+    @endif
+
+    @if(user.role === 'professor')
+
+        <div class="assignment-actions">
+            <a href="{{ urlFor('assignments.edit', { courseId: courseId, assignmentId: assignment.id }) }}">
+                Edit
+            </a>
+
+            @form({ route: 'assignments.destroy', routeParams: { courseId: courseId, assignmentId: assignment.id }, method: 'POST' })
+                @!button({ text: 'Delete', type: 'submit', style: 'color:red;' })
+            @end
+        </div>
+
+        <h2>Submissions</h2>
+
+        <table style="width:100%; border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th style="text-align:left; padding:8px;">Student</th>
+                    <th style="text-align:left; padding:8px;">File</th>
+                    <th style="text-align:left; padding:8px;">Submitted</th>
+                    <th style="text-align:left; padding:8px;">Grade</th>
+                    <th style="text-align:left; padding:8px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(submission in submissions)
+                    <tr>
+                        <td style="padding:8px;">{{ submission.first_name }} {{ submission.last_name }}</td>
+                        <td style="padding:8px;">
+                            <a href="{{ urlFor('assignments.file', { courseId: courseId, assignmentId: assignment.id, submissionId: submission.submission_id }) }}" target="_blank">
+                                {{ submission.file_name }}
+                            </a>
+                        </td>
+                        <td style="padding:8px;">{{ submission.submitted_at }}</td>
+                        <td style="padding:8px;">
+                            @if(submission.score !== null)
+                                {{ submission.score }}%
+                            @else
+                                Not graded
+                            @endif
+                        </td>
+                        <td style="padding:8px;">
+                            <a href="{{ urlFor('assignments.grade.edit', { courseId: courseId, assignmentId: assignment.id, submissionId: submission.submission_id }) }}">
+                                {{ submission.score !== null ? 'Edit grade' : 'Grade' }}
+                            </a>
+                        </td>
+                    </tr>
+                @else
+                    <tr>
+                        <td colspan="5" style="padding:8px;">No submissions yet.</td>
+                    </tr>
+                @endeach
+            </tbody>
+        </table>
+
+    @else
+
+        @if(submission)
+            <h2>Your submission</h2>
+            <p>File: {{ submission.file_name }}</p>
+            <p>Submitted: {{ submission.submitted_at }}</p>
+            <p>
+                Grade:
+                @if(submission.score !== null)
+                    {{ submission.score }}%
+                @else
+                    Not graded yet
+                @endif
+            </p>
+            @if(submission.feedback)
+                <p>Feedback: {{ submission.feedback }}</p>
+            @endif
+
+            <a href="{{ urlFor('assignments.file', { courseId: courseId, assignmentId: assignment.id, submissionId: submission.submission_id }) }}" target="_blank">
+                View submitted file
+            </a>
+        @else
+            <h2>Submit your work</h2>
+
+            @form({ route: 'assignments.submit', routeParams: { courseId: courseId, assignmentId: assignment.id }, method: 'POST', enctype: 'multipart/form-data' })
+                <div>
+                    @field.root({ name: 'submission' })
+                        @!field.label({ text: 'Choose file' })
+                        @!input.control({ type: 'file', accept: '.pdf,.doc,.docx,.txt,.zip' })
+                        @!field.error()
+                    @end
+                </div>
+
+                <div>
+                    @!button({ text: 'Submit', type: 'submit' })
+                </div>
+            @end
+        @endif
+
+    @endif
+
+</div>
+
+@endslot
+@end

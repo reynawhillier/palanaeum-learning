@@ -1,11 +1,27 @@
 import performanceReportService from '#services/performance_report_service'
+import { sessionUser } from '#services/role_service'
 import type { HttpContext } from '@adonisjs/core/http'
 import db from '@adonisjs/lucid/services/db'
 
 export default class PerformanceReportsController {
-  public async index({ view, params, auth, response }: HttpContext) {
+  private async getCourse(courseId: number) {
+    const row = await db
+      .from('courses')
+      .where('course_id', courseId)
+      .select('course_id', 'course_code', 'course_name')
+      .first()
+ 
+    if (!row) return null
+ 
+    return { id: row.course_id, code: row.course_code, name: row.course_name }
+  }
+  
+  public async index(ctx: HttpContext) {
+    const { params, auth, response, view } = ctx
     const courseId = Number(params.courseId)
     const userId = auth.user!.id
+    const user = sessionUser(ctx)
+    const course = await this.getCourse(courseId)
 
     const canAccessReport = await this.canAccessCourseReport(userId, courseId)
 
@@ -14,14 +30,19 @@ export default class PerformanceReportsController {
     }
 
     return view.render('pages/reports/performance', {
+      user,
+      course,
       courseId,
       report: null,
     })
   }
 
-  public async generate({ view, params, auth, response }: HttpContext) {
+  public async generate(ctx: HttpContext) {
+    const { view, params, auth, response } = ctx
     const courseId = Number(params.courseId)
     const userId = auth.user!.id
+    const user = sessionUser(ctx)
+    const course = await this.getCourse(courseId)
 
     const canAccessReport = await this.canAccessCourseReport(userId, courseId)
 
@@ -36,6 +57,8 @@ export default class PerformanceReportsController {
     }
 
     return view.render('pages/reports/performance', {
+      user,
+      course,
       courseId,
       report,
     })

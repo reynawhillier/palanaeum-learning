@@ -1,0 +1,18 @@
+@layouts.app()
+
+<section class="hero">
+    <h1>
+        Palanaeum Learning
+    </h1>
+
+    <p>
+        Coursework, assignments, and grades in one place.
+    </p>
+
+    <div class="dashboard-links">
+        @!link({ route: 'session.create', text: 'Log in', class: 'btn btn-primary' })
+        @!link({ route: 'new_account.create', text: 'Sign up' })
+    </div>
+</section>
+
+@end

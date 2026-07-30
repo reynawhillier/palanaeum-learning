@@ -1,0 +1,92 @@
+@let(courseId = course ? course.id : null)
+
+<header class="navbar">
+    <div class="navbar-left">
+
+        <a href="{{ urlFor('home') }}" class="navbar-logo">
+            Palanaeum Learning
+        </a>
+
+        <nav class="navbar-links">
+
+            @if(course)
+
+                <a class="navbar-link" href="{{ urlFor('courses.show', { id: courseId }) }}">
+                    {{ course.code }} - {{ course.name }}
+                </a>
+
+                <a class="navbar-link" href="{{ urlFor('courses.assignments', { courseId: courseId }) }}">
+                    Assignments
+                </a>
+
+                <a class="navbar-link" href="{{ urlFor('courses.grades', { id: courseId }) }}">
+                    Grades
+                </a>
+
+                @if(user && user.role === 'professor')
+
+                    <a class="navbar-link" href="{{ urlFor('courses.students', { id: courseId }) }}">
+                        Students
+                    </a>
+
+                @endif
+
+                @if(user && (user.role === 'professor' || user.role === 'admin'))
+
+                    <a class="navbar-link" href="{{ urlFor('reports.performance', { courseId: courseId }) }}">
+                        Performance Report
+                    </a>
+
+                @endif
+
+
+            @else
+
+                @if(user && user.role === 'student')
+
+                    <a class="navbar-link" href="{{ urlFor('dashboard') }}">
+                        My Courses
+                    </a>
+
+
+                @elseif(user && user.role === 'professor')
+
+                    <a class="navbar-link" href="{{ urlFor('dashboard') }}">
+                        Dashboard
+                    </a>
+
+                @elseif(user && user.role === 'admin')
+
+                    <a class="navbar-link" href="{{ urlFor('dashboard') }}">
+                        Dashboard
+                    </a>
+
+                    <a class="navbar-link" href="{{ urlFor('admin.users') }}">
+                        Manage Users
+                    </a>
+
+                @endif
+
+            @endif
+        </nav>
+    </div>
+
+    <div class="navbar-right">
+        @if(user)
+            <a href="{{ urlFor('profile') }}" class="navbar-link">
+                @!avatar({
+                    initials: user.initials,
+                    style: 'display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:#374151; color:white; font-size:12px; vertical-align:middle;'
+                })
+                <span>{{ user.fullName }}</span>
+            </a>
+
+            @form({ route: 'session.destroy', method: 'POST' })
+                @!button({ text: 'Logout', type: 'submit' })
+            @end
+        @else
+            <span>Guest</span>
+        @endif
+    </div>
+
+</header>

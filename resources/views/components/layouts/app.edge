@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <title>
+        Palanaeum Learning
+    </title>
+</head>
+
+<body>
+
+    @navbar({
+        user: $props.get('user'),
+        course: $props.get('course')
+    })
+    @end
+
+    <main class="page-content">
+        {{{ await $slots.main() }}}
+    </main>
+
+</body>
+
+
+</html>

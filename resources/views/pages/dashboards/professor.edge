@@ -1,0 +1,45 @@
+@layouts.app({
+    user: user,
+    course: course
+})
+
+<div class="dashboard">
+
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">
+            Welcome {{ user.fullName }}
+        </h1>
+
+        <a href="{{ urlFor('courses.create') }}" class="btn">
+            Create Course
+        </a>
+    </div>
+
+    <div class="dashboard-grid">
+
+        @each(course in courses)
+
+            <a href="/courses/{{ course.id }}" class="course-card">
+
+                <h2>
+                    {{ course.code }}
+                </h2>
+
+                <h3>
+                    {{ course.name }}
+                </h3>
+
+                <p>
+                    Students enrolled: {{ course.students }}
+                </p>
+
+            </a>
+
+        @endeach
+
+    </div>
+
+</div>
+
+@end
+

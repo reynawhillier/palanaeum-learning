@@ -5,10 +5,12 @@
 
 export const controllers = {
   Assignments: () => import('#controllers/assignments_controller'),
+  Courses: () => import('#controllers/courses_controller'),
+  Dashboard: () => import('#controllers/dashboard_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   PerformanceReports: () => import('#controllers/performance_reports_controller'),
+  Profile: () => import('#controllers/profile_controller'),
   Session: () => import('#controllers/session_controller'),
-  Submissions: () => import('#controllers/submissions_controller'),
   Upload: () => import('#controllers/upload_controller'),
   UserLists: () => import('#controllers/user_lists_controller'),
 }

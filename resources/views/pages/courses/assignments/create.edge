@@ -1,0 +1,46 @@
+@layouts.app({
+    user: user,
+    course: course
+})
+
+@slot('main')
+
+<div class="form-container">
+    <h1>Create Assignment</h1>
+
+    @form({ route: 'assignments.store', routeParams: { courseId: courseId }, method: 'POST' })
+
+        <div>
+            @field.root({ name: 'title' })
+                @!field.label({ text: 'Assignment Title' })
+                @!input.control({ type: 'text' })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @field.root({ name: 'description' })
+                @!field.label({ text: 'Description' })
+                @!textarea.control()
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @field.root({ name: 'due_date' })
+                @!field.label({ text: 'Due Date' })
+                @!input.control({ type: 'date' })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @!button({ text: 'Create Assignment', type: 'submit' })
+        </div>
+
+    @end
+
+</div>
+
+@endslot
+@end

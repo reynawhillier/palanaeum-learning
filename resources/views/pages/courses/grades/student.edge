@@ -1,0 +1,60 @@
+@layouts.app({
+    user: user,
+    course: course
+})
+
+@slot('main')
+
+<div class="grades-page">
+
+    <h1 class="page-title">
+        {{ course.code }} - My Grades
+    </h1>
+
+
+    <table class="grades-table">
+
+        <thead>
+            <tr>
+                <th>Assignment</th>
+                <th>Due Date</th>
+                <th>Grade</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+
+            @each(row in rows)
+                <tr>
+                    <td>
+                        <a href="{{ urlFor('assignments.show', { courseId: course.id, assignmentId: row.id }) }}">
+                            {{ row.title }}
+                        </a>
+                    </td>
+                    <td>{{ row.dueDate }}</td>
+                    <td>
+                        @if(row.score !== null)
+                            {{ row.score }}%
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td>{{ row.status }}</td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="4">No assignments in this course yet.</td>
+                </tr>
+            @endeach
+
+        </tbody>
+
+    </table>
+
+</div>
+
+@endslot
+
+@end

@@ -1,0 +1,86 @@
+@layouts.app({
+    user: user,
+    course: course
+})
+
+@slot('main')
+
+<div class="grades-page">
+
+    <h1 class="page-title">
+        {{ course.code }} - Grade Overview
+    </h1>
+
+    <table class="grades-table">
+
+        <thead>
+            <tr>
+                <th>Student</th>
+                @each(assignment in assignments)
+                    <th>{{ assignment.title }}</th>
+                @endeach
+                <th>Average</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @each(row in rows)
+                <tr>
+                    <td>{{ row.name }}</td>
+
+                    @each(cell in row.cells)
+                        <td>
+                            @if(cell.score !== null)
+                                {{ cell.score }}%
+                                <br>
+                                <a href="{{ urlFor('assignments.grade.edit', {
+                                    courseId: course.id,
+                                    assignmentId: cell.assignmentId,
+                                    submissionId: cell.submissionId
+                                }) }}">Edit</a>
+                            @elseif(cell.submissionId)
+                                <a href="{{ urlFor('assignments.grade.edit', {
+                                    courseId: course.id,
+                                    assignmentId: cell.assignmentId,
+                                    submissionId: cell.submissionId
+                                }) }}">Grade</a>
+                            @else
+                                <span style="color:#999;">Not submitted</span>
+                            @endif
+                        </td>
+                    @endeach
+
+                    <td>
+                        @if(row.average !== null)
+                            {{ row.average }}%
+                        @else
+                            -
+                        @endif
+                    </td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="{{ assignments.length + 2 }}">No students enrolled in this course.</td>
+                </tr>
+            @endeach
+
+        </tbody>
+
+    </table>
+
+
+    <div class="grade-actions">
+
+        <a href="{{ urlFor('courses.assignments', { courseId: course.id }) }}">
+            View Assignments
+        </a>
+
+    </div>
+
+
+</div>
+
+@endslot
+
+@end
