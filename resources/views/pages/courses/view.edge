@@ -1,0 +1,8 @@
+@each(course in courses)
+  <div>
+    <h2>{{ course.courseCode }}</h2>
+    <p>{{ course.courseName }}</p>
+    <p>Term: {{ course.term }}</p>
+    <p>Status: {{ course.status }}</p>
+  </div>
+@end
