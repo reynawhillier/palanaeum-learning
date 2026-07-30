@@ -12,19 +12,12 @@ export type ScannedRoutes = {
     'reports.performance.print': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'reports.performance': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'reports.performance.generate.get': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
-    'session.destroy': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
+    'session.destroy': { paramsTuple?: []; params?: {} }
     'profile.update': { paramsTuple?: []; params?: {} }
     'reports.performance.generate': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
-    'user_lists.index': { paramsTuple?: []; params?: {} }
-    'submissions.form': { paramsTuple?: []; params?: {} }
-    'submissions.validate': { paramsTuple?: []; params?: {} }
-    'submissions.create': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
-    'submissions.store': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
-    'submissions.file': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
-    'courses.assignments': { paramsTuple: [ParamValue]; params: { courseId: ParamValue } }    
-    'student_lists.index': { paramsTuple?: []; params?: {} }
+    'admin.users': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'upload.store': { paramsTuple?: []; params?: {} }
     'assignments.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
@@ -43,6 +36,7 @@ export type ScannedRoutes = {
     'courses.store': { paramsTuple?: []; params?: {} }
     'courses.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'courses.students': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'courses.enroll': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'courses.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'courses.grades': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
@@ -55,12 +49,7 @@ export type ScannedRoutes = {
     'reports.performance.generate.get': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
-    'user_lists.index': { paramsTuple?: []; params?: {} }
-    'submissions.form': { paramsTuple?: []; params?: {} }
-    'submissions.create': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
-    'submissions.file': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
-    'courses.assignments': { paramsTuple: [ParamValue]; params: { courseId: ParamValue } }
-    'student_lists.index': { paramsTuple?: []; params?: {} }
+    'admin.users': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'assignments.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'assignments.edit': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
@@ -82,12 +71,7 @@ export type ScannedRoutes = {
     'reports.performance.generate.get': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
-    'user_lists.index': { paramsTuple?: []; params?: {} }
-    'submissions.form': { paramsTuple?: []; params?: {} }
-    'submissions.create': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
-    'submissions.file': { paramsTuple: [ParamValue, ParamValue]; params: { courseId: ParamValue; assignmentId: ParamValue } }
-    'courses.assignments': { paramsTuple: [ParamValue]; params: { courseId: ParamValue } }
-    'student_lists.index': { paramsTuple?: []; params?: {} }
+    'admin.users': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'assignments.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'assignments.edit': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
@@ -115,6 +99,7 @@ export type ScannedRoutes = {
     'assignments.submit': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
     'courses.store': { paramsTuple?: []; params?: {} }
     'courses.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'courses.enroll': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }
 declare module '@adonisjs/core/types/http' {

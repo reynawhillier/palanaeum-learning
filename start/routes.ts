@@ -60,11 +60,13 @@ router
   })
   .use(middleware.auth())
 
+// Admin user list
 router
   .group(() => {
-    router.get('/user_list', [controllers.UserLists, 'index'])
+    router.get('/user_list', [controllers.UserLists, 'index']).as('admin.users')
   })
   .use(middleware.auth())
+  .use(middleware.role({ roles: ['admin'] }))
 
 router
   .get('/', async ({ auth, view, response }) => {
@@ -182,6 +184,13 @@ router
   })
   .use(middleware.auth())
   .use(middleware.role({ roles: ['professor', 'admin'] }))
+// Courses: admin-only enrollment.
+router
+  .group(() => {
+    router.post('/courses/:id/enrollments', [controllers.Courses, 'enroll']).as('courses.enroll')
+  })
+  .use(middleware.auth())
+  .use(middleware.role({ roles: ['admin'] }))
 
 // Courses: any authenticated course member can view.
 router
