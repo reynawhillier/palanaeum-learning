@@ -15,9 +15,9 @@ export default class AssignmentsController {
       .where('course_id', courseId)
       .select('course_id', 'course_code', 'course_name')
       .first()
- 
+
     if (!row) return null
- 
+
     return { id: row.course_id, code: row.course_code, name: row.course_name }
   }
 
@@ -267,17 +267,14 @@ export default class AssignmentsController {
       .first()
 
     if (existingSubmission) {
-      await db
-        .from('submissions')
-        .where('submission_id', existingSubmission.submission_id)
-        .update({
-          file_name: file.clientName,
-          file_key: fileKey,
-          mime_type: mimeType,
-          file_size: file.size,
-          submitted_at: new Date(),
-          status: 'Submitted',
-        })
+      await db.from('submissions').where('submission_id', existingSubmission.submission_id).update({
+        file_name: file.clientName,
+        file_key: fileKey,
+        mime_type: mimeType,
+        file_size: file.size,
+        submitted_at: new Date(),
+        status: 'Submitted',
+      })
     } else {
       await db.table('submissions').insert({
         assignment_id: assignmentId,
@@ -360,7 +357,6 @@ export default class AssignmentsController {
     })
   }
 
-
   // POST /courses/:courseId/assignments/:assignmentId/submissions/:submissionId/grade  (professor only)
   async gradeStore(ctx: HttpContext) {
     const { request, response, params } = ctx
@@ -373,12 +369,15 @@ export default class AssignmentsController {
     const existingGrade = await db.from('grades').where('submission_id', submissionId).first()
 
     if (existingGrade) {
-      await db.from('grades').where('grade_id', existingGrade.grade_id).update({
-        score: payload.score,
-        feedback: payload.feedback ?? null,
-        professor_id: user.roleId!,
-        graded_at: new Date(),
-      })
+      await db
+        .from('grades')
+        .where('grade_id', existingGrade.grade_id)
+        .update({
+          score: payload.score,
+          feedback: payload.feedback ?? null,
+          professor_id: user.roleId!,
+          graded_at: new Date(),
+        })
     } else {
       await db.table('grades').insert({
         submission_id: submissionId,
@@ -404,5 +403,3 @@ export default class AssignmentsController {
     return response.redirect().toRoute('assignments.show', { courseId, assignmentId })
   }
 }
-
-

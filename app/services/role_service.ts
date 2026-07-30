@@ -8,7 +8,6 @@ export interface ResolvedRole {
   roleId: number | null
 }
 
-
 export function sessionUser({ auth, session }: HttpContext) {
   const user = auth.user!
 
@@ -21,7 +20,6 @@ export function sessionUser({ auth, session }: HttpContext) {
     roleId: session.get('roleId') as number | null,
   }
 }
-
 
 export async function resolveUserRole(userId: number): Promise<ResolvedRole> {
   const student = await db.from('students').where('user_id', userId).select('student_id').first()

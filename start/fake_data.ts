@@ -11,7 +11,7 @@ export const fakeUsers = {
         name: 'Data Structures',
         professor: 'Dr. Johnson',
         term: 'Fall 2026',
-        description: 'Lists, trees, sorting, and algorithms.'
+        description: 'Lists, trees, sorting, and algorithms.',
       },
       {
         id: 102,
@@ -19,11 +19,10 @@ export const fakeUsers = {
         name: 'Object Oriented Programming',
         professor: 'Dr. Park',
         term: 'Fall 2026',
-        description: 'Object-oriented design and Java programming.'
-      }
-    ]
+        description: 'Object-oriented design and Java programming.',
+      },
+    ],
   },
-
 
   professor: {
     id: 2,
@@ -37,7 +36,7 @@ export const fakeUsers = {
         name: 'Data Structures',
         students: 85,
         term: 'Fall 2026',
-        description: 'Lists, trees, sorting, and algorithms.'
+        description: 'Lists, trees, sorting, and algorithms.',
       },
       {
         id: 103,
@@ -45,15 +44,14 @@ export const fakeUsers = {
         name: 'Advanced Data Structures',
         students: 60,
         term: 'Fall 2026',
-        description: 'Graphs, complexity analysis, and advanced algorithms.'
-      }
-    ]
+        description: 'Graphs, complexity analysis, and advanced algorithms.',
+      },
+    ],
   },
-
 
   admin: {
     id: 3,
     fullName: 'Admin User',
-    role: 'admin'
-  }
+    role: 'admin',
+  },
 }

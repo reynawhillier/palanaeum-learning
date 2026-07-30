@@ -94,17 +94,11 @@ router
       .as('assignments.store')
 
     router
-      .get('/courses/:courseId/assignments/:assignmentId/edit', [
-        controllers.Assignments,
-        'edit',
-      ])
+      .get('/courses/:courseId/assignments/:assignmentId/edit', [controllers.Assignments, 'edit'])
       .as('assignments.edit')
 
     router
-      .post('/courses/:courseId/assignments/:assignmentId', [
-        controllers.Assignments,
-        'update',
-      ])
+      .post('/courses/:courseId/assignments/:assignmentId', [controllers.Assignments, 'update'])
       .as('assignments.update')
 
     router
@@ -129,10 +123,10 @@ router
       .as('assignments.grade.store')
 
     router
-      .post(
-        '/courses/:courseId/assignments/:assignmentId/submissions/:submissionId/grade/delete',
-        [controllers.Assignments, 'gradeDestroy']
-      )
+      .post('/courses/:courseId/assignments/:assignmentId/submissions/:submissionId/grade/delete', [
+        controllers.Assignments,
+        'gradeDestroy',
+      ])
       .as('assignments.grade.destroy')
   })
   .use(middleware.auth())

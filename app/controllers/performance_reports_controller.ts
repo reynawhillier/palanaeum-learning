@@ -10,12 +10,12 @@ export default class PerformanceReportsController {
       .where('course_id', courseId)
       .select('course_id', 'course_code', 'course_name')
       .first()
- 
+
     if (!row) return null
- 
+
     return { id: row.course_id, code: row.course_code, name: row.course_name }
   }
-  
+
   public async index(ctx: HttpContext) {
     const { params, auth, response, view } = ctx
     const courseId = Number(params.courseId)

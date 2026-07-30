@@ -143,8 +143,11 @@ export default class CoursesController {
         id: assignment.assignment_id,
         title: assignment.title,
         dueDate: assignment.due_date,
-        score: match?.score ?? null,
-        status: match?.score != null ? 'Graded' : match ? 'Submitted' : 'Not submitted',
+        status: match
+          ? match.score !== null && match.score !== undefined
+            ? 'Graded'
+            : 'Submitted'
+          : 'Not submitted',
       }
     })
 
