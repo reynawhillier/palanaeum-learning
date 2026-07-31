@@ -66,7 +66,6 @@ router
   })
   .use(middleware.auth())
 
-
 router
   .get('/', async ({ auth, view, response }) => {
     if (await auth.use('web').check()) {
@@ -124,10 +123,10 @@ router
       .as('assignments.grade.store')
 
     router
-      .post(
-        '/courses/:courseId/assignments/:assignmentId/submissions/:submissionId/grade/delete',
-        [controllers.Assignments, 'gradeDestroy']
-      )
+      .post('/courses/:courseId/assignments/:assignmentId/submissions/:submissionId/grade/delete', [
+        controllers.Assignments,
+        'gradeDestroy',
+      ])
       .as('assignments.grade.destroy')
   })
   .use(middleware.auth())
@@ -167,7 +166,7 @@ router
   .use(middleware.auth())
   .use(middleware.role({ roles: ['student'] }))
 
-// Courses: professor-only create/delete. 
+// Courses: professor-only create/delete.
 router
   .group(() => {
     router.get('/courses/create', [controllers.Courses, 'create']).as('courses.create')
@@ -200,7 +199,6 @@ router
   })
   .use(middleware.auth())
 
-
 // Admin: user directory + role assignment
 router
   .group(() => {
@@ -216,7 +214,7 @@ router
   .use(middleware.auth())
   .use(middleware.role({ roles: ['admin'] }))
 
-// Admin: enroll a student in a course 
+// Admin: enroll a student in a course
 router
   .group(() => {
     router.post('/courses/:id/enrollments', [controllers.Courses, 'enroll']).as('courses.enroll')

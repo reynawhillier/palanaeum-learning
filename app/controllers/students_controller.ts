@@ -12,7 +12,12 @@ export default class StudentsController {
       .leftJoin('enrollments', 'students.student_id', 'enrollments.student_id')
       .groupBy('students.student_id', 'students.first_name', 'students.last_name', 'students.email')
       .orderBy('students.last_name', 'asc')
-      .select('students.student_id as id', 'students.first_name', 'students.last_name', 'students.email')
+      .select(
+        'students.student_id as id',
+        'students.first_name',
+        'students.last_name',
+        'students.email'
+      )
       .count('enrollments.enrollment_id as enrollmentCount')
 
     return ctx.view.render('pages/admin/students/index', { user, students })

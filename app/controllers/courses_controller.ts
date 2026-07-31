@@ -144,7 +144,12 @@ export default class CoursesController {
         title: assignment.title,
         dueDate: assignment.due_date,
         score: match?.score ?? null,
-        status: match?.score != null ? 'Graded' : match ? 'Submitted' : 'Not submitted',
+        status:
+          match?.score !== null && match?.score !== undefined
+            ? 'Graded'
+            : match
+              ? 'Submitted'
+              : 'Not submitted',
       }
     })
 
@@ -307,29 +312,29 @@ export default class CoursesController {
     const { response, params, session } = ctx
     const courseId = Number(params.id)
     const studentId = Number(params.studentId)
- 
+
     const studentRow = await db.from('students').where('student_id', studentId).first()
- 
+
     const enrollmentRow = await db
       .from('enrollments')
       .where('student_id', studentId)
       .where('course_id', courseId)
       .first()
- 
+
     if (!enrollmentRow) {
       session.flash('error', 'That enrollment could not be found.')
       return response.redirect().back()
     }
- 
+
     await db
       .from('enrollments')
       .where('student_id', studentId)
       .where('course_id', courseId)
       .delete()
- 
+
     const name = studentRow ? `${studentRow.first_name} ${studentRow.last_name}` : 'Student'
     session.flash('success', `${name} removed from this course.`)
-    
+
     return response.redirect().back()
   }
 

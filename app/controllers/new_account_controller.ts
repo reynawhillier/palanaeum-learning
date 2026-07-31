@@ -23,7 +23,7 @@ export default class NewAccountController {
     const user = await User.create({ ...payload })
 
     await auth.use('web').login(user)
-    
+
     // A fresh signup has no students/professors/admins row yet, so there's
     // no role to yet. An admin has to assign one via /admin/users
     // before this account can see a dashboard. Send them straight to

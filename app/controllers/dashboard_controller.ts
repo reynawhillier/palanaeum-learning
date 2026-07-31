@@ -66,7 +66,6 @@ export default class DashboardController {
       return ctx.view.render('pages/dashboards/admin', { user, unassignedUsers, courses })
     }
 
-
     // Logged-in user with no role redirecrt to profile page
     session.flash('error', 'Your account is not yet linked to a role. Contact an administrator.')
     return response.redirect().toRoute('profile')

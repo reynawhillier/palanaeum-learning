@@ -73,7 +73,11 @@ export default class UserListsController {
 
     if (currentRole && currentRole !== payload.role) {
       const currentTable =
-        currentRole === 'student' ? 'students' : currentRole === 'professor' ? 'professors' : 'admins'
+        currentRole === 'student'
+          ? 'students'
+          : currentRole === 'professor'
+            ? 'professors'
+            : 'admins'
 
       try {
         await db.from(currentTable).where('user_id', targetUserId).delete()

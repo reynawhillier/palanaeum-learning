@@ -3,10 +3,7 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   async run() {
-    const exists = await db
-      .from('courses')
-      .where('course_code', 'DADA601')
-      .first()
+    const exists = await db.from('courses').where('course_code', 'DADA601').first()
 
     if (!exists) {
       await db.table('courses').insert([
