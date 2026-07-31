@@ -1,0 +1,69 @@
+@layouts.app({
+    user: user
+})
+
+<div class="form-container">
+    <h1>Change Role: {{ targetUser.full_name }}</h1>
+
+    <p>
+        Current role:
+        <strong style="text-transform:capitalize;">{{ currentRole ?? 'unassigned' }}</strong>
+    </p>
+
+    @form({ route: 'admin.users.change_role', routeParams: { id: targetUser.id }, method: 'POST' })
+
+        <div>
+            <label>New Role</label>
+
+            @radio.group({ name: 'role' })
+                <label>
+                    @!radio.control({ value: 'student' })
+                    Student
+                </label>
+                <label>
+                    @!radio.control({ value: 'professor' })
+                    Professor
+                </label>
+                <label>
+                    @!radio.control({ value: 'admin' })
+                    Admin
+                </label>
+                @!field.error()
+            @end
+        </div>
+
+        <p style="margin-top:16px;"><strong>If Student:</strong></p>
+        <div>
+            @field.root({ name: 'program_id' })
+                @!field.label({ text: 'Program' })
+                @!select.control({
+                    options: programs.map((p) => ({ value: p.program_id, name: p.program_name }))
+                })
+                @!field.error()
+            @end
+        </div>
+
+        <p style="margin-top:16px;"><strong>If Professor:</strong></p>
+        <div>
+            @field.root({ name: 'department_id' })
+                @!field.label({ text: 'Department' })
+                @!select.control({
+                    options: departments.map((d) => ({ value: d.department_id, name: d.department_name }))
+                })
+                @!field.error()
+            @end
+        </div>
+
+        <p style="color:#666; font-size:14px;">
+            Only the section matching the role you pick above is used - leave the other one as-is.
+        </p>
+
+        <div>
+            @!button({ text: 'Save Role', type: 'submit' })
+        </div>
+
+    @end
+
+</div>
+
+@end

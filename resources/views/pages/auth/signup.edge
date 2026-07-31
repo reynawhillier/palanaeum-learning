@@ -1,4 +1,4 @@
-@layout()
+@layouts.app()
   <div class="form-container">
     <div>
       <h1>Signup</h1>
@@ -43,6 +43,12 @@
           @!button({ text: 'Sign up', type: 'submit' })
         </div>
       @end
+
+      <div style="margin-top:16px; text-align:center;">
+        <p>Already have an account?</p>
+        @!link({ route: 'session.create', text: 'Login' })
+      </div>
+
     </div>
   </div>
 @end

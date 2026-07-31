@@ -1,41 +1,41 @@
-@layout() 
-    <table style="width:100%; border-collapse:collapse;">
+@layouts.app({
+    user: user
+})
 
-        <thead style="background:#111827; color:white;">
-          <tr>
-            <th style="text-align:left; padding:12px;">User</th>
-            <th style="text-align:left; padding:12px;">Email</th>
+<h1>School Personnel</h1>
 
-          </tr>
-        </thead>
+<table style="width:100%; border-collapse:collapse;">
 
-        <tbody>
+    <thead style="background:#111827; color:white;">
+      <tr>
+        <th style="text-align:left; padding:12px;">User</th>
+        <th style="text-align:left; padding:12px;">Email</th>
+        <th style="text-align:left; padding:12px;">Role</th>
+        <th style="text-align:left; padding:12px;"></th>
+      </tr>
+    </thead>
 
-          @each(user in users)
+    <tbody>
 
-            <tr style="border-bottom:1px solid #eee;">
+      @each(row in users)
 
-              <!-- NAME = LINK TO DROPBOX -->
-              <td style="padding:12px;">
-                <p style="
-                  color:#111827;
-                  text-decoration:none;
-                  font-weight:500;
-                ">
-                  {{ user.fullName }}
-                </p>
-              </td>
+        <tr style="border-bottom:1px solid #eee;">
 
-              <td style="padding:12px;">
-                {{ user.email }}
-              </td>
+          <td style="padding:12px;">{{ row.fullName }}</td>
+          <td style="padding:12px;">{{ row.email }}</td>
+          <td style="padding:12px; text-transform:capitalize;">{{ row.role }}</td>
+          <td style="padding:12px;">
+            <a href="{{ urlFor('admin.users.change_role.form', { id: row.id }) }}">
+              Change Role
+            </a>
+          </td>
 
-            </tr>
+        </tr>
 
-          @endeach
+      @endeach
 
-        </tbody>
+    </tbody>
 
-      </table>
+  </table>
 
 @end

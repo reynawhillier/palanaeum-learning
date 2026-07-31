@@ -12,21 +12,23 @@
         {{ course.code }} - {{ course.name }}
     </h1>
 
-    @if(user.role === 'professor')
+    @if(user.role === 'professor' || user.role === 'admin')
         <div class="dashboard-actions">
             <a href="{{ urlFor('courses.students', { id: course.id }) }}">View Classlist</a>
 
             <a href="{{ urlFor('reports.performance', { courseId: course.id }) }}">Performance Report</a>
 
 
-            @form({ route: 'courses.destroy', routeParams: { id: course.id }, method: 'POST' })
-                @!button({
-                    text: 'Delete Course',
-                    type: 'submit',
-                    style: 'color:red;',
-                    onclick: "return confirm('Delete this course? This cannot be undone.')"
-                })
-            @end
+            @if(user.role === 'professor')
+                @form({ route: 'courses.destroy', routeParams: { id: course.id }, method: 'POST' })
+                    @!button({
+                        text: 'Delete Course',
+                        type: 'submit',
+                        style: 'color:red;',
+                        onclick: "return confirm('Delete this course? This cannot be undone.')"
+                    })
+                @end
+            @endif
         </div>
     @endif
 

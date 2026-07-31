@@ -1,0 +1,91 @@
+@layouts.app({
+    user: user
+})
+
+<div class="student-detail">
+
+    <a href="{{ urlFor('students.index') }}">&larr; Back to Students</a>
+
+    <h1>{{ student.firstName }} {{ student.lastName }}</h1>
+    <p>{{ student.email }}</p>
+
+    <h2 style="margin-top:24px;">Current Enrollments</h2>
+
+    <table style="width:100%; border-collapse:collapse;">
+        <thead style="background:#111827; color:white;">
+            <tr>
+                <th style="text-align:left; padding:12px;">Course</th>
+                <th style="text-align:left; padding:12px;">Professor</th>
+                <th style="text-align:left; padding:12px;">Status</th>
+                <th style="text-align:left; padding:12px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @each(enrollment in enrollments)
+                <tr style="border-bottom:1px solid #eee;">
+                    <td style="padding:12px;">
+                        <a href="{{ urlFor('courses.show', { id: enrollment.id }) }}">
+                            {{ enrollment.code }} - {{ enrollment.name }}
+                        </a>
+                    </td>
+                    <td style="padding:12px;">{{ enrollment.professor }}</td>
+                    <td style="padding:12px;">{{ enrollment.status }}</td>
+                    <td style="padding:12px;">
+                        @form({
+                            route: 'courses.unenroll',
+                            routeParams: { id: enrollment.id, studentId: student.id },
+                            method: 'POST'
+                        })
+                            @!button({
+                                text: 'Unenroll',
+                                type: 'submit',
+                                style: 'color:red;',
+                                onclick: "return confirm('Remove " + student.firstName + " " + student.lastName + " from " + enrollment.code + "?')"
+                            })
+                        @end
+                    </td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="4" style="padding:12px;">Not enrolled in any courses yet.</td>
+                </tr>
+            @endeach
+        </tbody>
+    </table>
+
+    <h2 style="margin-top:24px;">Enroll in Another Course</h2>
+
+    @if(availableCourses.length === 0)
+
+        <p style="color:#666;">Already enrolled in every course.</p>
+
+    @else
+
+        @form({ route: 'students.enroll', routeParams: { id: student.id }, method: 'POST' })
+
+            <table style="width:100%; border-collapse:collapse;">
+                <tbody>
+                    @each(course in availableCourses)
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:12px;">{{ course.code }} - {{ course.name }}</td>
+                            <td style="padding:12px; text-align:right;">
+                                <button
+                                    type="submit"
+                                    name="course_id"
+                                    value="{{ course.id }}"
+                                >
+                                    Enroll
+                                </button>
+                            </td>
+                        </tr>
+                    @endeach
+                </tbody>
+            </table>
+
+        @end
+
+    @endif
+
+</div>
+
+@end
