@@ -41,15 +41,32 @@ export default class DashboardController {
     }
 
     if (user.role === 'admin') {
-      return ctx.view.render('pages/dashboards/admin', { user })
+      const unassignedUsers = await db
+        .from('users')
+        .leftJoin('students', 'users.id', 'students.user_id')
+        .leftJoin('professors', 'users.id', 'professors.user_id')
+        .leftJoin('admins', 'users.id', 'admins.user_id')
+        .whereNull('students.user_id')
+        .whereNull('professors.user_id')
+        .whereNull('admins.user_id')
+        .orderBy('users.created_at', 'desc')
+        .select('users.id', 'users.full_name', 'users.email')
+
+      const courses = await db
+        .from('courses')
+        .join('professors', 'courses.professor_id', 'professors.professor_id')
+        .orderBy('courses.course_code', 'asc')
+        .select(
+          'courses.course_id as id',
+          'courses.course_code as code',
+          'courses.course_name as name',
+          db.raw("CONCAT(professors.first_name, ' ', professors.last_name) as professor")
+        )
+
+      return ctx.view.render('pages/dashboards/admin', { user, unassignedUsers, courses })
     }
 
-    // Logged-in user with no students/professors/admins row (typically a
-    // fresh self-signup awaiting admin role assignment). Redirecting to
-    // the login page here would loop forever - GuestMiddleware bounces
-    // authenticated users away from it, straight back to '/', which
-    // redirects to /dashboard again. Send them somewhere that works for
-    // any authenticated user instead.
+    // Logged-in user with no role redirecrt to profile page
     session.flash('error', 'Your account is not yet linked to a role. Contact an administrator.')
     return response.redirect().toRoute('profile')
   }

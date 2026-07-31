@@ -20,6 +20,8 @@
     })
     @end
 
+    @include('partials/flash_alerts')
+
     <main class="page-content">
         {{{ await $slots.main() }}}
     </main>

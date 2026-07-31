@@ -15,34 +15,33 @@
                     {{ course.code }} - {{ course.name }}
                 </a>
 
-                <a class="navbar-link" href="{{ urlFor('courses.content', { courseId: courseId }) }}">
-                    Content
-                </a>
-                
-                <a class="navbar-link" href="{{ urlFor('courses.assignments', { courseId: courseId }) }}">
-                    Assignments
-                </a>
+                @if(user && (user.role === 'professor' || user.role === 'student'))
 
-                <a class="navbar-link" href="{{ urlFor('courses.grades', { id: courseId }) }}">
-                    Grades
-                </a>
+                    <a class="navbar-link" href="{{ urlFor('courses.content', { courseId: courseId }) }}">
+                        Content
+                    </a>
 
-                @if(user && user.role === 'professor')
+                    <a class="navbar-link" href="{{ urlFor('courses.assignments', { courseId: courseId }) }}">
+                        Assignments
+                    </a>
 
-                    <a class="navbar-link" href="{{ urlFor('courses.students', { id: courseId }) }}">
-                        Students
+                    <a class="navbar-link" href="{{ urlFor('courses.grades', { id: courseId }) }}">
+                        Grades
                     </a>
 
                 @endif
 
                 @if(user && (user.role === 'professor' || user.role === 'admin'))
 
+                    <a class="navbar-link" href="{{ urlFor('courses.students', { id: courseId }) }}">
+                        Students
+                    </a>
+
                     <a class="navbar-link" href="{{ urlFor('reports.performance', { courseId: courseId }) }}">
                         Performance Report
                     </a>
 
                 @endif
-
 
             @else
 
@@ -51,7 +50,6 @@
                     <a class="navbar-link" href="{{ urlFor('dashboard') }}">
                         My Courses
                     </a>
-
 
                 @elseif(user && user.role === 'professor')
 
@@ -69,14 +67,20 @@
                         Manage Users
                     </a>
 
+                    <a class="navbar-link" href="{{ urlFor('students.index') }}">
+                        All Students
+                    </a>
+
                 @endif
 
             @endif
+
         </nav>
     </div>
 
     <div class="navbar-right">
         @if(user)
+
             <a href="{{ urlFor('profile') }}" class="navbar-link">
                 @!avatar({
                     initials: user.initials,
@@ -88,6 +92,7 @@
             @form({ route: 'session.destroy', method: 'POST' })
                 @!button({ text: 'Logout', type: 'submit' })
             @end
+
         @else
             <span>Guest</span>
         @endif

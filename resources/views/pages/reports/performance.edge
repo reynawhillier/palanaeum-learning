@@ -7,7 +7,11 @@
 
   <p>Course ID: {{ courseId }}</p>
   <p>
-    <a href="{{ route('courses.assignments', { courseId }) }}">Back to Assignments</a>
+    @if(user.role === 'professor')
+      <a href="{{ route('courses.assignments', { courseId }) }}">Back to Assignments</a>
+    @elseif(user.role === 'admin')
+      <a href="{{ urlFor('courses.show', { id: courseId }) }}">Back to Course</a>
+    @endif
   </p>
   <form method="POST" action="{{ route('reports.performance.generate', { courseId }) }}">
     {{ csrfField() }}

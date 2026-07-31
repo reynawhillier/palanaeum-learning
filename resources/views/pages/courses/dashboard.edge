@@ -135,12 +135,56 @@
             </p>
 
             <div class="course-actions">
-                <a class="course-button" href="{{ urlFor('courses.content', { courseId: course.id }) }}">Open Content</a>
-                <a class="course-button" href="{{ urlFor('courses.assignments', { courseId: course.id }) }}">Assignments</a>
-                <a class="course-button" href="{{ urlFor('courses.grades', { id: course.id }) }}">Grades</a>
-                <a class="course-button" href="{{ urlFor('courses.students', { id: course.id }) }}">Students</a>
-                <a class="course-button" href="{{ urlFor('reports.performance', { courseId: course.id }) }}">Performance Report</a>
+                @if(user.role === 'professor' || user.role === 'student')
+                    <a
+                        class="course-button"
+                        href="{{ urlFor('courses.content', { courseId: course.id }) }}"
+                    >
+                        Open Content
+                    </a>
+
+                    <a
+                        class="course-button"
+                        href="{{ urlFor('courses.assignments', { courseId: course.id }) }}"
+                    >
+                        Assignments
+                    </a>
+
+                    <a
+                        class="course-button"
+                        href="{{ urlFor('courses.grades', { id: course.id }) }}"
+                    >
+                        Grades
+                    </a>
+                @endif
+
+                @if(user.role === 'professor' || user.role === 'admin')
+                    <a
+                        class="course-button"
+                        href="{{ urlFor('courses.students', { id: course.id }) }}"
+                    >
+                        View Classlist
+                    </a>
+
+                    <a
+                        class="course-button"
+                        href="{{ urlFor('reports.performance', { courseId: course.id }) }}"
+                    >
+                        Performance Report
+                    </a>
+                @endif
             </div>
+
+            @if(user.role === 'professor')
+                @form({ route: 'courses.destroy', routeParams: { id: course.id }, method: 'POST' })
+                    @!button({
+                        text: 'Delete Course',
+                        type: 'submit',
+                        style: 'color:red; margin-top:18px;',
+                        onclick: "return confirm('Delete this course? This cannot be undone.')"
+                    })
+                @end
+            @endif
         </div>
 
         <div>

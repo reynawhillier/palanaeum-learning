@@ -185,6 +185,7 @@ export default class CoursesController {
         id: assignment.assignment_id,
         title: assignment.title,
         dueDate: assignment.due_date,
+        score: match?.score ?? null,
         status: match
           ? match.score !== null && match.score !== undefined
             ? 'Graded'
@@ -235,10 +236,6 @@ export default class CoursesController {
       return response.status(403).send('You do not have access to this course')
     }
 
-    // No ON DELETE CASCADE defined on assignments/enrollments -> courses,
-    // so a course with existing assignments or enrollments will fail this
-    // delete rather than orphan rows. Surface that as a friendly message
-    // instead of a raw DB error.
     try {
       await db.from('courses').where('course_id', courseId).delete()
     } catch {
@@ -289,8 +286,6 @@ export default class CoursesController {
       name: courseRow.course_name,
     }
 
-    // Only fetch the "available to enroll" list when it'll actually be
-    // used - the enroll form is admin-only.
     let availableStudents: { student_id: number; first_name: string; last_name: string }[] = []
 
     if (user.role === 'admin') {
@@ -351,6 +346,37 @@ export default class CoursesController {
 
     session.flash('success', `${studentRow.first_name} ${studentRow.last_name} enrolled.`)
     return response.redirect().toRoute('courses.students', { id: courseId })
+  }
+
+  // POST /courses/:id/enrollments/:studentId/delete  (admin only)
+  async unenroll(ctx: HttpContext) {
+    const { response, params, session } = ctx
+    const courseId = Number(params.id)
+    const studentId = Number(params.studentId)
+
+    const studentRow = await db.from('students').where('student_id', studentId).first()
+
+    const enrollmentRow = await db
+      .from('enrollments')
+      .where('student_id', studentId)
+      .where('course_id', courseId)
+      .first()
+
+    if (!enrollmentRow) {
+      session.flash('error', 'That enrollment could not be found.')
+      return response.redirect().back()
+    }
+
+    await db
+      .from('enrollments')
+      .where('student_id', studentId)
+      .where('course_id', courseId)
+      .delete()
+
+    const name = studentRow ? `${studentRow.first_name} ${studentRow.last_name}` : 'Student'
+    session.flash('success', `${name} removed from this course.`)
+
+    return response.redirect().back()
   }
 
   private async canAccessCourse(

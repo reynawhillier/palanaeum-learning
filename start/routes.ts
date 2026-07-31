@@ -12,8 +12,7 @@ import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
 const CourseContentsController = () => import('#controllers/course_contents_controller')
-
-// router.on('/').render('pages/dashboard').as('home')
+const StudentsController = () => import('#controllers/students_controller')
 
 // Guest routes
 router
@@ -50,7 +49,7 @@ router
     router.get('/dashboard', [controllers.Dashboard, 'index']).as('dashboard')
     router.get('/profile', [controllers.Profile, 'show']).as('profile')
 
-    router.post('logout', [controllers.Session, 'destroy'])
+    router.post('/logout', [controllers.Session, 'destroy']).as('session.destroy')
     router.post('/profile', [controllers.Profile, 'update']).as('profile.update')
 
     router
@@ -62,19 +61,12 @@ router
   })
   .use(middleware.auth())
 
-// Admin user list
-router
-  .group(() => {
-    router.get('/user_list', [controllers.UserLists, 'index']).as('admin.users')
-  })
-  .use(middleware.auth())
-  .use(middleware.role({ roles: ['admin'] }))
-
 router
   .get('/', async ({ auth, view, response }) => {
     if (await auth.use('web').check()) {
       return response.redirect().toRoute('dashboard')
     }
+
     return view.render('pages/home')
   })
   .as('home')
@@ -145,7 +137,7 @@ router
   })
   .use(middleware.auth())
 
-// Assignments: professor-only lifecycle create/edit/delete and grading.
+// Assignments: professor-only create/edit/delete and grading.
 router
   .group(() => {
     router
@@ -195,7 +187,7 @@ router
   .use(middleware.auth())
   .use(middleware.role({ roles: ['professor'] }))
 
-// Assignments: any authenticated course member can view.
+// Assignments: professor or student only.
 router
   .group(() => {
     router
@@ -214,6 +206,7 @@ router
       .as('assignments.file')
   })
   .use(middleware.auth())
+  .use(middleware.role({ roles: ['professor', 'student'] }))
 
 // Assignments: student-only submission.
 router
@@ -246,18 +239,58 @@ router
   .use(middleware.auth())
   .use(middleware.role({ roles: ['professor', 'admin'] }))
 
-// Courses: admin-only enrollment.
+// Courses: grades, professor or student only.
 router
   .group(() => {
-    router.post('/courses/:id/enrollments', [controllers.Courses, 'enroll']).as('courses.enroll')
+    router.get('/courses/:id/grades', [controllers.Courses, 'grades']).as('courses.grades')
+  })
+  .use(middleware.auth())
+  .use(middleware.role({ roles: ['professor', 'student'] }))
+
+// Courses: any authenticated course user.
+router
+  .group(() => {
+    router.get('/courses/:id', [controllers.Courses, 'show']).as('courses.show')
+  })
+  .use(middleware.auth())
+
+// Admin: user directory and role assignment.
+router
+  .group(() => {
+    router.get('/admin/users', [controllers.UserLists, 'index']).as('admin.users')
+
+    router
+      .get('/admin/users/:id/change-role', [controllers.UserLists, 'changeRoleForm'])
+      .as('admin.users.change_role.form')
+
+    router
+      .post('/admin/users/:id/change-role', [controllers.UserLists, 'changeRole'])
+      .as('admin.users.change_role')
   })
   .use(middleware.auth())
   .use(middleware.role({ roles: ['admin'] }))
 
-// Courses: any authenticated course member can view.
+// Admin: enroll and unenroll students from a course.
 router
   .group(() => {
-    router.get('/courses/:id', [controllers.Courses, 'show']).as('courses.show')
-    router.get('/courses/:id/grades', [controllers.Courses, 'grades']).as('courses.grades')
+    router.post('/courses/:id/enrollments', [controllers.Courses, 'enroll']).as('courses.enroll')
+
+    router
+      .post('/courses/:id/enrollments/:studentId/delete', [controllers.Courses, 'unenroll'])
+      .as('courses.unenroll')
   })
   .use(middleware.auth())
+  .use(middleware.role({ roles: ['admin'] }))
+
+// Admin: browse students and enroll them from the student page.
+router
+  .group(() => {
+    router.get('/admin/students', [StudentsController, 'index']).as('students.index')
+    router.get('/admin/students/:id', [StudentsController, 'show']).as('students.show')
+
+    router
+      .post('/admin/students/:id/enrollments', [StudentsController, 'enroll'])
+      .as('students.enroll')
+  })
+  .use(middleware.auth())
+  .use(middleware.role({ roles: ['admin'] }))
