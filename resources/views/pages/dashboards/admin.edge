@@ -23,6 +23,73 @@
 
     </div>
 
+    <div style="margin-top:24px;">
+
+        <h2>Pending Role Assignments ({{ unassignedUsers.length }})</h2>
+
+        @if(unassignedUsers.length === 0)
+
+            <p style="color:#666;">No new signups waiting on a role.</p>
+
+        @else
+
+            <table style="width:100%; border-collapse:collapse; margin-top:12px;">
+                <thead style="background:#111827; color:white;">
+                    <tr>
+                        <th style="text-align:left; padding:12px;">Name</th>
+                        <th style="text-align:left; padding:12px;">Email</th>
+                        <th style="text-align:left; padding:12px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @each(pendingUser in unassignedUsers)
+                        <tr style="border-bottom:1px solid #eee;">
+                            <td style="padding:12px;">{{ pendingUser.full_name ?? '(no name set)' }}</td>
+                            <td style="padding:12px;">{{ pendingUser.email }}</td>
+                            <td style="padding:12px;">
+                                <a href="{{ urlFor('admin.users.change_role.form', { id: pendingUser.id }) }}">
+                                    Assign Role
+                                </a>
+                            </td>
+                        </tr>
+                    @endeach
+                </tbody>
+            </table>
+
+        @endif
+
+    </div>
+
+    <div style="margin-top:24px;">
+
+        <h2>All Courses ({{ courses.length }})</h2>
+
+        @if(courses.length === 0)
+
+            <p style="color:#666;">No courses have been created yet.</p>
+
+        @else
+
+            <div class="dashboard-grid">
+
+                @each(course in courses)
+
+                    <a href="{{ urlFor('courses.show', { id: course.id }) }}" class="course-card">
+
+                        <h2>{{ course.code }}</h2>
+                        <h3>{{ course.name }}</h3>
+                        <p>{{ course.professor }}</p>
+
+                    </a>
+
+                @endeach
+
+            </div>
+
+        @endif
+
+    </div>
+
 </div>
 
 @end

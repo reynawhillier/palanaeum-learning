@@ -11,6 +11,7 @@ export const controllers = {
   PerformanceReports: () => import('#controllers/performance_reports_controller'),
   Profile: () => import('#controllers/profile_controller'),
   Session: () => import('#controllers/session_controller'),
+  Students: () => import('#controllers/students_controller'),
   Upload: () => import('#controllers/upload_controller'),
   UserLists: () => import('#controllers/user_lists_controller'),
 }
