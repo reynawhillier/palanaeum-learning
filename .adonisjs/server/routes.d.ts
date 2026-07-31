@@ -17,7 +17,6 @@ export type ScannedRoutes = {
     'session.destroy': { paramsTuple?: []; params?: {} }
     'profile.update': { paramsTuple?: []; params?: {} }
     'reports.performance.generate': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
-    'admin.users': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'upload.store': { paramsTuple?: []; params?: {} }
     'course_content.topics.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
@@ -65,7 +64,6 @@ export type ScannedRoutes = {
     'reports.performance.generate.get': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
-    'admin.users': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'course_content.topics.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'course_content.items.create': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
@@ -96,7 +94,6 @@ export type ScannedRoutes = {
     'reports.performance.generate.get': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
-    'admin.users': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'course_content.topics.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'course_content.items.create': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
