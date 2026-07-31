@@ -61,6 +61,69 @@ export class AssignmentSchema extends BaseModel {
   declare title: string
 }
 
+export class CourseContentItemSchema extends BaseModel {
+  static $columns = [
+    'body',
+    'contentItemId',
+    'contentTopicId',
+    'createdAt',
+    'fileKey',
+    'fileName',
+    'fileSize',
+    'mimeType',
+    'title',
+    'updatedAt',
+  ] as const
+  $columns = CourseContentItemSchema.$columns
+  @column()
+  declare body: string | null
+  @column({ isPrimary: true })
+  declare contentItemId: number
+  @column()
+  declare contentTopicId: number
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare fileKey: string | null
+  @column()
+  declare fileName: string | null
+  @column()
+  declare fileSize: number | null
+  @column()
+  declare mimeType: string | null
+  @column()
+  declare title: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class CourseContentTopicSchema extends BaseModel {
+  static $columns = [
+    'contentTopicId',
+    'courseId',
+    'createdAt',
+    'description',
+    'professorId',
+    'title',
+    'updatedAt',
+  ] as const
+  $columns = CourseContentTopicSchema.$columns
+  @column({ isPrimary: true })
+  declare contentTopicId: number
+  @column()
+  declare courseId: number
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare description: string | null
+  @column()
+  declare professorId: number
+  @column()
+  declare title: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
 export class CourseSchema extends BaseModel {
   static $columns = [
     'courseCode',

@@ -12,14 +12,22 @@ export type ScannedRoutes = {
     'reports.performance.print': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'reports.performance': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'reports.performance.generate.get': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
-    'session.destroy': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
+    'session.destroy': { paramsTuple?: []; params?: {} }
     'profile.update': { paramsTuple?: []; params?: {} }
     'reports.performance.generate': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
-    'user_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
     'upload.store': { paramsTuple?: []; params?: {} }
+    'course_content.topics.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
+    'course_content.topics.store': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
+    'course_content.items.create': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
+    'course_content.items.store': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
+    'course_content.topics.destroy': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
+    'course_content.items.destroy': { paramsTuple: [ParamValue,ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue,'itemId': ParamValue} }
+    'courses.content': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
+    'course_content.topics.show': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
+    'course_content.items.file': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'itemId': ParamValue} }
     'assignments.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'assignments.store': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'assignments.edit': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
@@ -56,8 +64,12 @@ export type ScannedRoutes = {
     'reports.performance.generate.get': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
-    'user_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
+    'course_content.topics.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
+    'course_content.items.create': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
+    'courses.content': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
+    'course_content.topics.show': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
+    'course_content.items.file': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'itemId': ParamValue} }
     'assignments.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'assignments.edit': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
     'assignments.grade.edit': { paramsTuple: [ParamValue,ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue,'submissionId': ParamValue} }
@@ -82,8 +94,12 @@ export type ScannedRoutes = {
     'reports.performance.generate.get': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile': { paramsTuple?: []; params?: {} }
-    'user_lists.index': { paramsTuple?: []; params?: {} }
     'home': { paramsTuple?: []; params?: {} }
+    'course_content.topics.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
+    'course_content.items.create': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
+    'courses.content': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
+    'course_content.topics.show': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
+    'course_content.items.file': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'itemId': ParamValue} }
     'assignments.create': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'assignments.edit': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
     'assignments.grade.edit': { paramsTuple: [ParamValue,ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue,'submissionId': ParamValue} }
@@ -106,6 +122,10 @@ export type ScannedRoutes = {
     'profile.update': { paramsTuple?: []; params?: {} }
     'reports.performance.generate': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'upload.store': { paramsTuple?: []; params?: {} }
+    'course_content.topics.store': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
+    'course_content.items.store': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
+    'course_content.topics.destroy': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue} }
+    'course_content.items.destroy': { paramsTuple: [ParamValue,ParamValue,ParamValue]; params: {'courseId': ParamValue,'topicId': ParamValue,'itemId': ParamValue} }
     'assignments.store': { paramsTuple: [ParamValue]; params: {'courseId': ParamValue} }
     'assignments.update': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }
     'assignments.destroy': { paramsTuple: [ParamValue,ParamValue]; params: {'courseId': ParamValue,'assignmentId': ParamValue} }

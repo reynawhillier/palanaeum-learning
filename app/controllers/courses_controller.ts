@@ -9,6 +9,10 @@ export default class CoursesController {
     const user = sessionUser(ctx)
     const courseId = Number(params.id)
 
+    if (Number.isNaN(courseId)) {
+      return response.status(400).send('Invalid course ID')
+    }
+
     const courseRow = await db.from('courses').where('course_id', courseId).first()
 
     if (!courseRow) {
@@ -21,17 +25,55 @@ export default class CoursesController {
       return response.status(403).send('You do not have access to this course')
     }
 
+    const formatDate = (value: unknown) => {
+      if (!value) return 'No date set'
+      return new Date(String(value)).toLocaleDateString('en-CA')
+    }
+
     const course = {
       id: courseRow.course_id,
       code: courseRow.course_code,
       name: courseRow.course_name,
       term: courseRow.term,
       status: courseRow.status,
+      imageUrl: '/images/course-default.svg',
     }
 
-    return ctx.view.render('pages/courses/dashboard', { user, course })
-  }
+    const upcomingAssignments = await db
+      .from('assignments')
+      .where('course_id', courseId)
+      .orderBy('due_date', 'asc')
+      .limit(5)
+      .select('assignment_id', 'title', 'due_date', 'status')
 
+    const calendarItems = upcomingAssignments.map((assignment) => ({
+      id: assignment.assignment_id,
+      title: assignment.title,
+      dueDate: formatDate(assignment.due_date),
+      status: assignment.status ?? 'Open',
+    }))
+
+    const contentTopics = await db
+      .from('course_content_topics')
+      .where('course_id', courseId)
+      .orderBy('created_at', 'desc')
+      .limit(3)
+      .select('content_topic_id', 'title', 'description', 'created_at')
+
+    const professorPosts = contentTopics.map((topic) => ({
+      id: topic.content_topic_id,
+      title: topic.title,
+      description: topic.description,
+      createdAt: formatDate(topic.created_at),
+    }))
+
+    return ctx.view.render('pages/courses/dashboard', {
+      user,
+      course,
+      calendarItems,
+      professorPosts,
+    })
+  }
   async grades(ctx: HttpContext) {
     const { params, response } = ctx
     const user = sessionUser(ctx)
@@ -144,12 +186,11 @@ export default class CoursesController {
         title: assignment.title,
         dueDate: assignment.due_date,
         score: match?.score ?? null,
-        status:
-          match?.score !== null && match?.score !== undefined
+        status: match
+          ? match.score !== null && match.score !== undefined
             ? 'Graded'
-            : match
-              ? 'Submitted'
-              : 'Not submitted',
+            : 'Submitted'
+          : 'Not submitted',
       }
     })
 

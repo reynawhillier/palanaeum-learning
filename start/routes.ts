@@ -25,7 +25,6 @@ router
 // Authenticated routes
 router
   .group(() => {
-    // GET routes
     router
       .get('/courses/:courseId/reports/performance/print', [
         controllers.PerformanceReports,
@@ -44,11 +43,10 @@ router
       ])
       .as('reports.performance.generate.get')
 
-    // POST routes
-    router.post('logout', [controllers.Session, 'destroy'])
-
     router.get('/dashboard', [controllers.Dashboard, 'index']).as('dashboard')
     router.get('/profile', [controllers.Profile, 'show']).as('profile')
+
+    router.post('/logout', [controllers.Session, 'destroy']).as('session.destroy')
     router.post('/profile', [controllers.Profile, 'update']).as('profile.update')
 
     router
@@ -61,16 +59,11 @@ router
   .use(middleware.auth())
 
 router
-  .group(() => {
-    router.get('/user_list', [controllers.UserLists, 'index'])
-  })
-  .use(middleware.auth())
-
-router
   .get('/', async ({ auth, view, response }) => {
     if (await auth.use('web').check()) {
       return response.redirect().toRoute('dashboard')
     }
+
     return view.render('pages/home')
   })
   .as('home')
@@ -82,7 +75,66 @@ router
   })
   .use(middleware.auth())
 
-// Assignments: professor-only create/edit/delete assignments
+// Course content: professor-only create/delete.
+router
+  .group(() => {
+    router
+      .get('/courses/:courseId/content/topics/create', [controllers.CourseContents, 'createTopic'])
+      .as('course_content.topics.create')
+
+    router
+      .post('/courses/:courseId/content/topics', [controllers.CourseContents, 'storeTopic'])
+      .as('course_content.topics.store')
+
+    router
+      .get('/courses/:courseId/content/topics/:topicId/items/create', [
+        controllers.CourseContents,
+        'createItem',
+      ])
+      .as('course_content.items.create')
+
+    router
+      .post('/courses/:courseId/content/topics/:topicId/items', [
+        controllers.CourseContents,
+        'storeItem',
+      ])
+      .as('course_content.items.store')
+
+    router
+      .post('/courses/:courseId/content/topics/:topicId/delete', [
+        controllers.CourseContents,
+        'destroyTopic',
+      ])
+      .as('course_content.topics.destroy')
+
+    router
+      .post('/courses/:courseId/content/topics/:topicId/items/:itemId/delete', [
+        controllers.CourseContents,
+        'destroyItem',
+      ])
+      .as('course_content.items.destroy')
+  })
+  .use(middleware.auth())
+  .use(middleware.role({ roles: ['professor'] }))
+
+// Course content: any authenticated course member can view.
+router
+  .group(() => {
+    router
+      .get('/courses/:courseId/content', [controllers.CourseContents, 'index'])
+      .as('courses.content')
+
+    router
+      .get('/courses/:courseId/content/topics/:topicId', [controllers.CourseContents, 'showTopic'])
+      .as('course_content.topics.show')
+
+    router
+      .get('/courses/:courseId/content/items/:itemId/file', [controllers.CourseContents, 'file'])
+      .as('course_content.items.file')
+  })
+  .use(middleware.auth())
+
+// Assignments: professor-only create/edit/delete and grading.
 router
   .group(() => {
     router
@@ -132,7 +184,7 @@ router
   .use(middleware.auth())
   .use(middleware.role({ roles: ['professor'] }))
 
-// Assignments: professor or student only
+// Assignments: professor or student only.
 router
   .group(() => {
     router
@@ -153,7 +205,7 @@ router
   .use(middleware.auth())
   .use(middleware.role({ roles: ['professor', 'student'] }))
 
-// Assignments: student-only submission
+// Assignments: student-only submission.
 router
   .group(() => {
     router
@@ -176,7 +228,7 @@ router
   .use(middleware.auth())
   .use(middleware.role({ roles: ['professor'] }))
 
-// Courses: classlist, professor (owner) or admin
+// Courses: classlist, professor or admin.
 router
   .group(() => {
     router.get('/courses/:id/students', [controllers.Courses, 'students']).as('courses.students')
@@ -184,7 +236,7 @@ router
   .use(middleware.auth())
   .use(middleware.role({ roles: ['professor', 'admin'] }))
 
-// Courses: grades - professor or student only
+// Courses: grades, professor or student only.
 router
   .group(() => {
     router.get('/courses/:id/grades', [controllers.Courses, 'grades']).as('courses.grades')
@@ -192,14 +244,14 @@ router
   .use(middleware.auth())
   .use(middleware.role({ roles: ['professor', 'student'] }))
 
-// Courses: any authenticated course user
+// Courses: any authenticated course user.
 router
   .group(() => {
     router.get('/courses/:id', [controllers.Courses, 'show']).as('courses.show')
   })
   .use(middleware.auth())
 
-// Admin: user directory + role assignment
+// Admin: user directory and role assignment.
 router
   .group(() => {
     router.get('/admin/users', [controllers.UserLists, 'index']).as('admin.users')
@@ -207,6 +259,7 @@ router
     router
       .get('/admin/users/:id/change-role', [controllers.UserLists, 'changeRoleForm'])
       .as('admin.users.change_role.form')
+
     router
       .post('/admin/users/:id/change-role', [controllers.UserLists, 'changeRole'])
       .as('admin.users.change_role')
@@ -214,10 +267,11 @@ router
   .use(middleware.auth())
   .use(middleware.role({ roles: ['admin'] }))
 
-// Admin: enroll a student in a course
+// Admin: enroll and unenroll students from a course.
 router
   .group(() => {
     router.post('/courses/:id/enrollments', [controllers.Courses, 'enroll']).as('courses.enroll')
+
     router
       .post('/courses/:id/enrollments/:studentId/delete', [controllers.Courses, 'unenroll'])
       .as('courses.unenroll')
@@ -225,11 +279,12 @@ router
   .use(middleware.auth())
   .use(middleware.role({ roles: ['admin'] }))
 
-// Admin: browse students and enroll them from the student's side
+// Admin: browse students and enroll them from the student page.
 router
   .group(() => {
     router.get('/admin/students', [controllers.Students, 'index']).as('students.index')
     router.get('/admin/students/:id', [controllers.Students, 'show']).as('students.show')
+
     router
       .post('/admin/students/:id/enrollments', [controllers.Students, 'enroll'])
       .as('students.enroll')

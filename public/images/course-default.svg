@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="50%" stop-color="#374151"/>
+      <stop offset="100%" stop-color="#6b7280"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="360" fill="url(#g)"/>
+  <circle cx="735" cy="90" r="52" fill="#ffffff" opacity="0.12"/>
+  <circle cx="785" cy="160" r="90" fill="#ffffff" opacity="0.08"/>
+  <path d="M80 260 C210 130, 330 320, 470 170 S720 120, 820 250" fill="none" stroke="#ffffff" stroke-width="18" opacity="0.22"/>
+  <text x="70" y="100" font-family="Arial, sans-serif" font-size="48" font-weight="700" fill="#ffffff">Course Hub</text>
+  <text x="72" y="150" font-family="Arial, sans-serif" font-size="24" fill="#e5e7eb">Lessons, updates, assignments, and resources</text>
+</svg>

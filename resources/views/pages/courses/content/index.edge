@@ -1,0 +1,41 @@
+@layouts.app({
+    user: user,
+    course: course
+})
+
+@slot('main')
+
+<div class="content-page">
+    <div class="page-header">
+        <h1>Content</h1>
+
+        @if(canManage)
+            <a href="{{ urlFor('course_content.topics.create', { courseId: courseId }) }}" class="btn">
+                Create Content Topic
+            </a>
+        @endif
+    </div>
+
+    <div class="content-topic-list">
+        @each(topic in topics)
+            <div class="card">
+                <h2>
+                    <a href="{{ urlFor('course_content.topics.show', { courseId: courseId, topicId: topic.id }) }}">
+                        {{ topic.title }}
+                    </a>
+                </h2>
+
+                @if(topic.description)
+                    <p>{{ topic.description }}</p>
+                @endif
+
+                <p>{{ topic.itemCount }} item(s)</p>
+            </div>
+        @else
+            <p>No content topics yet.</p>
+        @endeach
+    </div>
+</div>
+
+@endslot
+@end

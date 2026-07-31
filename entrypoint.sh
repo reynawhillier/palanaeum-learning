@@ -1,9 +1,8 @@
 #!/bin/sh
+set -e
 
 npm install
 
 node ace migration:run
 
-node ace db:seed
-
-npm run dev
+exec npm run dev

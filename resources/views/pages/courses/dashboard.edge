@@ -3,34 +3,285 @@
     course: course
 })
 
-
 @slot('main')
 
-<div class="dashboard">
+<style>
+    .course-home {
+        display: grid;
+        gap: 24px;
+    }
 
-    <h1>
-        {{ course.code }} - {{ course.name }}
-    </h1>
+    .course-hero {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 24px;
+        align-items: stretch;
+    }
 
-    @if(user.role === 'professor' || user.role === 'admin')
-        <div class="dashboard-actions">
-            <a href="{{ urlFor('courses.students', { id: course.id }) }}">View Classlist</a>
+    .course-hero-card,
+    .course-panel,
+    .quick-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
 
-            <a href="{{ urlFor('reports.performance', { courseId: course.id }) }}">Performance Report</a>
+    .course-image {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+    }
 
+    .course-title {
+        margin: 0 0 8px;
+        font-size: 34px;
+    }
+
+    .course-subtitle {
+        margin: 0 0 16px;
+        color: #4b5563;
+    }
+
+    .course-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    .course-button {
+        display: inline-block;
+        padding: 9px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #111827;
+        background: #f9fafb;
+    }
+
+    .course-button:hover {
+        background: #f3f4f6;
+    }
+
+    .course-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .course-panel h2 {
+        margin-top: 0;
+        margin-bottom: 12px;
+    }
+
+    .blog-post,
+    .calendar-item {
+        border-top: 1px solid #e5e7eb;
+        padding: 14px 0;
+    }
+
+    .blog-post:first-of-type,
+    .calendar-item:first-of-type {
+        border-top: 0;
+    }
+
+    .blog-post h3,
+    .calendar-item h3 {
+        margin: 0 0 6px;
+        font-size: 18px;
+    }
+
+    .muted {
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .quick-links {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(140px, 1fr));
+        gap: 14px;
+    }
+
+    .quick-card {
+        text-decoration: none;
+        color: #111827;
+    }
+
+    .quick-card strong {
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    @media (max-width: 900px) {
+        .course-hero,
+        .course-grid,
+        .quick-links {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="course-home">
+    <section class="course-hero">
+        <div class="course-hero-card">
+            <h1 class="course-title">{{ course.code }} - {{ course.name }}</h1>
+
+            <p class="course-subtitle">
+                Course homepage for announcements, class content, assignments, grades, and class resources.
+            </p>
+
+            <div class="course-actions">
+                @if(user.role === 'professor' || user.role === 'student')
+                    <a
+                        class="course-button"
+                        href="{{ urlFor('courses.content', { courseId: course.id }) }}"
+                    >
+                        Open Content
+                    </a>
+
+                    <a
+                        class="course-button"
+                        href="{{ urlFor('courses.assignments', { courseId: course.id }) }}"
+                    >
+                        Assignments
+                    </a>
+
+                    <a
+                        class="course-button"
+                        href="{{ urlFor('courses.grades', { id: course.id }) }}"
+                    >
+                        Grades
+                    </a>
+                @endif
+
+                @if(user.role === 'professor' || user.role === 'admin')
+                    <a
+                        class="course-button"
+                        href="{{ urlFor('courses.students', { id: course.id }) }}"
+                    >
+                        View Classlist
+                    </a>
+
+                    <a
+                        class="course-button"
+                        href="{{ urlFor('reports.performance', { courseId: course.id }) }}"
+                    >
+                        Performance Report
+                    </a>
+                @endif
+            </div>
 
             @if(user.role === 'professor')
                 @form({ route: 'courses.destroy', routeParams: { id: course.id }, method: 'POST' })
                     @!button({
                         text: 'Delete Course',
                         type: 'submit',
-                        style: 'color:red;',
+                        style: 'color:red; margin-top:18px;',
                         onclick: "return confirm('Delete this course? This cannot be undone.')"
                     })
                 @end
             @endif
         </div>
-    @endif
+
+        <div>
+            <img class="course-image" src="{{ course.imageUrl }}" alt="Course image">
+        </div>
+    </section>
+    @if(user && (user.role === 'professor' || user.role === 'student'))
+
+        <section class="course-grid">
+        <div class="course-panel">
+            <h2>Professor Blog</h2>
+            <p class="muted">Recent course updates and posted content topics.</p>
+
+            @each(post in professorPosts)
+                <article class="blog-post">
+                    <h3>
+                        <a href="{{ urlFor('course_content.topics.show', { courseId: course.id, topicId: post.id }) }}">
+                            {{ post.title }}
+                        </a>
+                    </h3>
+
+                    @if(post.description)
+        <p>{{ post.description }}</p>
+                    @else
+                        <p class="muted">No description added.</p>
+                    @endif
+
+                    <p class="muted">Posted {{ post.createdAt }}</p>
+                </article>
+            @else
+                <p>No professor updates have been posted yet.</p>
+
+                @if(user.role === 'professor')
+                    <p>
+                        <a href="{{ urlFor('course_content.topics.create', { courseId: course.id }) }}">
+                            Create the first content topic
+                        </a>
+                    </p>
+                @endif
+            @endeach
+        </div>
+
+        <div class="course-panel">
+            <h2>Course Calendar</h2>
+            <p class="muted">Upcoming assignments and due dates.</p>
+
+            @each(item in calendarItems)
+                <article class="calendar-item">
+                    <h3>
+                        <a href="{{ urlFor('assignments.show', { courseId: course.id, assignmentId: item.id }) }}">
+                            {{ item.title }}
+                        </a>
+                    </h3>
+
+                    <p>Due: {{ item.dueDate }}</p>
+                    <p class="muted">Status: {{ item.status }}</p>
+                </article>
+            @else
+                <p>No upcoming assignments are listed yet.</p>
+            @endeach
+        </div>
+    </section>
+
+    <section>
+        <h2>Course Tools</h2>
+
+        <div class="quick-links">
+            <a class="quick-card" href="{{ urlFor('courses.content', { courseId: course.id }) }}">
+                <strong>Content</strong>
+                Topics, files, and class notes.
+            </a>
+
+            <a class="quick-card" href="{{ urlFor('courses.assignments', { courseId: course.id }) }}">
+                <strong>Assignments</strong>
+                View and manage coursework.
+            </a>
+
+            <a class="quick-card" href="{{ urlFor('courses.grades', { id: course.id }) }}">
+                <strong>Grades</strong>
+                Review student progress.
+            </a>
+
+                        @if(user.role === 'professor')
+                <a class="quick-card" href="{{ urlFor('courses.students', { id: course.id }) }}">
+                    <strong>Students</strong>
+                    View the classlist.
+                </a>
+
+                <a class="quick-card" href="{{ urlFor('reports.performance', { courseId: course.id }) }}">
+                    <strong>Reports</strong>
+                    See class performance.
+                </a>
+            @endif
+        </div>
+    </section>
+
+@endif
 
 </div>
 

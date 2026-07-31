@@ -1,0 +1,39 @@
+@layouts.app({
+    user: user,
+    course: course
+})
+
+@slot('main')
+
+<div class="content-create-topic">
+    <a href="{{ urlFor('courses.content', { courseId: courseId }) }}">
+        &larr; Back to Content
+    </a>
+
+    <h1>Create Content Topic</h1>
+
+    @form({ route: 'course_content.topics.store', routeParams: { courseId: courseId }, method: 'POST' })
+        <div>
+            @field.root({ name: 'title' })
+                @!field.label({ text: 'Topic title' })
+                @!input.control({ type: 'text' })
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @field.root({ name: 'description' })
+                @!field.label({ text: 'Description' })
+                @!textarea.control()
+                @!field.error()
+            @end
+        </div>
+
+        <div>
+            @!button({ text: 'Create Topic', type: 'submit' })
+        </div>
+    @end
+</div>
+
+@endslot
+@end
