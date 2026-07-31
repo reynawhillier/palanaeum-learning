@@ -11,9 +11,6 @@ import { controllers } from '#generated/controllers'
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
-const CourseContentsController = () => import('#controllers/course_contents_controller')
-const StudentsController = () => import('#controllers/students_controller')
-
 // Guest routes
 router
   .group(() => {
@@ -82,37 +79,37 @@ router
 router
   .group(() => {
     router
-      .get('/courses/:courseId/content/topics/create', [CourseContentsController, 'createTopic'])
+      .get('/courses/:courseId/content/topics/create', [controllers.CourseContents, 'createTopic'])
       .as('course_content.topics.create')
 
     router
-      .post('/courses/:courseId/content/topics', [CourseContentsController, 'storeTopic'])
+      .post('/courses/:courseId/content/topics', [controllers.CourseContents, 'storeTopic'])
       .as('course_content.topics.store')
 
     router
       .get('/courses/:courseId/content/topics/:topicId/items/create', [
-        CourseContentsController,
+        controllers.CourseContents,
         'createItem',
       ])
       .as('course_content.items.create')
 
     router
       .post('/courses/:courseId/content/topics/:topicId/items', [
-        CourseContentsController,
+        controllers.CourseContents,
         'storeItem',
       ])
       .as('course_content.items.store')
 
     router
       .post('/courses/:courseId/content/topics/:topicId/delete', [
-        CourseContentsController,
+        controllers.CourseContents,
         'destroyTopic',
       ])
       .as('course_content.topics.destroy')
 
     router
       .post('/courses/:courseId/content/topics/:topicId/items/:itemId/delete', [
-        CourseContentsController,
+        controllers.CourseContents,
         'destroyItem',
       ])
       .as('course_content.items.destroy')
@@ -124,15 +121,15 @@ router
 router
   .group(() => {
     router
-      .get('/courses/:courseId/content', [CourseContentsController, 'index'])
+      .get('/courses/:courseId/content', [controllers.CourseContents, 'index'])
       .as('courses.content')
 
     router
-      .get('/courses/:courseId/content/topics/:topicId', [CourseContentsController, 'showTopic'])
+      .get('/courses/:courseId/content/topics/:topicId', [controllers.CourseContents, 'showTopic'])
       .as('course_content.topics.show')
 
     router
-      .get('/courses/:courseId/content/items/:itemId/file', [CourseContentsController, 'file'])
+      .get('/courses/:courseId/content/items/:itemId/file', [controllers.CourseContents, 'file'])
       .as('course_content.items.file')
   })
   .use(middleware.auth())
@@ -285,11 +282,11 @@ router
 // Admin: browse students and enroll them from the student page.
 router
   .group(() => {
-    router.get('/admin/students', [StudentsController, 'index']).as('students.index')
-    router.get('/admin/students/:id', [StudentsController, 'show']).as('students.show')
+    router.get('/admin/students', [controllers.Students, 'index']).as('students.index')
+    router.get('/admin/students/:id', [controllers.Students, 'show']).as('students.show')
 
     router
-      .post('/admin/students/:id/enrollments', [StudentsController, 'enroll'])
+      .post('/admin/students/:id/enrollments', [controllers.Students, 'enroll'])
       .as('students.enroll')
   })
   .use(middleware.auth())

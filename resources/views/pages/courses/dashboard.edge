@@ -191,8 +191,9 @@
             <img class="course-image" src="{{ course.imageUrl }}" alt="Course image">
         </div>
     </section>
+    @if(user && (user.role === 'professor' || user.role === 'student'))
 
-    <section class="course-grid">
+        <section class="course-grid">
         <div class="course-panel">
             <h2>Professor Blog</h2>
             <p class="muted">Recent course updates and posted content topics.</p>
@@ -206,7 +207,7 @@
                     </h3>
 
                     @if(post.description)
-                        <p>{{ post.description }}</p>
+        <p>{{ post.description }}</p>
                     @else
                         <p class="muted">No description added.</p>
                     @endif
@@ -215,11 +216,14 @@
                 </article>
             @else
                 <p>No professor updates have been posted yet.</p>
-                <p>
-                    <a href="{{ urlFor('course_content.topics.create', { courseId: course.id }) }}">
-                        Create the first content topic
-                    </a>
-                </p>
+
+                @if(user.role === 'professor')
+                    <p>
+                        <a href="{{ urlFor('course_content.topics.create', { courseId: course.id }) }}">
+                            Create the first content topic
+                        </a>
+                    </p>
+                @endif
             @endeach
         </div>
 
@@ -263,17 +267,22 @@
                 Review student progress.
             </a>
 
-            <a class="quick-card" href="{{ urlFor('courses.students', { id: course.id }) }}">
-                <strong>Students</strong>
-                View the classlist.
-            </a>
+                        @if(user.role === 'professor')
+                <a class="quick-card" href="{{ urlFor('courses.students', { id: course.id }) }}">
+                    <strong>Students</strong>
+                    View the classlist.
+                </a>
 
-            <a class="quick-card" href="{{ urlFor('reports.performance', { courseId: course.id }) }}">
-                <strong>Reports</strong>
-                See class performance.
-            </a>
+                <a class="quick-card" href="{{ urlFor('reports.performance', { courseId: course.id }) }}">
+                    <strong>Reports</strong>
+                    See class performance.
+                </a>
+            @endif
         </div>
     </section>
+
+@endif
+
 </div>
 
 @endslot

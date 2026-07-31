@@ -1,5 +1,8 @@
 #!/bin/sh
+set -e
 
 npm install
 
-npm run dev
+node ace migration:run
+
+exec npm run dev
